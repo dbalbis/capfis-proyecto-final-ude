@@ -1,0 +1,37 @@
+# Build outputs
+bin/
+obj/
+
+# User-specific files
+*.user
+*.suo
+
+# Visual Studio Code
+.vscode/
+
+# Entity Framework Core migrations snapshots (opcional)
+**/*ModelSnapshot.cs
+
+# Database files
+*.db
+*.mdf
+*.ldf
+*.sqlite
+
+# ASP.NET Core secrets (User Secrets)
+secrets.json
+
+# Logs
+*.log
+logs/
+
+# Configuration files with sensitive info (opcional)
+appsettings.Development.json
+# appsettings.Production.json  # Descomenta si contiene claves sensibles
+
+# Dotnet publish
+publish/
+
+# OS-specific files
+.DS_Store
+Thumbs.db
