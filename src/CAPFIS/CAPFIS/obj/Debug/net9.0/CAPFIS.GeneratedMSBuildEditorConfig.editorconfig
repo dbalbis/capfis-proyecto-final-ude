@@ -17,49 +17,49 @@ build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = CAPFIS
 build_property.RootNamespace = CAPFIS
-build_property.ProjectDir = C:\Users\Dayron\Desktop\CAPFIS\capfis-proyecto-final-ude\src\CAPFIS\CAPFIS\
+build_property.ProjectDir = C:\Users\diego\Desktop\UDE\CAPFIS\capfis-proyecto-final-ude\src\CAPFIS\CAPFIS\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 9.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = C:\Users\Dayron\Desktop\CAPFIS\capfis-proyecto-final-ude\src\CAPFIS\CAPFIS
+build_property.MSBuildProjectDirectory = C:\Users\diego\Desktop\UDE\CAPFIS\capfis-proyecto-final-ude\src\CAPFIS\CAPFIS
 build_property._RazorSourceGeneratorDebug = 
 build_property.EffectiveAnalysisLevelStyle = 9.0
 build_property.EnableCodeStyleSeverity = 
 
-[C:/Users/Dayron/Desktop/CAPFIS/capfis-proyecto-final-ude/src/CAPFIS/CAPFIS/Areas/Identity/Pages/_ViewStart.cshtml]
+[C:/Users/diego/Desktop/UDE/CAPFIS/capfis-proyecto-final-ude/src/CAPFIS/CAPFIS/Areas/Identity/Pages/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Dayron/Desktop/CAPFIS/capfis-proyecto-final-ude/src/CAPFIS/CAPFIS/Pages/Error.cshtml]
+[C:/Users/diego/Desktop/UDE/CAPFIS/capfis-proyecto-final-ude/src/CAPFIS/CAPFIS/Pages/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXJyb3IuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Dayron/Desktop/CAPFIS/capfis-proyecto-final-ude/src/CAPFIS/CAPFIS/Pages/Index.cshtml]
+[C:/Users/diego/Desktop/UDE/CAPFIS/capfis-proyecto-final-ude/src/CAPFIS/CAPFIS/Pages/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Dayron/Desktop/CAPFIS/capfis-proyecto-final-ude/src/CAPFIS/CAPFIS/Pages/Privacy.cshtml]
+[C:/Users/diego/Desktop/UDE/CAPFIS/capfis-proyecto-final-ude/src/CAPFIS/CAPFIS/Pages/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJpdmFjeS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Dayron/Desktop/CAPFIS/capfis-proyecto-final-ude/src/CAPFIS/CAPFIS/Pages/Shared/_LoginPartial.cshtml]
+[C:/Users/diego/Desktop/UDE/CAPFIS/capfis-proyecto-final-ude/src/CAPFIS/CAPFIS/Pages/Shared/_LoginPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2hhcmVkXF9Mb2dpblBhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Dayron/Desktop/CAPFIS/capfis-proyecto-final-ude/src/CAPFIS/CAPFIS/Pages/Shared/_ValidationScriptsPartial.cshtml]
+[C:/Users/diego/Desktop/UDE/CAPFIS/capfis-proyecto-final-ude/src/CAPFIS/CAPFIS/Pages/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Dayron/Desktop/CAPFIS/capfis-proyecto-final-ude/src/CAPFIS/CAPFIS/Pages/_ViewImports.cshtml]
+[C:/Users/diego/Desktop/UDE/CAPFIS/capfis-proyecto-final-ude/src/CAPFIS/CAPFIS/Pages/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Dayron/Desktop/CAPFIS/capfis-proyecto-final-ude/src/CAPFIS/CAPFIS/Pages/_ViewStart.cshtml]
+[C:/Users/diego/Desktop/UDE/CAPFIS/capfis-proyecto-final-ude/src/CAPFIS/CAPFIS/Pages/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Dayron/Desktop/CAPFIS/capfis-proyecto-final-ude/src/CAPFIS/CAPFIS/Pages/Shared/_Layout.cshtml]
+[C:/Users/diego/Desktop/UDE/CAPFIS/capfis-proyecto-final-ude/src/CAPFIS/CAPFIS/Pages/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-qokz936qdy
