@@ -21,6 +21,10 @@
       "PackagePath": "staticwebassets\\images\\logo2.png"
     },
     {
+      "Id": "C:\\Users\\diego\\Desktop\\UDE\\CAPFIS\\capfis-proyecto-final-ude\\src\\CAPFIS\\CAPFIS\\wwwroot\\images\\logo3.png",
+      "PackagePath": "staticwebassets\\images\\logo3.png"
+    },
+    {
       "Id": "C:\\Users\\diego\\Desktop\\UDE\\CAPFIS\\capfis-proyecto-final-ude\\src\\CAPFIS\\CAPFIS\\wwwroot\\js\\site.js",
       "PackagePath": "staticwebassets\\js\\site.js"
     },

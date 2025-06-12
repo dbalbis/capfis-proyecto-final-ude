@@ -41,7 +41,7 @@ body {
     background-color: transparent !important;
 }
 
-    /* Hover en negro para el dropdown de Módulos */
+    /* Hover negro para el dropdown de Módulos */
     .navbar .nav-link.dropdown-toggle:hover,
     .navbar .nav-link.dropdown-toggle:focus-visible {
         color: #FFA500 !important;
