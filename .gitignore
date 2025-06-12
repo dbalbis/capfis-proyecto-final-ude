@@ -5,9 +5,18 @@ obj/
 # User-specific files
 *.user
 *.suo
+*.userosscache
+*.sln.docstates
+
+# Visual Studio
+.vs/
 
 # Visual Studio Code
 .vscode/
+
+# Rider
+.idea/
+*.sln.iml
 
 # Entity Framework Core migrations snapshots (opcional)
 **/*ModelSnapshot.cs
@@ -35,3 +44,11 @@ publish/
 # OS-specific files
 .DS_Store
 Thumbs.db
+
+# Test results
+TestResults/
+*.coverage
+*.coveragexml
+
+# Local config
+*.local.json
