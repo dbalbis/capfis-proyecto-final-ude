@@ -29,3 +29,41 @@ body {
 .form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
   text-align: start;
 }
+
+.navbar .nav-link.dropdown-toggle,
+.navbar .nav-link.dropdown-toggle:focus,
+.navbar .nav-link.dropdown-toggle:active,
+.navbar .nav-link.dropdown-toggle.show,
+.navbar .nav-link.dropdown-toggle[aria-expanded="true"],
+.navbar-nav .nav-link.active,
+.navbar-nav .nav-link.show {
+    color: white !important;
+    background-color: transparent !important;
+}
+
+    /* Hover en negro para el dropdown de Módulos */
+    .navbar .nav-link.dropdown-toggle:hover,
+    .navbar .nav-link.dropdown-toggle:focus-visible {
+        color: #FFA500 !important;
+        background-color: transparent !important;
+    }
+
+    .navbar .nav-link.text-white:hover,
+    .navbar .nav-link.text-white:focus,
+    .navbar .nav-link.text-white:active,
+    .navbar .nav-link.dropdown-toggle:hover,
+    .navbar .nav-link.dropdown-toggle:focus,
+    .navbar .nav-link.dropdown-toggle:active {
+        color: #FFA500 !important;
+        background-color: transparent !important;
+    }
+
+.login-btn:hover, .login-btn:focus {
+    background-color: #FFA500 !important;
+    color: #000 !important;
+    border-color: #FFA500 !important;
+    transition: background 0.2s, color 0.2s;
+}
+}
+
+

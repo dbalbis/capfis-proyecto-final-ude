@@ -526,7 +526,6 @@ C:\Users\diego\Desktop\UDE\CAPFIS\capfis-proyecto-final-ude\src\CAPFIS\CAPFIS\ob
 C:\Users\diego\Desktop\UDE\CAPFIS\capfis-proyecto-final-ude\src\CAPFIS\CAPFIS\obj\Debug\net9.0\compressed\nezrqnk58p-muycvpuwrr.gz
 C:\Users\diego\Desktop\UDE\CAPFIS\capfis-proyecto-final-ude\src\CAPFIS\CAPFIS\obj\Debug\net9.0\compressed\v0zgfp0y55-87fc7y1x7t.gz
 C:\Users\diego\Desktop\UDE\CAPFIS\capfis-proyecto-final-ude\src\CAPFIS\CAPFIS\obj\Debug\net9.0\compressed\yfc7ypekbg-mlv21k5csn.gz
-C:\Users\diego\Desktop\UDE\CAPFIS\capfis-proyecto-final-ude\src\CAPFIS\CAPFIS\obj\Debug\net9.0\compressed\n43f6nb05e-b9sayid5wm.gz
 C:\Users\diego\Desktop\UDE\CAPFIS\capfis-proyecto-final-ude\src\CAPFIS\CAPFIS\obj\Debug\net9.0\compressed\c1l9gg8wru-61n19gt1b8.gz
 C:\Users\diego\Desktop\UDE\CAPFIS\capfis-proyecto-final-ude\src\CAPFIS\CAPFIS\obj\Debug\net9.0\compressed\f9ej3v12le-xtxxf3hu2r.gz
 C:\Users\diego\Desktop\UDE\CAPFIS\capfis-proyecto-final-ude\src\CAPFIS\CAPFIS\obj\Debug\net9.0\compressed\rpq7078son-t1cqhe9u97.gz
@@ -606,3 +605,4 @@ C:\Users\diego\Desktop\UDE\CAPFIS\capfis-proyecto-final-ude\src\CAPFIS\CAPFIS\ob
 C:\Users\diego\Desktop\UDE\CAPFIS\capfis-proyecto-final-ude\src\CAPFIS\CAPFIS\obj\Debug\net9.0\CAPFIS.pdb
 C:\Users\diego\Desktop\UDE\CAPFIS\capfis-proyecto-final-ude\src\CAPFIS\CAPFIS\obj\Debug\net9.0\CAPFIS.genruntimeconfig.cache
 C:\Users\diego\Desktop\UDE\CAPFIS\capfis-proyecto-final-ude\src\CAPFIS\CAPFIS\obj\Debug\net9.0\ref\CAPFIS.dll
+C:\Users\diego\Desktop\UDE\CAPFIS\capfis-proyecto-final-ude\src\CAPFIS\CAPFIS\obj\Debug\net9.0\compressed\n43f6nb05e-wng2ps77tu.gz

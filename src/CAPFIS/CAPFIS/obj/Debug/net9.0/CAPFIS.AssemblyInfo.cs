@@ -16,7 +16,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CAPFIS")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c6e8ee3e690d477d25ef140c91b1e041951c7116")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+fe8991ee17e0ba06bf14e1169e00eea7cb5745a2")]
 [assembly: System.Reflection.AssemblyProductAttribute("CAPFIS")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CAPFIS")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

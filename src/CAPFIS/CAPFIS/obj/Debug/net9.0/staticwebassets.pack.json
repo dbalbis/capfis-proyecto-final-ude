@@ -13,6 +13,14 @@
       "PackagePath": "staticwebassets\\favicon.ico"
     },
     {
+      "Id": "C:\\Users\\diego\\Desktop\\UDE\\CAPFIS\\capfis-proyecto-final-ude\\src\\CAPFIS\\CAPFIS\\wwwroot\\images\\logo.png",
+      "PackagePath": "staticwebassets\\images\\logo.png"
+    },
+    {
+      "Id": "C:\\Users\\diego\\Desktop\\UDE\\CAPFIS\\capfis-proyecto-final-ude\\src\\CAPFIS\\CAPFIS\\wwwroot\\images\\logo2.png",
+      "PackagePath": "staticwebassets\\images\\logo2.png"
+    },
+    {
       "Id": "C:\\Users\\diego\\Desktop\\UDE\\CAPFIS\\capfis-proyecto-final-ude\\src\\CAPFIS\\CAPFIS\\wwwroot\\js\\site.js",
       "PackagePath": "staticwebassets\\js\\site.js"
     },

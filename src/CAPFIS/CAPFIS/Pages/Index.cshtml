@@ -1,10 +1,153 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "CAPFIS";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<!-- Hero Section -->
+<div class="py-5" style="background-color: #e5e5e5;">
+    <div class="container">
+        <div class="row align-items-center">
+            <!-- Texto principal -->
+            <div class="col-md-6 mb-4 mb-md-0">
+                <h2 class="fw-bold mb-3" style="border-left: 4px solid #000; padding-left: 16px;">
+                    Evita Fraudes por<br />Ingeniería Social
+                </h2>
+                <div class="mb-4" style="height: 32px;">
+                    <div style="height: 8px; background: #000; margin-bottom: 6px; width: 80%;"></div>
+                    <div style="height: 8px; background: #000; margin-bottom: 6px; width: 60%;"></div>
+                    <div style="height: 8px; background: #000; width: 90%;"></div>
+                </div>
+                <button class="btn btn-secondary btn-lg mb-3" style="width: 150px;" disabled>——</button>
+                <div class="d-flex gap-2">
+                    <a class="btn btn-outline-dark" href="#">Registrarse</a>
+                    <a class="btn btn-outline-dark" href="#">Explorar más</a>
+                </div>
+            </div>
+            <!-- Imagen principal -->
+            <div class="col-md-6 d-flex justify-content-center">
+                <div style="width: 320px; height: 320px; border: 2px solid #888; background: #f8f9fa; position: relative;">
+                    <svg width="100%" height="100%">
+                        <line x1="0" y1="0" x2="100%" y2="100%" stroke="#888" stroke-width="2" />
+                        <line x1="100%" y1="0" x2="0" y2="100%" stroke="#888" stroke-width="2" />
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+<!-- Funcionalidades destacadas -->
+<div class="py-5 bg-white">
+    <div class="container">
+        <h3 class="text-center mb-5 fw-semibold">Funcionalidades destacadas</h3>
+        <div class="row g-4 justify-content-center">
+            <div class="col-6 col-md-3">
+                <div class="border p-4 text-center h-100">
+                    <div style="font-size: 3rem;">
+                        <i class="bi bi-list-task"></i>
+                    </div>
+                    <div class="fw-semibold mt-2">Cuestionarios</div>
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="border p-4 text-center h-100">
+                    <div style="font-size: 3rem;">
+                        <i class="bi bi-controller"></i>
+                    </div>
+                    <div class="fw-semibold mt-2">Juegos</div>
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="border p-4 text-center h-100">
+                    <div style="font-size: 3rem;">
+                        <i class="bi bi-journal-bookmark"></i>
+                    </div>
+                    <div class="fw-semibold mt-2">Módulos</div>
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="border p-4 text-center h-100">
+                    <div style="font-size: 3rem;">
+                        <i class="bi bi-search"></i>
+                    </div>
+                    <div class="fw-semibold mt-2">Casos Reales</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Preguntas Frecuentes -->
+<div class="container my-5">
+    <div class="row">
+        <div class="col">
+            <div class="border">
+                <div class="bg-white py-3 px-2 border-bottom">
+                    <h4 class="text-center fw-bold mb-0">Preguntas Frecuentes</h4>
+                </div>
+                <div class="table-responsive">
+                    <table class="table mb-0">
+                        <tbody>
+                            <tr><td class="text-center">¿Qué es CAPFIS?</td></tr>
+                            <tr><td class="text-center">¿Necesito conocimientos técnicos?</td></tr>
+                            <tr><td class="text-center">¿Qué tipo de fraudes voy a aprender a detectar?</td></tr>
+                            <tr><td class="text-center">¿Cuánto cuesta usar la plataforma?</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Footer extendido -->
+<div class="container mb-4">
+    <div class="row g-4">
+        <div class="col-md-3">
+            <div class="border p-3 h-100">
+                <div class="fw-bold">Navegación rápida</div>
+                <ul class="mb-0 ps-3">
+                    <li>Inicio</li>
+                    <li>Módulos</li>
+                    <li>Juegos</li>
+                    <li>Registrarse / Mi perfil / Login</li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="border p-3 h-100">
+                <div class="fw-bold">Contacto</div>
+                <ul class="mb-0 ps-3">
+                    <li>contacto@capfis.org</li>
+                    <li>Universidad de la Empresa</li>
+                    <li>Montevideo, Uruguay</li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="border p-3 h-100">
+                <div class="fw-bold">Creado por</div>
+                <ul class="mb-0 ps-3">
+                    <li>Dayron Muñiz</li>
+                    <li>Diego Balbis</li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="border p-3 h-100">
+                <div class="fw-bold">Comprometidos con tu aprendizaje y seguridad</div>
+                <ul class="mb-0 ps-3">
+                    <li>Política de privacidad</li>
+                    <li>Términos y condiciones</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Footer inferior -->
+<footer class="text-center py-3 fw-bold">
+    CAPFIS © 2025
+</footer>
+

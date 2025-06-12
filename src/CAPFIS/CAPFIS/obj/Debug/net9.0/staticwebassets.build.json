@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "eOdFwbRc+hDiuckr1tQs5XN3UuEnArXhNpfYAZTX3E8=",
+  "Hash": "CfcrF4pbqAhY+nsn1ybhehfXYrnQtioLY/cU35yTlZ8=",
   "Source": "CAPFIS",
   "BasePath": "_content/CAPFIS",
   "Mode": "Default",
@@ -2789,12 +2789,12 @@
       "OriginalItemSpec": "C:\\Users\\diego\\Desktop\\UDE\\CAPFIS\\capfis-proyecto-final-ude\\src\\CAPFIS\\CAPFIS\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css"
     },
     {
-      "Identity": "C:\\Users\\diego\\Desktop\\UDE\\CAPFIS\\capfis-proyecto-final-ude\\src\\CAPFIS\\CAPFIS\\obj\\Debug\\net9.0\\compressed\\n43f6nb05e-b9sayid5wm.gz",
+      "Identity": "C:\\Users\\diego\\Desktop\\UDE\\CAPFIS\\capfis-proyecto-final-ude\\src\\CAPFIS\\CAPFIS\\obj\\Debug\\net9.0\\compressed\\n43f6nb05e-wng2ps77tu.gz",
       "SourceId": "CAPFIS",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\diego\\Desktop\\UDE\\CAPFIS\\capfis-proyecto-final-ude\\src\\CAPFIS\\CAPFIS\\obj\\Debug\\net9.0\\compressed\\",
       "BasePath": "_content/CAPFIS",
-      "RelativePath": "css/site#[.{fingerprint=b9sayid5wm}]?.css.gz",
+      "RelativePath": "css/site#[.{fingerprint=wng2ps77tu}]?.css.gz",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Alternative",
@@ -2803,8 +2803,8 @@
       "RelatedAsset": "C:\\Users\\diego\\Desktop\\UDE\\CAPFIS\\capfis-proyecto-final-ude\\src\\CAPFIS\\CAPFIS\\wwwroot\\css\\site.css",
       "AssetTraitName": "Content-Encoding",
       "AssetTraitValue": "gzip",
-      "Fingerprint": "wf4wcyqcqt",
-      "Integrity": "fNKkLSNFLZMVTc2zVrpMXQqOwPU3sU4GWcfEbCR2V1I=",
+      "Fingerprint": "ssrgpsdd7i",
+      "Integrity": "RFZtaLIwFwzsgPMDeybogHLRTq7cRPuaAmHGQ9Vz2V0=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "C:\\Users\\diego\\Desktop\\UDE\\CAPFIS\\capfis-proyecto-final-ude\\src\\CAPFIS\\CAPFIS\\wwwroot\\css\\site.css"
@@ -4042,8 +4042,8 @@
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
-      "Fingerprint": "b9sayid5wm",
-      "Integrity": "j6fhJSuuyLpOSLuPJU0TsDV0iNjor5S3rDnvxJrt4bg=",
+      "Fingerprint": "wng2ps77tu",
+      "Integrity": "3Jm+7fBDh1k8N5OuuiAPE3JEdl5RhcjfSNEjyJqlpVY=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\css\\site.css"
@@ -4068,6 +4068,48 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\favicon.ico"
+    },
+    {
+      "Identity": "C:\\Users\\diego\\Desktop\\UDE\\CAPFIS\\capfis-proyecto-final-ude\\src\\CAPFIS\\CAPFIS\\wwwroot\\images\\logo.png",
+      "SourceId": "CAPFIS",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\diego\\Desktop\\UDE\\CAPFIS\\capfis-proyecto-final-ude\\src\\CAPFIS\\CAPFIS\\wwwroot\\",
+      "BasePath": "_content/CAPFIS",
+      "RelativePath": "images/logo#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "nic4x8b96r",
+      "Integrity": "oRayS3I6SBiEZzyWrdl/PyFTcciuJSxVa9WVUjAO1C4=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\logo.png"
+    },
+    {
+      "Identity": "C:\\Users\\diego\\Desktop\\UDE\\CAPFIS\\capfis-proyecto-final-ude\\src\\CAPFIS\\CAPFIS\\wwwroot\\images\\logo2.png",
+      "SourceId": "CAPFIS",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\diego\\Desktop\\UDE\\CAPFIS\\capfis-proyecto-final-ude\\src\\CAPFIS\\CAPFIS\\wwwroot\\",
+      "BasePath": "_content/CAPFIS",
+      "RelativePath": "images/logo2#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "53kl1u29tx",
+      "Integrity": "D27I3PtCenHbdNQoqiMpbByXRpRSnPzzitg8Rq+xdkk=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\logo2.png"
     },
     {
       "Identity": "C:\\Users\\diego\\Desktop\\UDE\\CAPFIS\\capfis-proyecto-final-ude\\src\\CAPFIS\\CAPFIS\\wwwroot\\js\\site.js",
@@ -5949,167 +5991,6 @@
       ]
     },
     {
-      "Route": "css/site.b9sayid5wm.css",
-      "AssetFile": "C:\\Users\\diego\\Desktop\\UDE\\CAPFIS\\capfis-proyecto-final-ude\\src\\CAPFIS\\CAPFIS\\obj\\Debug\\net9.0\\compressed\\n43f6nb05e-b9sayid5wm.gz",
-      "Selectors": [
-        {
-          "Name": "Content-Encoding",
-          "Value": "gzip",
-          "Quality": "0.003125000000"
-        }
-      ],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "319"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"fNKkLSNFLZMVTc2zVrpMXQqOwPU3sU4GWcfEbCR2V1I=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Fri, 23 May 2025 01:41:49 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "max-age=31536000, immutable"
-        },
-        {
-          "Name": "Content-Encoding",
-          "Value": "gzip"
-        },
-        {
-          "Name": "Vary",
-          "Value": "Content-Encoding"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/css"
-        },
-        {
-          "Name": "ETag",
-          "Value": "W/\"j6fhJSuuyLpOSLuPJU0TsDV0iNjor5S3rDnvxJrt4bg=\""
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "fingerprint",
-          "Value": "b9sayid5wm"
-        },
-        {
-          "Name": "label",
-          "Value": "css/site.css"
-        },
-        {
-          "Name": "integrity",
-          "Value": "sha256-j6fhJSuuyLpOSLuPJU0TsDV0iNjor5S3rDnvxJrt4bg="
-        }
-      ]
-    },
-    {
-      "Route": "css/site.b9sayid5wm.css",
-      "AssetFile": "C:\\Users\\diego\\Desktop\\UDE\\CAPFIS\\capfis-proyecto-final-ude\\src\\CAPFIS\\CAPFIS\\wwwroot\\css\\site.css",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "667"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/css"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"j6fhJSuuyLpOSLuPJU0TsDV0iNjor5S3rDnvxJrt4bg=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Fri, 23 May 2025 01:41:49 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "max-age=31536000, immutable"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "fingerprint",
-          "Value": "b9sayid5wm"
-        },
-        {
-          "Name": "label",
-          "Value": "css/site.css"
-        },
-        {
-          "Name": "integrity",
-          "Value": "sha256-j6fhJSuuyLpOSLuPJU0TsDV0iNjor5S3rDnvxJrt4bg="
-        }
-      ]
-    },
-    {
-      "Route": "css/site.b9sayid5wm.css.gz",
-      "AssetFile": "C:\\Users\\diego\\Desktop\\UDE\\CAPFIS\\capfis-proyecto-final-ude\\src\\CAPFIS\\CAPFIS\\obj\\Debug\\net9.0\\compressed\\n43f6nb05e-b9sayid5wm.gz",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "319"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/css"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"fNKkLSNFLZMVTc2zVrpMXQqOwPU3sU4GWcfEbCR2V1I=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Fri, 23 May 2025 01:41:49 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "max-age=31536000, immutable"
-        },
-        {
-          "Name": "Content-Encoding",
-          "Value": "gzip"
-        },
-        {
-          "Name": "Vary",
-          "Value": "Content-Encoding"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "fingerprint",
-          "Value": "b9sayid5wm"
-        },
-        {
-          "Name": "label",
-          "Value": "css/site.css.gz"
-        },
-        {
-          "Name": "integrity",
-          "Value": "sha256-fNKkLSNFLZMVTc2zVrpMXQqOwPU3sU4GWcfEbCR2V1I="
-        }
-      ]
-    },
-    {
       "Route": "css/site.css",
       "AssetFile": "C:\\Users\\diego\\.nuget\\packages\\microsoft.aspnetcore.identity.ui\\9.0.4\\staticwebassets\\css\\site.css",
       "Selectors": [],
@@ -6148,12 +6029,12 @@
     },
     {
       "Route": "css/site.css",
-      "AssetFile": "C:\\Users\\diego\\Desktop\\UDE\\CAPFIS\\capfis-proyecto-final-ude\\src\\CAPFIS\\CAPFIS\\obj\\Debug\\net9.0\\compressed\\n43f6nb05e-b9sayid5wm.gz",
+      "AssetFile": "C:\\Users\\diego\\Desktop\\UDE\\CAPFIS\\capfis-proyecto-final-ude\\src\\CAPFIS\\CAPFIS\\obj\\Debug\\net9.0\\compressed\\n43f6nb05e-wng2ps77tu.gz",
       "Selectors": [
         {
           "Name": "Content-Encoding",
           "Value": "gzip",
-          "Quality": "0.003125000000"
+          "Quality": "0.001718213058"
         }
       ],
       "ResponseHeaders": [
@@ -6163,15 +6044,15 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "319"
+          "Value": "581"
         },
         {
           "Name": "ETag",
-          "Value": "\"fNKkLSNFLZMVTc2zVrpMXQqOwPU3sU4GWcfEbCR2V1I=\""
+          "Value": "\"RFZtaLIwFwzsgPMDeybogHLRTq7cRPuaAmHGQ9Vz2V0=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 23 May 2025 01:41:49 GMT"
+          "Value": "Thu, 12 Jun 2025 01:04:57 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -6191,13 +6072,13 @@
         },
         {
           "Name": "ETag",
-          "Value": "W/\"j6fhJSuuyLpOSLuPJU0TsDV0iNjor5S3rDnvxJrt4bg=\""
+          "Value": "W/\"3Jm+7fBDh1k8N5OuuiAPE3JEdl5RhcjfSNEjyJqlpVY=\""
         }
       ],
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-j6fhJSuuyLpOSLuPJU0TsDV0iNjor5S3rDnvxJrt4bg="
+          "Value": "sha256-3Jm+7fBDh1k8N5OuuiAPE3JEdl5RhcjfSNEjyJqlpVY="
         }
       ]
     },
@@ -6212,7 +6093,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "667"
+          "Value": "1850"
         },
         {
           "Name": "Content-Type",
@@ -6220,11 +6101,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"j6fhJSuuyLpOSLuPJU0TsDV0iNjor5S3rDnvxJrt4bg=\""
+          "Value": "\"3Jm+7fBDh1k8N5OuuiAPE3JEdl5RhcjfSNEjyJqlpVY=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 23 May 2025 01:41:49 GMT"
+          "Value": "Thu, 12 Jun 2025 01:04:57 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -6234,13 +6115,13 @@
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-j6fhJSuuyLpOSLuPJU0TsDV0iNjor5S3rDnvxJrt4bg="
+          "Value": "sha256-3Jm+7fBDh1k8N5OuuiAPE3JEdl5RhcjfSNEjyJqlpVY="
         }
       ]
     },
     {
       "Route": "css/site.css.gz",
-      "AssetFile": "C:\\Users\\diego\\Desktop\\UDE\\CAPFIS\\capfis-proyecto-final-ude\\src\\CAPFIS\\CAPFIS\\obj\\Debug\\net9.0\\compressed\\n43f6nb05e-b9sayid5wm.gz",
+      "AssetFile": "C:\\Users\\diego\\Desktop\\UDE\\CAPFIS\\capfis-proyecto-final-ude\\src\\CAPFIS\\CAPFIS\\obj\\Debug\\net9.0\\compressed\\n43f6nb05e-wng2ps77tu.gz",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -6249,7 +6130,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "319"
+          "Value": "581"
         },
         {
           "Name": "Content-Type",
@@ -6257,11 +6138,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"fNKkLSNFLZMVTc2zVrpMXQqOwPU3sU4GWcfEbCR2V1I=\""
+          "Value": "\"RFZtaLIwFwzsgPMDeybogHLRTq7cRPuaAmHGQ9Vz2V0=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 23 May 2025 01:41:49 GMT"
+          "Value": "Thu, 12 Jun 2025 01:04:57 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -6279,7 +6160,168 @@
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-fNKkLSNFLZMVTc2zVrpMXQqOwPU3sU4GWcfEbCR2V1I="
+          "Value": "sha256-RFZtaLIwFwzsgPMDeybogHLRTq7cRPuaAmHGQ9Vz2V0="
+        }
+      ]
+    },
+    {
+      "Route": "css/site.wng2ps77tu.css",
+      "AssetFile": "C:\\Users\\diego\\Desktop\\UDE\\CAPFIS\\capfis-proyecto-final-ude\\src\\CAPFIS\\CAPFIS\\obj\\Debug\\net9.0\\compressed\\n43f6nb05e-wng2ps77tu.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.001718213058"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "581"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"RFZtaLIwFwzsgPMDeybogHLRTq7cRPuaAmHGQ9Vz2V0=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 12 Jun 2025 01:04:57 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"3Jm+7fBDh1k8N5OuuiAPE3JEdl5RhcjfSNEjyJqlpVY=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "wng2ps77tu"
+        },
+        {
+          "Name": "label",
+          "Value": "css/site.css"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-3Jm+7fBDh1k8N5OuuiAPE3JEdl5RhcjfSNEjyJqlpVY="
+        }
+      ]
+    },
+    {
+      "Route": "css/site.wng2ps77tu.css",
+      "AssetFile": "C:\\Users\\diego\\Desktop\\UDE\\CAPFIS\\capfis-proyecto-final-ude\\src\\CAPFIS\\CAPFIS\\wwwroot\\css\\site.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1850"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"3Jm+7fBDh1k8N5OuuiAPE3JEdl5RhcjfSNEjyJqlpVY=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 12 Jun 2025 01:04:57 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "wng2ps77tu"
+        },
+        {
+          "Name": "label",
+          "Value": "css/site.css"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-3Jm+7fBDh1k8N5OuuiAPE3JEdl5RhcjfSNEjyJqlpVY="
+        }
+      ]
+    },
+    {
+      "Route": "css/site.wng2ps77tu.css.gz",
+      "AssetFile": "C:\\Users\\diego\\Desktop\\UDE\\CAPFIS\\capfis-proyecto-final-ude\\src\\CAPFIS\\CAPFIS\\obj\\Debug\\net9.0\\compressed\\n43f6nb05e-wng2ps77tu.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "581"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"RFZtaLIwFwzsgPMDeybogHLRTq7cRPuaAmHGQ9Vz2V0=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 12 Jun 2025 01:04:57 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "wng2ps77tu"
+        },
+        {
+          "Name": "label",
+          "Value": "css/site.css.gz"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-RFZtaLIwFwzsgPMDeybogHLRTq7cRPuaAmHGQ9Vz2V0="
         }
       ]
     },
@@ -15146,6 +15188,170 @@
         {
           "Name": "integrity",
           "Value": "sha256-1HkjQSVuV0/ji/X/lGeDTHeagBS0BwopMrHDQuwqgtU="
+        }
+      ]
+    },
+    {
+      "Route": "images/logo.nic4x8b96r.png",
+      "AssetFile": "C:\\Users\\diego\\Desktop\\UDE\\CAPFIS\\capfis-proyecto-final-ude\\src\\CAPFIS\\CAPFIS\\wwwroot\\images\\logo.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1053733"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"oRayS3I6SBiEZzyWrdl/PyFTcciuJSxVa9WVUjAO1C4=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 12 Jun 2025 00:42:13 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "nic4x8b96r"
+        },
+        {
+          "Name": "label",
+          "Value": "images/logo.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-oRayS3I6SBiEZzyWrdl/PyFTcciuJSxVa9WVUjAO1C4="
+        }
+      ]
+    },
+    {
+      "Route": "images/logo.png",
+      "AssetFile": "C:\\Users\\diego\\Desktop\\UDE\\CAPFIS\\capfis-proyecto-final-ude\\src\\CAPFIS\\CAPFIS\\wwwroot\\images\\logo.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1053733"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"oRayS3I6SBiEZzyWrdl/PyFTcciuJSxVa9WVUjAO1C4=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 12 Jun 2025 00:42:13 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-oRayS3I6SBiEZzyWrdl/PyFTcciuJSxVa9WVUjAO1C4="
+        }
+      ]
+    },
+    {
+      "Route": "images/logo2.53kl1u29tx.png",
+      "AssetFile": "C:\\Users\\diego\\Desktop\\UDE\\CAPFIS\\capfis-proyecto-final-ude\\src\\CAPFIS\\CAPFIS\\wwwroot\\images\\logo2.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1168053"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"D27I3PtCenHbdNQoqiMpbByXRpRSnPzzitg8Rq+xdkk=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 12 Jun 2025 01:01:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "53kl1u29tx"
+        },
+        {
+          "Name": "label",
+          "Value": "images/logo2.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-D27I3PtCenHbdNQoqiMpbByXRpRSnPzzitg8Rq+xdkk="
+        }
+      ]
+    },
+    {
+      "Route": "images/logo2.png",
+      "AssetFile": "C:\\Users\\diego\\Desktop\\UDE\\CAPFIS\\capfis-proyecto-final-ude\\src\\CAPFIS\\CAPFIS\\wwwroot\\images\\logo2.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1168053"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"D27I3PtCenHbdNQoqiMpbByXRpRSnPzzitg8Rq+xdkk=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 12 Jun 2025 01:01:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-D27I3PtCenHbdNQoqiMpbByXRpRSnPzzitg8Rq+xdkk="
         }
       ]
     },
