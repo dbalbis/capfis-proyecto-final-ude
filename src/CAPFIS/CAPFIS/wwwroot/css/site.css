@@ -64,6 +64,39 @@ body {
     border-color: #FFA500 !important;
     transition: background 0.2s, color 0.2s;
 }
+
+.hero-bg {
+    position: relative;
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+    background-image: url('/images/hero.jpg');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    width: 100vw;
+    min-height: 420px;
+    margin-left: calc(-50vw + 50%);
+    margin-right: calc(-50vw + 50%);
+    z-index: 1;
+    overflow: hidden;
 }
+
+    .hero-bg::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: rgba(0,0,0,0.65); /* Ajusta la opacidad aquí */
+        z-index: 2;
+        pointer-events: none;
+    }
+
+    .hero-bg > .container,
+    .hero-bg > .container > .row {
+        position: relative;
+        z-index: 3;
+    }
+
+
+
 
 
