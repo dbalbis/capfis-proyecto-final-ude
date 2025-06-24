@@ -1,7 +1,7 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "CAPFIS";
+    ViewData["Title"] = "Inicio";
 }
 
 <!-- Hero Section -->
@@ -53,115 +53,124 @@
 
 
 <!-- Funcionalidades destacadas -->
-<div class="py-5 bg-white">
+<div class="py-5" style="background: black;">
     <div class="container">
-        <h3 class="text-center mb-5 fw-semibold">Funcionalidades destacadas</h3>
+        <h3 class="text-center mb-5 fw-bold text-light" style="text-shadow: 0 4px 18px rgba(0,0,0,0.8); font-size: 2.5rem;">
+            Funcionalidades destacadas
+        </h3>
         <div class="row g-4 justify-content-center">
             <div class="col-6 col-md-3">
-                <div class="border p-4 text-center h-100">
-                    <div style="font-size: 3rem;">
+                <div class="feature-card text-center h-100">
+                    <div class="icon-wrapper">
                         <i class="bi bi-list-task"></i>
                     </div>
-                    <div class="fw-semibold mt-2">Cuestionarios</div>
+                    <div class="fw-semibold fs-5 mt-2">Cuestionarios</div>
                 </div>
             </div>
             <div class="col-6 col-md-3">
-                <div class="border p-4 text-center h-100">
-                    <div style="font-size: 3rem;">
+                <div class="feature-card text-center h-100">
+                    <div class="icon-wrapper">
                         <i class="bi bi-controller"></i>
                     </div>
-                    <div class="fw-semibold mt-2">Juegos</div>
+                    <div class="fw-semibold fs-5 mt-2">Juegos</div>
                 </div>
             </div>
             <div class="col-6 col-md-3">
-                <div class="border p-4 text-center h-100">
-                    <div style="font-size: 3rem;">
+                <div class="feature-card text-center h-100">
+                    <div class="icon-wrapper">
                         <i class="bi bi-journal-bookmark"></i>
                     </div>
-                    <div class="fw-semibold mt-2">Módulos</div>
+                    <div class="fw-semibold fs-5 mt-2">Módulos</div>
                 </div>
             </div>
             <div class="col-6 col-md-3">
-                <div class="border p-4 text-center h-100">
-                    <div style="font-size: 3rem;">
+                <div class="feature-card text-center h-100">
+                    <div class="icon-wrapper">
                         <i class="bi bi-search"></i>
                     </div>
-                    <div class="fw-semibold mt-2">Casos Reales</div>
+                    <div class="fw-semibold fs-5 mt-2">Casos Reales</div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 
 <!-- Preguntas Frecuentes -->
-<div class="container my-5">
-    <div class="row">
-        <div class="col">
-            <div class="border">
-                <div class="bg-white py-3 px-2 border-bottom">
-                    <h4 class="text-center fw-bold mb-0">Preguntas Frecuentes</h4>
+<div class="py-5" style="background: black;">
+    <div class="container">
+        <h3 class="text-center mb-5 fw-bold text-light" style="text-shadow: 0 4px 18px rgba(0,0,0,0.8); font-size: 2.5rem;">
+            Preguntas Frecuentes
+        </h3>
+        <div class="accordion" id="faqAccordion">
+            <!-- Pregunta 1 -->
+            <div class="accordion-item faq-card bg-black text-light border-0 mb-3">
+                <h2 class="accordion-header text-center">
+                    <button class="accordion-button collapsed faq-button fw-semibold fs-5 w-100 position-relative justify-content-center text-center" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                        <span class="w-100">¿Qué es CAPFIS?</span>
+                        <i class="bi bi-chevron-down faq-icon position-absolute" style="right: 1.5rem;"></i>
+                    </button>
+                </h2>
+                <div id="faq1" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body text-light text-center fs-6">
+                        Es una plataforma de simulación y entrenamiento para detectar fraudes por ingeniería social.
+                    </div>
                 </div>
-                <div class="table-responsive">
-                    <table class="table mb-0">
-                        <tbody>
-                            <tr><td class="text-center">¿Qué es CAPFIS?</td></tr>
-                            <tr><td class="text-center">¿Necesito conocimientos técnicos?</td></tr>
-                            <tr><td class="text-center">¿Qué tipo de fraudes voy a aprender a detectar?</td></tr>
-                            <tr><td class="text-center">¿Cuánto cuesta usar la plataforma?</td></tr>
-                        </tbody>
-                    </table>
+            </div>
+
+            <!-- Pregunta 2 -->
+            <div class="accordion-item faq-card bg-black text-light border-0 mb-3">
+                <h2 class="accordion-header text-center">
+                    <button class="accordion-button collapsed faq-button fw-semibold fs-5 w-100 position-relative justify-content-center text-center" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                        <span class="w-100">¿Necesito conocimientos técnicos?</span>
+                        <i class="bi bi-chevron-down faq-icon position-absolute" style="right: 1.5rem;"></i>
+                    </button>
+                </h2>
+                <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body text-light text-center fs-6">
+                        No. CAPFIS está diseñado para todo público, sin necesidad de formación técnica previa.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pregunta 3 -->
+            <div class="accordion-item faq-card bg-black text-light border-0 mb-3">
+                <h2 class="accordion-header text-center">
+                    <button class="accordion-button collapsed faq-button fw-semibold fs-5 w-100 position-relative justify-content-center text-center" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                        <span class="w-100">¿Qué tipo de fraudes voy a aprender a detectar?</span>
+                        <i class="bi bi-chevron-down faq-icon position-absolute" style="right: 1.5rem;"></i>
+                    </button>
+                </h2>
+                <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body text-light text-center fs-6">
+                        Phishing, smishing, vishing, suplantación de identidad y otros ataques de ingeniería social.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pregunta 4 -->
+            <div class="accordion-item faq-card bg-black text-light border-0 mb-3">
+                <h2 class="accordion-header text-center">
+                    <button class="accordion-button collapsed faq-button fw-semibold fs-5 w-100 position-relative justify-content-center text-center" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">
+                        <span class="w-100">¿Cuánto cuesta usar la plataforma?</span>
+                        <i class="bi bi-chevron-down faq-icon position-absolute" style="right: 1.5rem;"></i>
+                    </button>
+                </h2>
+                <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body text-light text-center fs-6">
+                        Actualmente el uso de CAPFIS es gratuito para usuarios registrados.
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Footer extendido -->
-<div class="container mb-4">
-    <div class="row g-4">
-        <div class="col-md-3">
-            <div class="border p-3 h-100">
-                <div class="fw-bold">Navegación rápida</div>
-                <ul class="mb-0 ps-3">
-                    <li>Inicio</li>
-                    <li>Módulos</li>
-                    <li>Juegos</li>
-                    <li>Registrarse / Mi perfil / Login</li>
-                </ul>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="border p-3 h-100">
-                <div class="fw-bold">Contacto</div>
-                <ul class="mb-0 ps-3">
-                    <li>contacto@capfis.org</li>
-                    <li>Universidad de la Empresa</li>
-                    <li>Montevideo, Uruguay</li>
-                </ul>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="border p-3 h-100">
-                <div class="fw-bold">Creado por</div>
-                <ul class="mb-0 ps-3">
-                    <li>Dayron Muñiz</li>
-                    <li>Diego Balbis</li>
-                </ul>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="border p-3 h-100">
-                <div class="fw-bold">Comprometidos con tu aprendizaje y seguridad</div>
-                <ul class="mb-0 ps-3">
-                    <li>Política de privacidad</li>
-                    <li>Términos y condiciones</li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</div>
 
-<!-- Footer inferior -->
-<footer class="text-center py-3 fw-bold">
-    CAPFIS © 2025
-</footer>
+
+
+
+
+
+
+

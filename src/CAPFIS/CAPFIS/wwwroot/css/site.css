@@ -1,4 +1,4 @@
-html {
+﻿html {
   font-size: 14px;
 }
 
@@ -19,6 +19,7 @@ html {
 
 body {
   margin-bottom: 60px;
+  background-color: black!important;
 }
 
 .form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
@@ -41,7 +42,12 @@ body {
     background-color: transparent !important;
 }
 
-    /* Hover negro para el dropdown de M�dulos */
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='%23FFA500' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e")!important;
+}
+
+
+    /* Hover negro para el dropdown de Módulos */
     .navbar .nav-link.dropdown-toggle:hover,
     .navbar .nav-link.dropdown-toggle:focus-visible {
         color: #FFA500 !important;
@@ -85,7 +91,7 @@ body {
         content: "";
         position: absolute;
         inset: 0;
-        background: rgba(0,0,0,0.65); /* Ajusta la opacidad aqu� */
+        background: rgba(0,0,0,0.65); /* Ajusta la opacidad aquí */
         z-index: 2;
         pointer-events: none;
     }
@@ -95,6 +101,140 @@ body {
         position: relative;
         z-index: 3;
     }
+
+.feature-card {
+    background-color: #111;
+    border-radius: 1rem;
+    padding: 2rem 1.5rem;
+    color: white;
+    box-shadow: 0 6px 20px rgba(255, 165, 0, 0.05);
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 165, 0, 0.15);
+    cursor: pointer;
+}
+
+    .feature-card:hover {
+        transform: translateY(-6px) scale(1.02);
+        box-shadow: 0 0 20px rgba(255, 165, 0, 0.3);
+        border-color: #FFA500;
+    }
+
+.icon-wrapper {
+    font-size: 3rem;
+    color: #FFA500;
+    transition: transform 0.3s ease;
+}
+
+.feature-card:hover .icon-wrapper {
+    transform: scale(1.2) rotate(-5deg);
+}
+
+.faq-card {
+    border-radius: 1rem;
+    background-color: #111;
+    box-shadow: 0 6px 20px rgba(255, 165, 0, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    transition: all 0.3s ease;
+}
+
+    .faq-card:hover {
+        box-shadow: 0 0 20px rgba(255, 165, 0, 0.15);
+    }
+
+.faq-button {
+    background-color: transparent;
+    color: #fff;
+    font-weight: 600;
+    padding: 1.25rem 1rem;
+    border-radius: 1rem;
+    position: relative;
+    transition: background 0.3s ease, color 0.3s ease;
+}
+
+/* Elimina el ícono de Bootstrap (solo si aún ves una doble flecha) */
+.accordion-button::after {
+    display: none !important;
+}
+
+.accordion-button.faq-button:not(.collapsed) {
+    background-color: #1a1a1a !important;
+    color: #FFA500 !important;
+    text-shadow: 0 4px 18px rgba(0, 0, 0, 0.8);
+}
+
+/* Ícono personalizado */
+.faq-icon {
+    font-size: 1.40rem;
+    color: #000;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+/* Cambia al expandir */
+.accordion-button.faq-button:not(.collapsed) .faq-icon {
+    transform: rotate(180deg);
+    color: #FFA500;
+   
+}
+
+/* Quitar borde azul */
+.accordion-button:focus {
+    outline: none !important;
+    box-shadow: none !important;
+    border: 1px solid rgba(255, 165, 0, 0.15);
+}
+
+.footer-card {
+    border-radius: 1rem;
+    background-color: #111;
+    box-shadow: 0 6px 20px rgba(255, 165, 0, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 1.25rem 1rem;
+    color: #fff;
+    height: 100%;
+}
+
+.footer-title {
+    font-weight: 700;
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+    color: #FFA500;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+}
+
+.footer-card ul {
+    list-style: none;
+    padding-left: 0;
+    margin-bottom: 0;
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.footer-card li {
+    margin-bottom: 0.5rem;
+}
+
+.footer-inferior {
+    background-color: black;
+    color: #FFA500;
+    font-weight: 700;
+    text-align: center;
+    padding: 1rem 0;
+    font-size: 1rem;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
+    user-select: none;
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
