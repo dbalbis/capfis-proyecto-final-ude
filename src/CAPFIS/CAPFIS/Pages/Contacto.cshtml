@@ -4,10 +4,19 @@
     ViewData["Title"] = "Contacto";
 }
 
-<div class="container mt-5">
+<div class="container text-light mt-5">
     <div class="row justify-content-center">
         <div class="col-md-8 col-lg-6">
-            <h2 class="mb-4 text-center">Contáctenos</h2>
+
+            <!-- Hero Section -->
+            <div class="contacto-bg mb-2 d-flex justify-content-center align-items-center">
+                <h1 class="fw-bold mb-0 text-center" style="color: #fff;">
+                    Contáctenos
+                </h1>
+            </div>
+
+
+
             <form class="needs-validation" novalidate>
                 <div class="mb-3">
                     <label for="nombre" class="form-label">Nombre</label>
@@ -25,21 +34,24 @@
                 </div>
                 <div class="mb-3">
                     <label for="mensaje" class="form-label">Mensaje</label>
-                    <textarea class="form-control" id="mensaje" rows="4" placeholder="Escribe tu mensaje" required></textarea>
+                    <textarea class="form-control" id="mensaje" rows="4" placeholder="Escribe tu mensaje" required style="resize: none";></textarea>
                     <div class="invalid-feedback">
                         Por favor, escribe tu mensaje.
                     </div>
                 </div>
-                <button type="submit" class="btn btn-warning fw-bold w-100">Enviar</button>
+                <button type="submit" class="btn btn-outline-warning fw-bold px-4 login-btn w-100" style="border-width:2px; color:#FFA500; border-color:#FFA500; background-color:transparent;">
+                    Enviar
+                </button>
+
             </form>
             <div class="text-center mt-4 d-flex flex-row justify-content-center gap-4 align-items-center">
                 <a href="https://www.linkedin.com/in/diego-balbis/" target="_blank" rel="noopener" class="d-flex align-items-center text-decoration-none">
-                    <i class="bi bi-linkedin me-2" style="font-size: 2rem; color: #0A66C2;"></i>
-                    <span class="text-dark" style="font-size: 0.8rem;">Diego Balbis</span>
+                    <i class="bi bi-linkedin me-2" style="font-size: 1.7rem; color:#FFA500;"></i>
+                    <span class="text-light" style="font-size: 0.8rem;">Diego Balbis</span>
                 </a>
                 <a href="https://www.linkedin.com/in/dayron-mu%C3%B1iz/" target="_blank" rel="noopener" class="d-flex align-items-center text-decoration-none">
-                    <i class="bi bi-linkedin me-2" style="font-size: 2rem; color: #0A66C2;"></i>
-                    <span class="text-dark" style="font-size: 0.8rem;">Dayron Muñiz</span>
+                    <i class="bi bi-linkedin me-2" style="font-size: 1.7rem; color: #FFA500;"></i>
+                    <span class="text-light" style="font-size: 0.8rem;">Dayron Muñiz</span>
                 </a>
             </div>
         </div>
