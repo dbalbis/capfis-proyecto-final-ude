@@ -248,8 +248,6 @@ body {
 
 .contacto-bg {
     position: relative;
-    margin-top: 0 !important;
-    padding-top: 0 !important;
     background-image: url('/images/contacto-img.png');
     background-size: cover;
     background-position: center center;
@@ -258,22 +256,21 @@ body {
     min-height: 220px;
     margin-left: calc(-50vw + 50%);
     margin-right: calc(-50vw + 50%);
-    z-index: 1;
     overflow: hidden;
+    z-index: 1;
 }
-
 
     .contacto-bg::before {
         content: "";
         position: absolute;
         inset: 0;
-        background: rgba(0,0,0,0.65); /* Ajusta la opacidad aquí */
+        background: rgba(0,0,0,0.5); /* overlay negro con 50% opacidad */
         z-index: 2;
         pointer-events: none;
     }
 
-    .contacto-bg > .container,
-    .contacto-bg > .container > .row {
+    .contacto-bg > .container {
         position: relative;
         z-index: 3;
+        color: white; /* para que el texto sea blanco */
     }
