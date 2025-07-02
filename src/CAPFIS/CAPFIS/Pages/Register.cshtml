@@ -1,0 +1,98 @@
+﻿@page "/register"
+@model RegisterModel
+@{
+    ViewData["Title"] = "Registrarse";
+    Layout = "/Pages/Shared/_Layout.cshtml";
+}
+
+<div class="container py-5">
+
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+
+            <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="bg-dark p-4 rounded shadow">
+                
+                <h1 class="mb-4 fw-bold text-center" style="color: #FFA800; text-shadow: 0 4px 18px rgba(0,0,0,0.8);">
+                    Crear cuenta
+                </h1>
+
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3" role="alert"></div>
+
+                <!-- Nombre -->
+                <div class="form-floating mb-3">
+                    <input asp-for="Input.FirstName" class="form-control" placeholder="Nombre" />
+                    <label asp-for="Input.FirstName">Nombre</label>
+                    <span asp-validation-for="Input.FirstName" class="text-danger"></span>
+                </div>
+
+                <!-- Apellido -->
+                <div class="form-floating mb-3">
+                    <input asp-for="Input.LastName" class="form-control" placeholder="Apellido" />
+                    <label asp-for="Input.LastName">Apellido</label>
+                    <span asp-validation-for="Input.LastName" class="text-danger"></span>
+                </div>
+
+                <!-- Email -->
+                <div class="form-floating mb-3">
+                    <input asp-for="Input.Email" class="form-control" autocomplete="username" placeholder="email@ejemplo.com" />
+                    <label asp-for="Input.Email">Email</label>
+                    <span asp-validation-for="Input.Email" class="text-danger"></span>
+                </div>
+
+                <!-- Clave -->
+                <div class="form-floating mb-3">
+                    <input asp-for="Input.Password" class="form-control" type="password" autocomplete="new-password" placeholder="Contraseña" />
+                    <label asp-for="Input.Password">Contraseña</label>
+                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                </div>
+
+                <!-- Confirmar clave -->
+                <div class="form-floating mb-3">
+                    <input asp-for="Input.ConfirmPassword" class="form-control" type="password" autocomplete="new-password" placeholder="Repetir Contraseña" />
+                    <label asp-for="Input.ConfirmPassword">Confirmar Contraseña</label>
+                    <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                </div>
+
+                <!-- País -->
+                <div class="form-floating mb-3">
+                    <input asp-for="Input.Country" class="form-control" placeholder="País" />
+                    <label asp-for="Input.Country">País</label>
+                    <span asp-validation-for="Input.Country" class="text-danger"></span>
+                </div>
+
+                <!-- Género -->
+                <div class="mb-3">
+                    <label class="form-label text-light">Género</label>
+                    <select asp-for="Input.Gender" class="form-select">
+                        <option value="">Seleccionar</option>
+                        <option value="Masculino">Masculino</option>
+                        <option value="Femenino">Femenino</option>
+                        <option value="Otro">Otro</option>
+                    </select>
+                    <span asp-validation-for="Input.Gender" class="text-danger"></span>
+                </div>
+
+                <!-- Fecha de nacimiento -->
+                <div class="mb-4">
+                    <label class="form-label text-light">Fecha de nacimiento</label>
+                    <input asp-for="Input.BirthDate" type="date" class="form-control" />
+                    <span asp-validation-for="Input.BirthDate" class="text-danger"></span>
+                </div>
+
+                <!-- Botón -->
+                <button id="registerSubmit" type="submit" class="btn fw-bold w-100 py-3" style="background-color: #FFA800; color: black; font-size: 1.25rem;">
+                    Registrarse
+                </button>
+
+                <!-- Link a login -->
+                <div class="mt-4 text-center">
+                    <a asp-page="./Login" class="custom-hover text-white fw-semibold">¿Ya tenés una cuenta?</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

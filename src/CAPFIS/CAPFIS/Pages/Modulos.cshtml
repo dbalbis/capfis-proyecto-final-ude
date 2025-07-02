@@ -1,0 +1,147 @@
+﻿@page
+@model CAPFIS.Pages.ModulosModel
+@{
+    ViewData["Title"] = "Centro de Entrenamiento";
+}
+
+<div class="container py-5">
+
+    <div class="row justify-content-center">
+        <div class="col-md-6 bg-dark p-4 rounded shadow">
+            
+            <!-- Título central -->
+            <h1 class="mb-4 fw-bold text-center" style="color: #FFA800; text-shadow: 0 4px 18px rgba(0,0,0,0.8);">
+                Centro de Entrenamiento
+            </h1>
+
+            <!-- Módulo: ejemplo -->
+            <div class="mb-4 p-4 bg-white border rounded shadow-sm">
+                <div class="row align-items-center">
+                    <div class="col-md-2 text-center">
+                        <i class="bi bi-play-btn-fill display-4 text-secondary"></i>
+                    </div>
+                    <div class="col-md-10">
+                        <h5 class="fw-bold">¿Qué es un ataque de Ingeniería Social?</h5>
+                        <p class="mb-1">🎥 Video interactivo</p>
+                        <p class="mb-1">🧠 Miniquiz: "¿Cae o no cae?" [<a href="#">Jugar</a>]</p>
+                        <p class="mb-0">⭐ Estado: <span class="text-success fw-bold">Completado ✅</span></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Módulo: Phishing real -->
+            <div class="mb-4 p-4 bg-white border rounded shadow-sm">
+                <div class="row align-items-center">
+                    <div class="col-md-2 text-center">
+                        <i class="bi bi-play-btn-fill display-4 text-secondary"></i>
+                    </div>
+                    <div class="col-md-10">
+                        <h5 class="fw-bold">Phishing real</h5>
+                        <p class="mb-1">🎥 Caso real</p>
+                        <p class="mb-1">🎯 Juego: Detecta el correo trampa [<a href="#">Empezar</a>]</p>
+                        <p class="mb-0">⭐ Estado: <span class="text-warning fw-bold">En progreso ⏳</span></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Módulo: Vishing -->
+            <div class="mb-4 p-4 bg-white border rounded shadow-sm">
+                <div class="row align-items-center">
+                    <div class="col-md-2 text-center">
+                        <i class="bi bi-play-btn-fill display-4 text-secondary"></i>
+                    </div>
+                    <div class="col-md-10">
+                        <h5 class="fw-bold">Vishing (llamadas falsas)</h5>
+                        <p class="mb-1">🔊 Simulación de audio</p>
+                        <p class="mb-1">🎮 Juego: Responde o cuelga [<a href="#">Jugar</a>]</p>
+                        <p class="mb-0">🔒 Estado: <span class="text-muted">Bloqueado (completa 2 módulos)</span></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Módulo: Smishing -->
+            <div class="mb-4 p-4 bg-white border rounded shadow-sm">
+                <div class="row align-items-center">
+                    <div class="col-md-2 text-center">
+                        <i class="bi bi-play-btn-fill display-4 text-secondary"></i>
+                    </div>
+                    <div class="col-md-10">
+                        <h5 class="fw-bold">Smishing (SMS falsos)</h5>
+                        <p class="mb-1">📩 SMS sospechoso en tiempo real</p>
+                        <p class="mb-1">🧠 Responde como experto [<a href="#">Jugar</a>]</p>
+                        <p class="mb-0">🔒 Estado: <span class="text-muted">Bloqueado (completa 3 módulos)</span></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Módulo: Redes Sociales -->
+            <div class="mb-4 p-4 bg-white border rounded shadow-sm">
+                <div class="row align-items-center">
+                    <div class="col-md-2 text-center">
+                        <i class="bi bi-play-btn-fill display-4 text-secondary"></i>
+                    </div>
+                    <div class="col-md-10">
+                        <h5 class="fw-bold">Redes Sociales</h5>
+                        <p class="mb-1">📱 Historias reales de engaños en Instagram y WhatsApp</p>
+                        <p class="mb-1">🔍 Detecta el perfil falso [<a href="#">Empezar</a>]</p>
+                        <p class="mb-0">🔒 Estado: <span class="text-muted">Bloqueado (completa 4 módulos)</span></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Progreso del usuario -->
+            <div class="my-5 text-center" style="max-width: 600px; margin-left:auto; margin-right:auto;">
+                <label class="fw-bold mb-2 d-block fs-5 text-white">📊 Tu progreso:</label>
+                <div class="progress" style="height: 30px; border-radius: 15px; overflow: hidden;">
+                    <div class="progress-bar bg-primary fw-bold fs-6 progress-animated" data-progress="@Model.Porcentaje"
+                         style="border-radius: 15px 0 0 15px;">
+                        0%
+                    </div>
+                </div>
+
+            </div>
+
+
+
+            <!-- Filtros y búsqueda -->
+            <div class="d-flex flex-column flex-md-row justify-content-between gap-3 mb-4">
+                <input type="text" class="form-control w-100 w-md-50" placeholder="🔍 Buscar módulo..." />
+                <select class="form-select w-100 w-md-25">
+                    <option selected>Filtro: Juegos / Videos</option>
+                    <option>Solo Juegos</option>
+                    <option>Solo Videos</option>
+                </select>
+            </div>
+           
+           
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            document.querySelectorAll('.progress-animated').forEach(bar => {
+                const value = parseInt(bar.dataset.progress) || 0;
+                bar.style.width = '0%';
+
+                let current = 0;
+                const increment = value > 50 ? 2 : 1; // ajustar velocidad si es alto
+                const interval = setInterval(() => {
+                    if(current >= value) {
+                        clearInterval(interval);
+                        bar.textContent = value + '%';
+                    } else {
+                        current += increment;
+                        if(current > value) current = value;
+                        bar.style.width = current + '%';
+                        bar.textContent = current + '%';
+                    }
+                }, 30); // controla la velocidad del conteo y animación
+            });
+        });
+    </script>
+}
+
+

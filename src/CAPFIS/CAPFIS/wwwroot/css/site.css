@@ -1,35 +1,34 @@
 ﻿html {
-  font-size: 14px;
+    font-size: 14px;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
-  background-color: black!important;
+    margin-bottom: 60px;
+    background-color: black !important;
 }
 
-
 .form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
-  color: var(--bs-secondary-color);
-  text-align: end;
+    color: var(--bs-secondary-color);
+    text-align: end;
 }
 
 .form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
-  text-align: start;
+    text-align: start;
 }
 
 .navbar .nav-link.dropdown-toggle,
@@ -44,26 +43,25 @@ body {
 }
 
 .navbar-toggler-icon {
-    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='%23FFA500' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e")!important;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='%23FFA500' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
 }
 
+/* Hover negro para el dropdown de Módulos */
+.navbar .nav-link.dropdown-toggle:hover,
+.navbar .nav-link.dropdown-toggle:focus-visible {
+    color: #FFA500 !important;
+    background-color: transparent !important;
+}
 
-    /* Hover negro para el dropdown de Módulos */
-    .navbar .nav-link.dropdown-toggle:hover,
-    .navbar .nav-link.dropdown-toggle:focus-visible {
-        color: #FFA500 !important;
-        background-color: transparent !important;
-    }
-
-    .navbar .nav-link.text-white:hover,
-    .navbar .nav-link.text-white:focus,
-    .navbar .nav-link.text-white:active,
-    .navbar .nav-link.dropdown-toggle:hover,
-    .navbar .nav-link.dropdown-toggle:focus,
-    .navbar .nav-link.dropdown-toggle:active {
-        color: #FFA500 !important;
-        background-color: transparent !important;
-    }
+.navbar .nav-link.text-white:hover,
+.navbar .nav-link.text-white:focus,
+.navbar .nav-link.text-white:active,
+.navbar .nav-link.dropdown-toggle:hover,
+.navbar .nav-link.dropdown-toggle:focus,
+.navbar .nav-link.dropdown-toggle:active {
+    color: #FFA500 !important;
+    background-color: transparent !important;
+}
 
 .login-btn:hover, .login-btn:focus {
     background-color: #FFA500 !important;
@@ -87,7 +85,6 @@ body {
     z-index: 1;
     overflow: hidden;
 }
-
 
     .hero-bg::before {
         content: "";
@@ -175,7 +172,6 @@ body {
 .accordion-button.faq-button:not(.collapsed) .faq-icon {
     transform: rotate(180deg);
     color: #FFA500;
-   
 }
 
 /* Quitar borde azul */
@@ -226,25 +222,10 @@ body {
     user-select: none;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /* Cambia el color del icono hamburguesa a #FFA500 */
 .navbar-toggler .navbar-toggler-icon {
     background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255,165,0,1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
 }
-
 
 .contacto-bg {
     position: relative;
@@ -264,7 +245,7 @@ body {
         content: "";
         position: absolute;
         inset: 0;
-        background: rgba(0,0,0,0.5); /* overlay negro con 50% opacidad */
+        background: rgba(0,0,0,0.5);
         z-index: 2;
         pointer-events: none;
     }
@@ -272,5 +253,75 @@ body {
     .contacto-bg > .container {
         position: relative;
         z-index: 3;
-        color: white; /* para que el texto sea blanco */
+        color: white;
     }
+
+.btn-naranja {
+    background-color: #FFA800 !important;
+    border-color: #FFA800 !important;
+    color: black;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.25);
+}
+
+    .btn-naranja:hover {
+        background-color: #e69500 !important;
+        border-color: #e69500 !important;
+    }
+
+.link-naranja {
+    color: #FFA800;
+    font-weight: 600; /* fw-semibold */
+    text-decoration: none;
+}
+
+    .link-naranja:hover,
+    .link-naranja:focus {
+        color: #e69500; /* un tono más oscuro para hover */
+        text-decoration: underline;
+    }
+
+.custom-hover:hover {
+    color: #FFA500 !important; /* amarillo más claro por ejemplo */
+    text-decoration: underline;
+}
+
+.module-card:hover {
+    background-color: #f8f9fa;
+    transition: background 0.3s ease-in-out;
+}
+
+/* Contenedor con bordes redondeados y sombra */
+.progress {
+    height: 30px;
+    background: #e9ecef;
+    border-radius: 15px;
+    box-shadow: inset 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* Barra de progreso con degradado animado y sombra interna */
+.progress-bar.progress-animated {
+    border-radius: 15px;
+    box-shadow: inset 0 2px 6px rgba(0,0,0,0.3);
+    background: linear-gradient(180deg, #007bff, #00d4ff);
+    background-size: 200% 100%;
+    animation: gradientMove 3s linear 1 forwards;
+    transition: width 3s ease-in-out;
+    font-weight: 700;
+    color: white;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap; /* evita que el texto se corte */
+}
+
+/* Animación para el movimiento del degradado */
+@keyframes gradientMove {
+    0% {
+        background-position: 0% 0;
+    }
+
+    100% {
+        background-position: 200% 0;
+    }
+}
