@@ -325,3 +325,206 @@ body {
         background-position: 200% 0;
     }
 }
+        color: white; /* para que el texto sea blanco */
+    }
+
+.ingsocial-bg {
+    position: relative;
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+    background-image: url('/images/ingsocial.jpg');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    width: 100vw;
+    min-height: 420px;
+    margin-left: calc(-50vw + 50%);
+    margin-right: calc(-50vw + 50%);
+    z-index: 1;
+    overflow: hidden;
+}
+
+    .ingsocial-bg::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: rgba(0,0,0,0.65); /* Overlay oscuro */
+        z-index: 2;
+        pointer-events: none;
+    }
+
+    /* El texto dentro del hero siempre blanco y por encima del overlay */
+    .ingsocial-bg > .container,
+    .ingsocial-bg > .container > .row {
+        position: relative;
+        z-index: 3;
+        color: #fff !important;
+    }
+
+
+.pretexting-bg {
+    position: relative;
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+    background-image: url('/images/pretexting.jpg');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    width: 100vw;
+    min-height: 420px;
+    margin-left: calc(-50vw + 50%);
+    margin-right: calc(-50vw + 50%);
+    z-index: 1;
+    overflow: hidden;
+}
+
+    .pretexting-bg::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: rgba(0,0,0,0.65); /* Overlay oscuro */
+        z-index: 2;
+        pointer-events: none;
+    }
+
+    /* El texto dentro del hero siempre blanco y por encima del overlay */
+    .pretexting-bg > .container,
+    .pretexting-bg > .container > .row {
+        position: relative;
+        z-index: 3;
+        color: #fff !important;
+    }
+
+
+.vishing-bg {
+    position: relative;
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+    background-image: url('/images/vishing.jpg');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    width: 100vw;
+    min-height: 420px;
+    margin-left: calc(-50vw + 50%);
+    margin-right: calc(-50vw + 50%);
+    z-index: 1;
+    overflow: hidden;
+}
+
+    .vishing-bg::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: rgba(0,0,0,0.65); /* Overlay oscuro */
+        z-index: 2;
+        pointer-events: none;
+    }
+
+    /* El texto dentro del hero siempre blanco y por encima del overlay */
+    .vishing-bg > .container,
+    .vishing-bg > .container > .row {
+        position: relative;
+        z-index: 3;
+        color: #fff !important;
+    }
+
+.baiting-bg {
+    position: relative;
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+    background-image: url('/images/baiting.jpg');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    width: 100vw;
+    min-height: 420px;
+    margin-left: calc(-50vw + 50%);
+    margin-right: calc(-50vw + 50%);
+    z-index: 1;
+    overflow: hidden;
+}
+
+    .baiting-bg::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: rgba(0,0,0,0.65); /* Overlay oscuro */
+        z-index: 2;
+        pointer-events: none;
+    }
+
+    /* El texto dentro del hero siempre blanco y por encima del overlay */
+    .baiting-bg > .container,
+    .baiting-bg > .container > .row {
+        position: relative;
+        z-index: 3;
+        color: #fff !important;
+    }
+
+
+.phishing-bg {
+    position: relative;
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+    background-image: url('/images/phishing.jpg');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    width: 100vw;
+    min-height: 420px;
+    margin-left: calc(-50vw + 50%);
+    margin-right: calc(-50vw + 50%);
+    z-index: 1;
+    overflow: hidden;
+}
+
+    .phishing-bg::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: rgba(0,0,0,0.65); /* Overlay oscuro */
+        z-index: 2;
+        pointer-events: none;
+    }
+
+    /* El texto dentro del hero siempre blanco y por encima del overlay */
+    .phishing-bg > .container,
+    .phishing-bg > .container > .row {
+        position: relative;
+        z-index: 3;
+        color: #fff !important;
+    }
+
+.smishing-bg {
+    position: relative;
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+    background-image: url('/images/smishing.jpg');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    width: 100vw;
+    min-height: 420px;
+    margin-left: calc(-50vw + 50%);
+    margin-right: calc(-50vw + 50%);
+    z-index: 1;
+    overflow: hidden;
+}
+
+    .smishing-bg::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: rgba(0,0,0,0.65); /* Overlay oscuro */
+        z-index: 2;
+        pointer-events: none;
+    }
+
+    /* El texto dentro del hero siempre blanco y por encima del overlay */
+    .smishing-bg > .container,
+    .smishing-bg > .container > .row {
+        position: relative;
+        z-index: 3;
+        color: #fff !important;
+    }
