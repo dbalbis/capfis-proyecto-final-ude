@@ -96,7 +96,7 @@ namespace CAPFIS.Pages
             /// </summary>
             [DataType(DataType.Password)]
             [Display(Name = "Confirm password")]
-            [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+            [Compare("Password", ErrorMessage = "Las contraseñas no coinciden.")]
             public string ConfirmPassword { get; set; }
 
             [Required]
@@ -114,6 +114,10 @@ namespace CAPFIS.Pages
             [DataType(DataType.Date)]
             [Display(Name = "Date of Birth")]
             public DateTime? BirthDate { get; set; }
+
+            [Phone]
+            [Display(Name = "Phone Number")]
+            public string PhoneNumber { get; set; }
         }
 
         public async Task OnGetAsync(string returnUrl = null)
@@ -138,6 +142,8 @@ namespace CAPFIS.Pages
                 user.Country = Input.Country;
                 user.Gender = Input.Gender;
                 user.BirthDate = Input.BirthDate;
+                user.PhoneNumber = Input.PhoneNumber;
+                user.EmailConfirmed = true;
 
                 var result = await _userManager.CreateAsync(user, Input.Password);
 

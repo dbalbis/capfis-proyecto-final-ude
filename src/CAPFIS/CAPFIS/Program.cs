@@ -11,7 +11,19 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
+{
+    options.SignIn.RequireConfirmedAccount = false;
+
+    // Habilitar lockout para nuevos usuarios
+    options.Lockout.AllowedForNewUsers = true;
+
+    // Cantidad m�xima de intentos fallidos antes de bloquear
+    options.Lockout.MaxFailedAccessAttempts = 3;
+
+    // Tiempo de bloqueo tras llegar al l�mite (ejemplo: 5 minutos)
+    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+})
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddRazorPages();
 

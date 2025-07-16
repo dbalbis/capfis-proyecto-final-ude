@@ -39,6 +39,13 @@
                     <span asp-validation-for="Input.Email" class="text-danger"></span>
                 </div>
 
+                <!-- Phone -->
+                <div class="form-floating mb-3">
+                    <input asp-for="Input.PhoneNumber" class="form-control" autocomplete="tel" placeholder="+598 99 123 456" />
+                    <label asp-for="Input.PhoneNumber">Teléfono</label>
+                    <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
+                </div>
+
                 <!-- Clave -->
                 <div class="form-floating mb-3">
                     <input asp-for="Input.Password" class="form-control" type="password" autocomplete="new-password" placeholder="Contraseña" />
