@@ -58,6 +58,20 @@
 					<div class="d-flex">
 						@if (User.Identity.IsAuthenticated)
 						{
+							<a href="/Identity/Account/Manage"
+								class="btn btn-outline-warning fw-bold px-4 login-btn me-3" 
+								style="border-width:2px; color:#FFA500; border-color:#FFA500; background-color:transparent;">
+								Aprendizaje
+							</a>
+
+							<a href="/Identity/Account/Manage"
+								class="btn btn-outline-warning fw-bold px-4 login-btn me-3" 
+								style="border-width:2px; color:#FFA500; border-color:#FFA500; background-color:transparent;">
+								Perfil
+							</a>
+
+
+
 							<form method="post" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="/" id="logoutForm" class="d-inline">
 								<button type="submit" class="btn btn-outline-warning fw-bold px-4 login-btn" style="border-width:2px; color:#FFA500; border-color:#FFA500; background-color:transparent;">
 								Cerrar sesión

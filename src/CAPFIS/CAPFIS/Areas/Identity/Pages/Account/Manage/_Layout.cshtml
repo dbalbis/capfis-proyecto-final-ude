@@ -1,5 +1,5 @@
 ﻿@{
-    if (ViewData.TryGetValue("ParentLayout", out var parentLayout) && parentLayout !=  null)
+    if (ViewData.TryGetValue("ParentLayout", out var parentLayout) && parentLayout != null)
     {
         Layout = parentLayout.ToString();
     }
@@ -9,20 +9,29 @@
     }
 }
 
-<h1>Manage your account</h1>
+<h1 class="fw-bold mb-4" style="color: #FFA500;">Administrar perfil</h1>
 
 <div>
-    <h2>Change your account settings</h2>
-    <hr />
+    <h2 class="h4 text-light mb-3">Cambiar configuraciones de cuenta</h2>
+
+
     <div class="row">
+        <!-- Menú de navegación lateral -->
         <div class="col-md-3">
-            <partial name="_ManageNav" />
+            <div class="bg-dark p-3 rounded shadow-sm">
+                <partial name="_ManageNav" />
+            </div>
         </div>
+
+        <!-- Contenido principal -->
         <div class="col-md-9">
-            @RenderBody()
+            <div class="bg-dark text-light p-4 rounded shadow-sm">
+                @RenderBody()
+            </div>
         </div>
     </div>
 </div>
+
 
 @section Scripts {
     @RenderSection("Scripts", required: false)
