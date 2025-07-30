@@ -1,5 +1,6 @@
 ﻿@page "/login"
 @model LoginModel
+@inject IConfiguration Configuration
 @{
     ViewData["Title"] = "Iniciar sesión";
 }
@@ -31,6 +32,9 @@
             </label>
         </div>
 
+        <!-- Campo oculto para el token de reCAPTCHA -->
+        <input type="hidden" id="g-recaptcha-response" name="g-recaptcha-response" />
+
         <button type="submit" class="btn btn-naranja fw-bold w-100 py-3" style="font-size: 1.25rem;">
             Iniciar sesión
         </button>
@@ -45,4 +49,12 @@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+    <script src="https://www.google.com/recaptcha/api.js?render=@Configuration["GoogleReCaptcha:SiteKey"]"></script>
+    <script>
+        grecaptcha.ready(function() {
+            grecaptcha.execute('@Configuration["GoogleReCaptcha:SiteKey"]', {action: 'login'}).then(function(token) {
+                document.getElementById('g-recaptcha-response').value = token;
+            });
+        });
+    </script>
 }
