@@ -1,26 +1,72 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Profile";
-    ViewData["ActivePage"] = ManageNavPages.Index;
+    ViewData["Title"] = "Perfil";
+    ViewData["ActivePage"] = ManageNavPages.Index; 
 }
-
-<h3>@ViewData["Title"]</h3>
-<partial name="_StatusMessage" for="StatusMessage" />
 <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-6 mx-auto">
+        <h3 style="color: #FFA500;">@ViewData["Title"]</h3>
+        <partial name="_StatusMessage" for="StatusMessage" />
         <form id="profile-form" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+
             <div class="form-floating mb-3">
-                <input asp-for="Username" class="form-control" placeholder="Please choose your username." disabled />
-                <label asp-for="Username" class="form-label"></label>
+                <input asp-for="Username" class="form-control" placeholder="Nombre de usuario" disabled />
+                <label asp-for="Username" class="form-label">Nombre de usuario</label>
             </div>
+
             <div class="form-floating mb-3">
-                <input asp-for="Input.PhoneNumber" class="form-control" placeholder="Please enter your phone number."/>
-                <label asp-for="Input.PhoneNumber" class="form-label"></label>
+                <input asp-for="Input.PhoneNumber" class="form-control" placeholder="Número de teléfono" />
+                <label asp-for="Input.PhoneNumber" class="form-label">Número de teléfono</label>
                 <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
             </div>
-            <button id="update-profile-button" type="submit" class="w-100 btn btn-lg btn-primary">Save</button>
+
+            <!-- Nombre -->
+            <div class="form-floating mb-3">
+                <input asp-for="Input.FirstName" class="form-control" placeholder="Nombre" />
+                <label asp-for="Input.FirstName" class="form-label">Nombre</label>
+                <span asp-validation-for="Input.FirstName" class="text-danger"></span>
+            </div>
+
+            <!-- Apellido -->
+            <div class="form-floating mb-3">
+                <input asp-for="Input.LastName" class="form-control" placeholder="Apellido" />
+                <label asp-for="Input.LastName" class="form-label">Apellido</label>
+                <span asp-validation-for="Input.LastName" class="text-danger"></span>
+            </div>
+
+            <!-- País -->
+            <div class="form-floating mb-3">
+                <input asp-for="Input.Country" class="form-control" placeholder="País" />
+                <label asp-for="Input.Country" class="form-label">País</label>
+                <span asp-validation-for="Input.Country" class="text-danger"></span>
+            </div>
+
+            <!-- Género -->
+            <div class="form-floating mb-3">
+                <select asp-for="Input.Gender" class="form-select" aria-label="Género">
+                    <option value="">Seleccione...</option>
+                    <option>Masculino</option>
+                    <option>Femenino</option>
+                    <option>Otro</option>
+                </select>
+                <label asp-for="Input.Gender" class="form-label">Género</label>
+                <span asp-validation-for="Input.Gender" class="text-danger"></span>
+            </div>
+
+            <!-- Fecha de nacimiento -->
+            <div class="form-floating mb-3">
+                <input asp-for="Input.BirthDate" class="form-control" type="date" placeholder="Fecha de nacimiento" />
+                <label asp-for="Input.BirthDate" class="form-label">Fecha de nacimiento</label>
+                <span asp-validation-for="Input.BirthDate" class="text-danger"></span>
+            </div>
+
+            <button id="update-profile-button" type="submit" class="btn btn-outline-warning fw-bold px-4 login-btn w-100" style="border-width:2px; color:#FFA500; border-color:#FFA500; background-color:transparent;">
+                Guardar
+            </button>
+
+
         </form>
     </div>
 </div>

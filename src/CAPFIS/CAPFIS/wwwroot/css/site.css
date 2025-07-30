@@ -528,3 +528,12 @@ body {
         z-index: 3;
         color: #fff !important;
     }
+
+.nav-pills .nav-link.btn-outline-warning:hover,
+.nav-pills .nav-link.btn-outline-warning.active {
+    background-color: #FFA500 !important;
+    color: black !important;
+    border-color: #FFA500 !important;
+}
+
+
