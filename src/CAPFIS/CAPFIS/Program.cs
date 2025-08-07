@@ -24,6 +24,7 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
     // Tiempo de bloqueo tras llegar al l�mite (ejemplo: 5 minutos)
     options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
 })
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddRazorPages();
 
@@ -51,4 +52,66 @@ app.MapStaticAssets();
 app.MapRazorPages()
    .WithStaticAssets();
 
+var scope = app.Services.CreateScope();
+var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+await CrearRoles(roleManager);
+
+var services = scope.ServiceProvider;
+var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
+
+await CrearUsuarioAdministrador(userManager, services);
+
 app.Run();
+
+async Task CrearUsuarioAdministrador(UserManager<ApplicationUser> userManager, IServiceProvider services)
+{
+    //ESTO TIENE QUE IR EN UN ARCHIVO DE CONFIGURACION Y NO PLANO
+    string adminEmail = "admin@capfis.com";
+    string adminPassword = "Admin123!";
+
+    var adminUser = await userManager.FindByEmailAsync(adminEmail);
+
+    if (adminUser == null)
+    {
+        var nuevoAdmin = new ApplicationUser
+        {
+            UserName = adminEmail,
+            Email = adminEmail,
+            FirstName = "Admin",
+            LastName = "CAPFIS",
+            Country = "Uruguay", 
+            Gender = "Otro",     
+            BirthDate = new DateTime(1990, 1, 1),
+            EmailConfirmed = true
+        };
+
+        var result = await userManager.CreateAsync(nuevoAdmin, adminPassword);
+        if (result.Succeeded)
+        {
+            await userManager.AddToRoleAsync(nuevoAdmin, "Administrador");
+        }
+        else
+        {
+            var logger = services.GetRequiredService<ILogger<Program>>();
+            foreach (var error in result.Errors)
+            {
+                logger.LogError($"Error al crear usuario admin: {error.Description}");
+            }
+        }
+    }
+}
+
+async Task CrearRoles(RoleManager<IdentityRole> roleManager)
+{
+    string[] roles = new[] { "Administrador", "Estudiante" };
+
+    foreach (var rol in roles)
+    {
+        bool existeRol = await roleManager.RoleExistsAsync(rol);
+        if (!existeRol)
+        {
+            await roleManager.CreateAsync(new IdentityRole(rol));
+        }
+    }
+}
+

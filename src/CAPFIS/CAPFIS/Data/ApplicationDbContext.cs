@@ -6,6 +6,8 @@ namespace CAPFIS.Data
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
+        public DbSet<ModuloInteractivo> Modulos { get; set; }
+        public DbSet<EtapaModulo> Etapas { get; set; }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
