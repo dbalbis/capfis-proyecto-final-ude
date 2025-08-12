@@ -32,6 +32,18 @@
         </li>
         <!-- Aquí podrías agregar más enlaces de etapas -->
     </ul>
+
+    <h5 style="color:#FFA500; margin-top:1rem;">Usuarios</h5>
+    <hr class="separator">
+    <ul class="nav nav-pills flex-column">
+        <li class="nav-item">
+            <a class="nav-link btn btn-outline-warning fw-bold px-4 mb-2 @(isActive("/Admin/Usuarios/EditarUsuario") ? "active" : "")"
+               asp-page="/Admin/Etapas/EditarUsuario">
+                Editar Usuario
+            </a>
+        </li>
+        <!-- Aquí podrías agregar más enlaces de etapas -->
+    </ul>
 </div>
 
 <style>
