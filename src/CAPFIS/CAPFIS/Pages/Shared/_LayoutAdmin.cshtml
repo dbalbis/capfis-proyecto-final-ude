@@ -1,0 +1,27 @@
+﻿@{
+    Layout = "_Layout";
+}
+
+<h1 class="fw-bold mb-4" style="color: #FFA500;">Panel de Administración</h1>
+
+<div>
+    <div class="row">
+        <!-- Menú de navegación lateral -->
+        <div class="col-md-3">
+            <div class="bg-dark p-3 rounded shadow-sm">
+                <partial name="_AdminNav" />
+            </div>
+        </div>
+
+        <!-- Contenido principal -->
+        <div class="col-md-9">
+            <div class="bg-dark text-light p-4 rounded shadow-sm">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @RenderSection("Scripts", required: false)
+}

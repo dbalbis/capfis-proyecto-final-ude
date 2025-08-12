@@ -12,6 +12,7 @@
 
         // Guardar contenido según tipo
         public string? ContenidoUrl { get; set; }    // Para videos
+
         public string? ContenidoJson { get; set; }   // Para quizzes, sopas, etc.
         public string? ContenidoTexto { get; set; }  // Texto plano
 
@@ -29,4 +30,3 @@
         EncuentraLaPalabra
     }
 }
-
