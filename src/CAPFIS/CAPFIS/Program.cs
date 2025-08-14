@@ -18,10 +18,10 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
     // Habilitar lockout para nuevos usuarios
     options.Lockout.AllowedForNewUsers = true;
 
-    // Cantidad m�xima de intentos fallidos antes de bloquear
+    // Cantidad máxima de intentos fallidos antes de bloquear
     options.Lockout.MaxFailedAccessAttempts = 3;
 
-    // Tiempo de bloqueo tras llegar al l�mite (ejemplo: 5 minutos)
+    // Tiempo de bloqueo tras llegar al límite (ejemplo: 5 minutos)
     options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
 })
     .AddRoles<IdentityRole>()
@@ -46,6 +46,7 @@ app.UseHttpsRedirection();
 
 app.UseRouting();
 
+app.UseAuthentication(); // <-- ¡IMPORTANTE! Debe estar antes de UseAuthorization
 app.UseAuthorization();
 
 app.MapStaticAssets();
@@ -79,8 +80,8 @@ async Task CrearUsuarioAdministrador(UserManager<ApplicationUser> userManager, I
             Email = adminEmail,
             FirstName = "Admin",
             LastName = "CAPFIS",
-            Country = "Uruguay", 
-            Gender = "Otro",     
+            Country = "Uruguay",
+            Gender = "Otro",
             BirthDate = new DateTime(1990, 1, 1),
             EmailConfirmed = true
         };
@@ -114,4 +115,3 @@ async Task CrearRoles(RoleManager<IdentityRole> roleManager)
         }
     }
 }
-

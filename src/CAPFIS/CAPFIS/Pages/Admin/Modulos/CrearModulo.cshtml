@@ -1,7 +1,39 @@
 ﻿@page
-@model CAPFIS.Pages.Admin.Modulos.CrearModuloModel
 @{
+    ViewData["Title"] = "Crear Módulo";
 }
-<h1>
-    Hola
-</h1>
+
+<div class="container py-5" style="max-width: 600px;">
+    <div class="bg-dark p-4 rounded shadow">
+        <h1 class="mb-4 fw-bold text-center" style="color: #FFA800;">Crear Módulo de Aprendizaje</h1>
+        <form>
+            <div class="mb-3">
+                <label class="form-label text-white">Título del módulo</label>
+                <input class="form-control" placeholder="Ej: Sopa de letras, Ahorcado, etc." />
+            </div>
+            <div class="mb-3">
+                <label class="form-label text-white">Descripción</label>
+                <textarea class="form-control" rows="3" placeholder="Breve descripción del módulo"></textarea>
+            </div>
+            <div class="mb-3">
+                <label class="form-label text-white">Tipo de módulo</label>
+                <select class="form-select">
+                    <option value="">Selecciona un tipo...</option>
+                    <option value="Ahorcado">Ahorcado</option>
+                    <option value="SopaDeLetras">Sopa de letras</option>
+                    <option value="EncuentraLaPalabra">Encuentra la palabra</option>
+                    <option value="Quiz">Quiz</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label class="form-label text-white">Orden</label>
+                <input type="number" class="form-control" min="1" placeholder="Posición del módulo" />
+            </div>
+            <div class="form-check form-switch mb-4">
+                <input class="form-check-input" type="checkbox" role="switch" id="publicadoSwitch">
+                <label class="form-check-label text-white" for="publicadoSwitch">¿Publicado?</label>
+            </div>
+            <button type="button" class="btn btn-warning fw-bold w-100 py-2" style="font-size: 1.2rem;">Crear módulo</button>
+        </form>
+    </div>
+</div>
