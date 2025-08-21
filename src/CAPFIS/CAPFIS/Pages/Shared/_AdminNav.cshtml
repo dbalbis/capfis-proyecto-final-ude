@@ -17,6 +17,10 @@
                asp-page="/Admin/Modulos/CrearModulo">
 				Crear Módulo
             </a>
+            <a class="nav-link btn btn-outline-warning fw-bold px-4 mb-2 @(isActive("/Admin/Modulos/EditarModulo") ? "active" : "")"
+               asp-page="/Admin/Modulos/EditarModulo">
+                Editar Módulo
+            </a>
         </li>
         <!-- Aquí podrías agregar más enlaces de módulos -->
     </ul>

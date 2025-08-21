@@ -1,0 +1,98 @@
+﻿@model CAPFIS.Models.ModuloInteractivo
+@using Microsoft.AspNetCore.Http
+@using System.Text.Encodings.Web
+
+<form method="post" enctype="multipart/form-data">
+    <!-- Id oculto -->
+    <input type="hidden" asp-for="Id" />
+
+    <!-- Título -->
+    <div class="form-floating mb-3">
+        <input asp-for="Titulo" class="form-control" placeholder="Título" />
+        <label asp-for="Titulo">Título del módulo</label>
+        <span asp-validation-for="Titulo" class="text-danger"></span>
+    </div>
+
+    <!-- Descripción -->
+    <div class="mb-3">
+        <input type="hidden" asp-for="Descripcion" id="descripcion-hidden-@Model.Id" />
+        <button type="button" class="btn btn-outline-secondary w-100 mb-2" data-bs-toggle="modal" data-bs-target="#descripcionModal-@Model.Id">
+            Editar Descripción
+        </button>
+        <div id="descripcion-preview-@Model.Id" class="border p-2" style="min-height:100px; background-color:#1c1c1c; color:white;">
+            @Html.Raw(Model.Descripcion)
+        </div>
+        <span asp-validation-for="Descripcion" class="text-danger"></span>
+    </div>
+
+    <!-- Imagen Hero -->
+    <div class="mb-3">
+        <label class="form-label">Cambiar Imagen Hero</label>
+        <input type="file" name="HeroImageFile" class="form-control" accept=".jpg,.jpeg,.png,.gif,.webp" />
+        <div class="form-text text-white fst-italic small">
+            Formatos permitidos: JPG, JPEG, PNG, GIF, WebP. Tamaño máximo: 2 MB.
+        </div>
+    </div>
+
+    <!-- Publicado -->
+    <div class="form-check mb-3">
+        <input asp-for="EstaPublicado" class="form-check-input" />
+        <label asp-for="EstaPublicado" class="form-check-label">Publicado</label>
+    </div>
+
+    <button type="submit" class="btn btn-outline-warning fw-bold w-100">Guardar Cambios</button>
+</form>
+
+<!-- Modal TinyMCE -->
+<div class="modal fade" id="descripcionModal-@Model.Id" tabindex="-1" aria-labelledby="descripcionModalLabel-@Model.Id" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content bg-dark text-white">
+            <div class="modal-header">
+                <h5 class="modal-title" id="descripcionModalLabel-@Model.Id">Editar Descripción</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- TinyMCE editor -->
+                <textarea id="descripcion-editor-@Model.Id" data-content="@Html.Raw(JavaScriptEncoder.Default.Encode(Model.Descripcion))"></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-warning" data-bs-dismiss="modal" id="guardarDescripcion-@Model.Id">
+                    Guardar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script src="https://cdn.tiny.cloud/1/i3bcbffxqt17xzk15ef2l79qo6bc5v3v7fov118ycjpomtmk/tinymce/8/tinymce.min.js" referrerpolicy="origin" crossorigin="anonymous"></script>
+
+    <script>
+        var editorId = 'descripcion-editor-@Model.Id';
+
+        tinymce.init({
+            selector: '#' + editorId,
+            height: 300,
+            menubar: false,
+            plugins: 'lists link paste',
+            toolbar: 'undo redo | bold italic underline | bullist numlist | link',
+            skin: 'oxide-dark',
+            content_css: 'dark',
+            setup: function (editor) {
+                editor.on('init', function () {
+                    // Tomar contenido desde el atributo data-content
+                    var contenido = document.getElementById(editorId).getAttribute('data-content');
+                    editor.setContent(contenido);
+                });
+            }
+        });
+
+        // Guardar contenido en hidden input y preview
+        document.getElementById('guardarDescripcion-@Model.Id').addEventListener('click', function () {
+            var contenido = tinymce.get(editorId).getContent();
+            document.getElementById('descripcion-hidden-@Model.Id').value = contenido;
+            document.getElementById('descripcion-preview-@Model.Id').innerHTML = contenido;
+        });
+    </script>
+}

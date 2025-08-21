@@ -1,8 +1,11 @@
-using CAPFIS.Data;
+Ôªøusing CAPFIS.Data;
 using CAPFIS.Models;
+using CAPFIS.Utils;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;
+using System.Text;
+using System.Text.RegularExpressions;
 
 namespace CAPFIS.Pages.Admin.Modulos
 {
@@ -22,68 +25,138 @@ namespace CAPFIS.Pages.Admin.Modulos
 
         public class InputModel
         {
-            [Required(ErrorMessage = "El tÌtulo es obligatorio")]
+            [Required(ErrorMessage = "El t√≠tulo es obligatorio")]
             public string Titulo { get; set; } = string.Empty;
 
-            [Required(ErrorMessage = "El slug es obligatorio")]
-            public string Slug { get; set; } = string.Empty;
-
-            [Required(ErrorMessage = "La descripciÛn es obligatoria")]
+            [Required(ErrorMessage = "La descripci√≥n es obligatoria")]
             public string Descripcion { get; set; } = string.Empty;
 
-            [Range(1, int.MaxValue, ErrorMessage = "El orden debe ser mayor a cero")]
-            public int Orden { get; set; }
-
             public bool Publicado { get; set; }
+
+            public IFormFile? HeroImageFile { get; set; }
+
+            //public string? BotonTexto { get; set; }
+
+            //[Url(ErrorMessage = "Debe ser una URL v√°lida")]
+            //public string? BotonUrl { get; set; }
         }
 
         public void OnGet()
         {
+            // Solo muestra el formulario vac√≠o
         }
 
         public IActionResult OnPost()
         {
             if (!ModelState.IsValid)
+                return Page();
+
+            // Sanitizar inputs
+            Input.Titulo = InputSanitizer.SanitizeText(Input.Titulo);
+            //Input.BotonTexto = InputSanitizer.SanitizeText(Input.BotonTexto ?? string.Empty);
+            //Input.BotonUrl = InputSanitizer.SanitizeUrl(Input.BotonUrl ?? string.Empty);
+
+            // Generar slug siempre a partir del t√≠tulo
+            string slug = GenerarSlug(Input.Titulo);
+
+            // Validar slug √∫nico
+            if (_context.Modulos.Any(m => m.Slug == slug))
             {
+                ModelState.AddModelError("Input.Titulo", "Ya existe un m√≥dulo con un t√≠tulo similar.");
                 return Page();
             }
 
-            // Generar slug autom·tico si no se ingresÛ
-            if (string.IsNullOrWhiteSpace(Input.Slug))
+            string? heroImagePath = null;
+
+            if (Input.HeroImageFile != null && Input.HeroImageFile.Length > 0)
             {
-                Input.Slug = GenerarSlug(Input.Titulo);
+                const long maxFileSize = 2 * 1024 * 1024; // 2 MB
+                if (Input.HeroImageFile.Length > maxFileSize)
+                {
+                    ModelState.AddModelError("Input.HeroImageFile", "El archivo no debe superar los 2 MB.");
+                    return Page();
+                }
+
+                var permittedExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif", ".webp" };
+                var extension = Path.GetExtension(Input.HeroImageFile.FileName).ToLowerInvariant();
+                if (string.IsNullOrEmpty(extension) || !permittedExtensions.Contains(extension))
+                {
+                    ModelState.AddModelError("Input.HeroImageFile", "Solo se permiten im√°genes en formato JPG, PNG, GIF o WebP.");
+                    return Page();
+                }
+
+                if (!Input.HeroImageFile.ContentType.StartsWith("image/"))
+                {
+                    ModelState.AddModelError("Input.HeroImageFile", "El archivo no es una imagen v√°lida.");
+                    return Page();
+                }
+
+                var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/uploads/modulos");
+                Directory.CreateDirectory(uploadsFolder);
+
+                var uniqueFileName = Guid.NewGuid().ToString() + extension;
+                var filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    Input.HeroImageFile.CopyTo(fileStream);
+                }
+
+                heroImagePath = $"/uploads/modulos/{uniqueFileName}";
             }
 
             var modulo = new ModuloInteractivo
             {
                 Titulo = Input.Titulo,
-                Slug = Input.Slug,
-                Descripcion = Input.Descripcion,
-                Orden = Input.Orden,
-                EstaPublicado = Input.Publicado
+                Slug = slug,
+                Descripcion = InputSanitizer.SanitizeHtml(Input.Descripcion),
+                EstaPublicado = Input.Publicado,
+                ImagenHero = heroImagePath,
+                //BotonTexto = Input.BotonTexto,
+                //BotonUrl = Input.BotonUrl
             };
 
-            _context.Modulos.Add(modulo);
-            _context.SaveChanges();
+            try
+            {
+                _context.Modulos.Add(modulo);
+                _context.SaveChanges();
 
-            StatusMessage = "MÛdulo creado correctamente.";
+                StatusMessage = "‚úÖ M√≥dulo creado correctamente.";
 
-            ModelState.Clear();
-            Input = new InputModel();
+                // Limpiar formulario
+                ModelState.Clear();
+                Input = new InputModel();
+            }
+            catch (Exception ex)
+            {
+                StatusMessage = $"‚ùå Error al guardar el m√≥dulo: {ex.Message}";
+            }
 
             return Page();
         }
 
         private string GenerarSlug(string texto)
         {
-            return texto
-                .ToLower()
-                .Replace(" ", "-")
-                .Replace("·", "a")
-                .Replace("È", "e")
-                .Replace("Ì", "i")
-                .Replace("Û", "o")
-                .Replace("˙", "u");
+            if (string.IsNullOrEmpty(texto)) return string.Empty;
+
+            string normalizedString = texto.Normalize(NormalizationForm.FormD);
+            var stringBuilder = new StringBuilder();
+
+            foreach (char c in normalizedString)
+            {
+                var unicodeCategory = System.Globalization.CharUnicodeInfo.GetUnicodeCategory(c);
+                if (unicodeCategory != System.Globalization.UnicodeCategory.NonSpacingMark)
+                    stringBuilder.Append(c);
+            }
+
+            string slug = stringBuilder.ToString().Normalize(NormalizationForm.FormC);
+            slug = slug.ToLowerInvariant();
+            slug = Regex.Replace(slug, @"\s+", "-");
+            slug = Regex.Replace(slug, @"[^a-z0-9\-]", "");
+            slug = Regex.Replace(slug, @"-+", "-");
+            slug = slug.Trim('-');
+
+            return slug;
         }
     }
 }

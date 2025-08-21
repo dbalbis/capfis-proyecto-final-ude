@@ -1,0 +1,132 @@
+﻿@page
+@model CAPFIS.Pages.Admin.Modulos.EditarModuloModel
+@{
+    Layout = "/Pages/Shared/_LayoutAdmin.cshtml";
+    ViewData["Title"] = "Editar Módulo";
+}
+
+<div class="row">
+    <div class="col-md-6 mx-auto">
+        <h3 style="color: #FFA500;">Editar Módulo</h3>
+
+        <partial name="_StatusMessage" model="Model.StatusMessage" />
+
+        <!-- Selección de módulo -->
+        @if (Model.SelectedModulo == null)
+        {
+            <form method="get">
+                @if (Model.Modulos.Any())
+                {
+                    <label for="moduloSelect" class="form-label">Seleccione un módulo:</label>
+                    <select class="form-select" id="moduloSelect" name="SelectedId" onchange="this.form.submit()">
+                        <option value="">-- Seleccione --</option>
+                        @foreach (var mod in Model.Modulos)
+                        {
+                            <option value="@mod.Id">@mod.Titulo</option>
+                        }
+                    </select>
+                }
+                else
+                {
+                    <div class="form-text fst-italic small text-white">
+                        Aún no hay módulos, por favor crea alguno.
+                    </div>
+                }
+            </form>
+        }
+
+        <!-- Formulario de edición -->
+        @if (Model.SelectedModulo != null)
+        {
+            <form method="post" enctype="multipart/form-data">
+                <input type="hidden" asp-for="SelectedModulo.Id" />
+
+                <!-- Título -->
+                <div class="form-floating mb-3">
+                    <input asp-for="SelectedModulo.Titulo" class="form-control" placeholder="Título" />
+                    <label asp-for="SelectedModulo.Titulo">Título del módulo</label>
+                    <span asp-validation-for="SelectedModulo.Titulo" class="text-danger"></span>
+                </div>
+
+                <!-- Descripción -->
+                <div class="mb-3">
+                    <input type="hidden" asp-for="SelectedModulo.Descripcion" id="descripcion-hidden" />
+                    <button type="button" class="btn btn-outline-secondary w-100 mb-2" data-bs-toggle="modal" data-bs-target="#descripcionModal">
+                        Editar Descripción
+                    </button>
+                    <div id="descripcion-preview" class="border p-2" style="min-height:100px; background-color:#1c1c1c; color:white;">
+                        @Html.Raw(Model.SelectedModulo.Descripcion)
+                    </div>
+                    <span asp-validation-for="SelectedModulo.Descripcion" class="text-danger"></span>
+                </div>
+
+                <!-- Imagen Hero -->
+                <div class="mb-3">
+                    @if (!string.IsNullOrEmpty(Model.SelectedModulo.ImagenHero))
+                    {
+                        <img src="@Model.SelectedModulo.ImagenHero" class="img-fluid mb-2" />
+                    }
+                    <label class="form-label">Cambiar Imagen Hero</label>
+                    <input type="file" name="HeroImageFile" class="form-control" accept=".jpg,.jpeg,.png,.gif,.webp" />
+                    <div class="form-text text-white fst-italic small">
+                        Formatos permitidos: JPG, JPEG, PNG, GIF, WebP. Tamaño máximo: 2 MB.
+                    </div>
+                </div>
+
+                <!-- Publicado -->
+                <div class="form-check mb-3">
+                    <input asp-for="SelectedModulo.EstaPublicado" class="form-check-input" />
+                    <label asp-for="SelectedModulo.EstaPublicado" class="form-check-label">Publicado</label>
+                </div>
+
+                <button type="submit" class="btn btn-outline-warning fw-bold w-100">Guardar Cambios</button>
+            </form>
+
+            <!-- Modal TinyMCE -->
+            <div class="modal fade" id="descripcionModal" tabindex="-1" aria-labelledby="descripcionModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg modal-dialog-centered">
+                    <div class="modal-content bg-dark text-white">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="descripcionModalLabel">Editar Descripción</h5>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <textarea id="descripcion-editor">@Html.Raw(Model.SelectedModulo.Descripcion)</textarea>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-warning" id="guardarDescripcion" data-bs-dismiss="modal">
+                                Guardar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <!-- TinyMCE -->
+    <script src="https://cdn.tiny.cloud/1/i3bcbffxqt17xzk15ef2l79qo6bc5v3v7fov118ycjpomtmk/tinymce/8/tinymce.min.js" referrerpolicy="origin" crossorigin="anonymous"></script>
+    <script>
+        // Inicializar TinyMCE al cargar la página
+        tinymce.init({
+            selector: '#descripcion-editor',
+            height: 300,
+            menubar: false,
+            plugins: 'lists link paste',
+            toolbar: 'undo redo | bold italic underline | bullist numlist | link',
+            skin: 'oxide-dark',
+            content_css: 'dark'
+        });
+
+        // Guardar contenido en hidden input y preview
+        document.getElementById('guardarDescripcion').addEventListener('click', function () {
+            var contenido = tinymce.get('descripcion-editor').getContent();
+            document.getElementById('descripcion-hidden').value = contenido;
+            document.getElementById('descripcion-preview').innerHTML = contenido;
+        });
+    </script>
+}

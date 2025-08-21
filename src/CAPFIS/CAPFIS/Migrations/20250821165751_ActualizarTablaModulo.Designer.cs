@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CAPFIS.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250807022315_ModulosCursos")]
-    partial class ModulosCursos
+    [Migration("20250821165751_ActualizarTablaModulo")]
+    partial class ActualizarTablaModulo
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -157,12 +157,21 @@ namespace CAPFIS.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("BotonTexto")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("BotonUrl")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Descripcion")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("EstaPublicado")
                         .HasColumnType("bit");
+
+                    b.Property<string>("ImagenHero")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Orden")
                         .HasColumnType("int");
