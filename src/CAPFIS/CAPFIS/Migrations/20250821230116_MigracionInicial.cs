@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace CAPFIS.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class MigracionInicial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -64,8 +64,11 @@ namespace CAPFIS.Migrations
                     Titulo = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Slug = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Descripcion = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Orden = table.Column<int>(type: "int", nullable: false),
-                    EstaPublicado = table.Column<bool>(type: "bit", nullable: false)
+                    Orden = table.Column<int>(type: "int", nullable: true),
+                    EstaPublicado = table.Column<bool>(type: "bit", nullable: false),
+                    ImagenHero = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    BotonTexto = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    BotonUrl = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {

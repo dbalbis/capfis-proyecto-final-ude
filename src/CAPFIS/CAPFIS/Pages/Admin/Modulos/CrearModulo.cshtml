@@ -9,6 +9,10 @@
     <div class="col-md-6 mx-auto">
         <h3 style="color: #FFA500;">Crear Módulo</h3>
 
+        <!-- Separador -->
+        <hr class="text-secondary my-3"
+            style="border: none; border-bottom: 2px solid rgba(255, 165, 0, 0.4); margin: 0 1rem 0.5rem 1rem;" />
+
         <partial name="_StatusMessage" model="Model.StatusMessage" />
 
         <form method="post" enctype="multipart/form-data" id="create-modulo-form">
@@ -39,16 +43,27 @@
 
             <!-- Imagen Hero -->
             <div class="mb-3">
-                <label asp-for="Input.HeroImageFile" class="form-label">Imagen Hero</label>
-                <input asp-for="Input.HeroImageFile"
-                       type="file"
-                       class="form-control"
-                       accept=".jpg,.jpeg,.png,.gif,.webp" />
-                <div class="form-text text-white fst-italic small">
-                    Formatos permitidos: JPG, JPEG, PNG, GIF, WebP. Tamaño máximo: 2 MB.
+                <label asp-for="Input.HeroImageFile" class="form-label fw-bold">Imagen Hero</label>
+
+                <div class="input-group">
+                    <input asp-for="Input.HeroImageFile"
+                           type="file"
+                           class="form-control"
+                           id="heroImageFile"
+                           accept=".jpg,.jpeg,.png,.gif,.webp" />
+                    <label class="input-group-text" for="HeroImageFile">📂 Seleccionar</label>
                 </div>
+
+                <!-- Bloque de ayuda -->
+                <div class="mt-2 p-2 rounded bg-dark border border-secondary small text-white">
+                    <div>📐 Resolución recomendada: <strong>1920x1080 px (mínimo)</strong></div>
+                    <div>🖼️ Formatos permitidos: <strong>JPG, JPEG, PNG, GIF, WebP</strong></div>
+                    <div>💾 Tamaño máximo: <strong>2 MB</strong></div>
+                </div>
+
                 <span asp-validation-for="Input.HeroImageFile" class="text-danger"></span>
             </div>
+
 
             <!-- Publicado -->
             <div class="form-check mb-3">

@@ -3,6 +3,8 @@ using CAPFIS.Models;
 using CAPFIS.Utils;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Text;
+using System.Text.RegularExpressions;
 
 namespace CAPFIS.Pages.Admin.Modulos
 {
@@ -53,10 +55,19 @@ namespace CAPFIS.Pages.Admin.Modulos
             var modulo = _context.Modulos.Find(SelectedModulo.Id);
             if (modulo == null) return Page();
 
-            // Actualizar campos
-            modulo.Titulo = SelectedModulo.Titulo;
+            // Sanitizar inputs
+            modulo.Titulo = InputSanitizer.SanitizeText(SelectedModulo.Titulo);
             modulo.Descripcion = InputSanitizer.SanitizeHtml(SelectedModulo.Descripcion);
             modulo.EstaPublicado = SelectedModulo.EstaPublicado;
+
+            // Opcional: actualizar slug si cambió el título
+            string newSlug = GenerarSlug(modulo.Titulo);
+            if (_context.Modulos.Any(m => m.Id != modulo.Id && m.Slug == newSlug))
+            {
+                ModelState.AddModelError("SelectedModulo.Titulo", "Ya existe un módulo con un título similar.");
+                return Page();
+            }
+            modulo.Slug = newSlug;
 
             // Subir imagen nueva si se seleccionó
             if (HeroImageFile != null && HeroImageFile.Length > 0)
@@ -90,6 +101,31 @@ namespace CAPFIS.Pages.Admin.Modulos
             SelectedModulo = modulo;
 
             return Page();
+        }
+
+        // Reutilizar la función de generar slug del modelo CrearModulo
+        private string GenerarSlug(string texto)
+        {
+            if (string.IsNullOrEmpty(texto)) return string.Empty;
+
+            string normalizedString = texto.Normalize(System.Text.NormalizationForm.FormD);
+            var stringBuilder = new StringBuilder();
+
+            foreach (char c in normalizedString)
+            {
+                var unicodeCategory = System.Globalization.CharUnicodeInfo.GetUnicodeCategory(c);
+                if (unicodeCategory != System.Globalization.UnicodeCategory.NonSpacingMark)
+                    stringBuilder.Append(c);
+            }
+
+            string slug = stringBuilder.ToString().Normalize(System.Text.NormalizationForm.FormC);
+            slug = slug.ToLowerInvariant();
+            slug = Regex.Replace(slug, @"\s+", "-");
+            slug = Regex.Replace(slug, @"[^a-z0-9\-]", "");
+            slug = Regex.Replace(slug, @"-+", "-");
+            slug = slug.Trim('-');
+
+            return slug;
         }
     }
 }

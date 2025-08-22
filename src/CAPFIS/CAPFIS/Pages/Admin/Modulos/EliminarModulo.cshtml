@@ -1,0 +1,71 @@
+﻿@page
+@model CAPFIS.Pages.Admin.Modulos.EliminarModuloModel
+@{
+    Layout = "/Pages/Shared/_LayoutAdmin.cshtml";
+    ViewData["Title"] = "Eliminar Módulo";
+}
+
+<div class="row">
+    <div class="col-md-6 mx-auto">
+        <h3 style="color: #FFA500;">Eliminar Módulo</h3>
+
+        <!-- Separador -->
+        <hr class="text-secondary my-3"
+            style="border: none; border-bottom: 2px solid rgba(255, 165, 0, 0.4); margin: 0 1rem 0.5rem 1rem;" />
+
+        <partial name="_StatusMessage" model="Model.StatusMessage" />
+
+        <!-- Select de módulo siempre visible -->
+        <label for="moduloSelect" class="form-label">Seleccione un módulo:</label>
+        <form method="get">
+            <select class="form-select" id="moduloSelect" name="SelectedId" onchange="this.form.submit()">
+                <option value="">-- Seleccione --</option>
+                @foreach (var mod in Model.Modulos)
+                {
+                    <option value="@mod.Id" selected="@(mod.Id == Model.SelectedId ? true : (bool?)null)">
+                        @mod.Titulo
+                    </option>
+                }
+            </select>
+        </form>
+
+        <!-- Separador -->
+        <hr class="text-secondary my-3"
+            style="border: none; border-bottom: 2px solid rgba(255, 165, 0, 0.4); margin: 0 1rem 0.5rem 1rem;" />
+
+        <!-- Card de detalles y botón de eliminación -->
+        @if (Model.SelectedModulo != null)
+        {
+            <div class="mb-3">
+                <h5 style="color:white;">@Model.SelectedModulo.Titulo</h5>
+
+                @if (!string.IsNullOrEmpty(Model.SelectedModulo.ImagenHero))
+                {
+                    <img src="@Model.SelectedModulo.ImagenHero"
+                         class="img-fluid mb-2 rounded-2"
+                         style="max-height:350px; object-fit:contain;" />
+                }
+
+            <div class="border p-2 mb-3" style="background-color:#1c1c1c; color:white; min-height:100px;">
+                @Html.Raw(Model.SelectedModulo.Descripcion.Length > 300
+                                ? Model.SelectedModulo.Descripcion.Substring(0, 300) + "..."
+                                : Model.SelectedModulo.Descripcion)
+            </div>
+
+            <div class="alert alert-danger small mb-3">
+                ⚠️ Esta acción eliminará el módulo permanentemente.
+            </div>
+
+            <form method="post">
+                <input type="hidden" asp-for="SelectedModulo.Id" />
+                <button type="submit" class="btn btn-outline-danger px-4 fw-bold w-100"
+                        style="border-width:2px;">
+                    Eliminar módulo
+                </button>
+            </form>
+        </div>
+                }
+        </div>
+                }
+    </div>
+</div>

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CAPFIS.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250821165751_ActualizarTablaModulo")]
-    partial class ActualizarTablaModulo
+    [Migration("20250821230116_MigracionInicial")]
+    partial class MigracionInicial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -173,7 +173,7 @@ namespace CAPFIS.Migrations
                     b.Property<string>("ImagenHero")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Orden")
+                    b.Property<int?>("Orden")
                         .HasColumnType("int");
 
                     b.Property<string>("Slug")
