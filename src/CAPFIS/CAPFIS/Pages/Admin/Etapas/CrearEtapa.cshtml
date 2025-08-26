@@ -1,75 +1,204 @@
 ﻿@page
-@model CAPFIS.Pages.Admin.Etapas.CrearEtapaModel
+@model CAPFIS.Pages.Admin.Etapas.CrearEtapaModuloModel
 @{
     Layout = "/Pages/Shared/_LayoutAdmin.cshtml";
-    ViewData["Title"] = "Panel de Administración";
+    ViewData["Title"] = "Crear Etapa";
 }
 
 <div class="row">
     <div class="col-md-6 mx-auto">
-        <h3 style="color: #FFA500;">Crear Etapa</h3>
+        <h3 style="color: #FFA500;">Crear Etapa de Módulo</h3>
+        <hr class="text-secondary my-3"
+            style="border: none; border-bottom: 2px solid rgba(255, 165, 0, 0.4); margin: 0 1rem 0.5rem 1rem;" />
 
         <partial name="_StatusMessage" model="Model.StatusMessage" />
+        <div id="statusMessageJS" class="text-danger mb-2"></div>
 
-        <form method="post" id="create-etapa-form">
-            <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+        <form method="post" id="formCrearEtapa">
+            <input type="hidden" asp-for="Input.ContenidoJson" id="contenidoJsonHidden" />
 
-            <div class="form-floating mb-3">
-                <input asp-for="Input.Titulo" class="form-control" placeholder="Título de la etapa" />
-                <label asp-for="Input.Titulo">Título de la etapa</label>
+            <!-- Módulo -->
+            <div class="mb-3">
+                <label asp-for="Input.ModuloInteractivoId" class="form-label">Seleccionar Módulo</label>
+                <select asp-for="Input.ModuloInteractivoId" class="form-select">
+                    <option value="">-- Seleccione un módulo --</option>
+                    @foreach (var mod in Model.Modulos)
+                    {
+                        <option value="@mod.Id">@mod.Titulo</option>
+                    }
+                </select>
+                <span asp-validation-for="Input.ModuloInteractivoId" class="text-danger"></span>
+            </div>
+
+            <!-- Título -->
+            <div class="mb-3">
+                <label asp-for="Input.Titulo" class="form-label">Título</label>
+                <input asp-for="Input.Titulo" class="form-control" />
                 <span asp-validation-for="Input.Titulo" class="text-danger"></span>
             </div>
 
-            <div class="form-floating mb-3">
-                <select asp-for="Input.Tipo" class="form-select" aria-label="Tipo de etapa">
-                    <option value="">Seleccione un tipo</option>
-                    @foreach (var tipo in Enum.GetValues(typeof(CAPFIS.Models.TipoEtapa)))
-                    {
-                        <option value="@tipo">@tipo</option>
-                    }
+            <!-- Tipo -->
+            <div class="mb-3">
+                <label asp-for="Input.Tipo" class="form-label">Tipo de Etapa</label>
+                <select asp-for="Input.Tipo" class="form-select" id="tipoEtapaSelect">
+                    <option value="Video">Video</option>
+                    <option value="Ahorcado">Ahorcado</option>
+                    <option value="Quiz">Quiz</option>
+                    <option value="SopaDeLetras">Sopa de Letras</option>
+                    <option value="EncuentraLaPalabra">Encuentra la Palabra</option>
                 </select>
-                <label asp-for="Input.Tipo">Tipo de etapa</label>
                 <span asp-validation-for="Input.Tipo" class="text-danger"></span>
             </div>
 
-            <div class="form-floating mb-3">
-                <input asp-for="Input.ContenidoUrl" class="form-control" placeholder="URL del contenido (para videos)" />
-                <label asp-for="Input.ContenidoUrl">Contenido URL</label>
-                <span asp-validation-for="Input.ContenidoUrl" class="text-danger"></span>
+            <!-- Video -->
+            <div id="contenidoVideo" class="mb-3" style="display:none;">
+                <label class="form-label">URL del Video</label>
+                <input asp-for="Input.ContenidoUrl" class="form-control" placeholder="https://www.youtube.com/watch?v=..." />
             </div>
 
-            <div class="form-floating mb-3">
-                <textarea asp-for="Input.ContenidoJson" class="form-control" placeholder="Contenido JSON (para quizzes, sopas, etc.)" style="height: 100px;"></textarea>
-                <label asp-for="Input.ContenidoJson">Contenido JSON</label>
-                <span asp-validation-for="Input.ContenidoJson" class="text-danger"></span>
+            <!-- Ahorcado -->
+            <div id="contenidoAhorcado" class="mb-3" style="display:none;">
+                <label class="form-label">Palabra a adivinar</label>
+                <input asp-for="Input.ContenidoTexto" class="form-control" placeholder="Palabra" />
             </div>
 
-            <div class="form-floating mb-3">
-                <textarea asp-for="Input.ContenidoTexto" class="form-control" placeholder="Contenido de texto" style="height: 100px;"></textarea>
-                <label asp-for="Input.ContenidoTexto">Contenido de texto</label>
-                <span asp-validation-for="Input.ContenidoTexto" class="text-danger"></span>
+            <!-- Quiz -->
+            <div id="contenidoQuiz" class="mb-3" style="display:none;">
+                <label class="form-label">Preguntas del Quiz</label>
+                <div id="preguntasList"></div>
+                <button type="button" class="btn btn-outline-warning btn-sm mt-2" id="agregarPreguntaBtn">Agregar Pregunta</button>
             </div>
 
-            <div class="form-floating mb-3">
-                <input asp-for="Input.Orden" type="number" class="form-control" placeholder="Orden" />
-                <label asp-for="Input.Orden">Orden</label>
-                <span asp-validation-for="Input.Orden" class="text-danger"></span>
+            <!-- Sopa de letras -->
+            <div id="contenidoSopa" class="mb-3" style="display:none;">
+                <label class="form-label">Palabras de la Sopa de Letras</label>
+                <div id="palabrasSopaList"></div>
+                <button type="button" class="btn btn-outline-warning btn-sm mt-2" id="agregarPalabraSopaBtn">Agregar palabra</button>
             </div>
 
-            <div class="form-check mb-3">
-                <input asp-for="Input.EstaPublicado" class="form-check-input" type="checkbox" />
-                <label asp-for="Input.EstaPublicado" class="form-check-label">Publicado</label>
+            <!-- Encuentra la palabra -->
+            <div id="contenidoEncuentra" class="mb-3" style="display:none;">
+                <label class="form-label">Texto base</label>
+                <textarea asp-for="Input.ContenidoTexto" class="form-control" rows="5"></textarea>
+
+                <label class="form-label mt-2">Palabras clave</label>
+                <div id="palabrasClaveList"></div>
+                <button type="button" class="btn btn-outline-warning btn-sm mt-2" id="agregarPalabraBtn">Agregar palabra</button>
             </div>
 
-            <button type="submit"
-                    class="btn btn-outline-warning fw-bold px-4 login-btn w-100"
-                    style="border-width:2px; color:#FFA500; border-color:#FFA500; background-color:transparent;">
-                Guardar
-            </button>
+            <button type="submit" class="btn btn-outline-warning w-100 mt-3">Crear Etapa</button>
         </form>
     </div>
 </div>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        const tipoSelect = document.getElementById('tipoEtapaSelect');
+        const contenidoVideo = document.getElementById('contenidoVideo');
+        const contenidoAhorcado = document.getElementById('contenidoAhorcado');
+        const contenidoQuiz = document.getElementById('contenidoQuiz');
+        const contenidoSopa = document.getElementById('contenidoSopa');
+        const contenidoEncuentra = document.getElementById('contenidoEncuentra');
+
+        const preguntasList = document.getElementById('preguntasList');
+        const agregarPreguntaBtn = document.getElementById('agregarPreguntaBtn');
+
+        const palabrasSopaList = document.getElementById('palabrasSopaList');
+        const agregarPalabraSopaBtn = document.getElementById('agregarPalabraSopaBtn');
+
+        const palabrasClaveList = document.getElementById('palabrasClaveList');
+        const agregarPalabraBtn = document.getElementById('agregarPalabraBtn');
+
+        const contenidoJsonHidden = document.getElementById('contenidoJsonHidden');
+        const form = document.getElementById('formCrearEtapa');
+
+        function actualizarCampos() {
+            const tipo = tipoSelect.value;
+            contenidoVideo.style.display = tipo === 'Video' ? 'block' : 'none';
+            contenidoAhorcado.style.display = tipo === 'Ahorcado' ? 'block' : 'none';
+            contenidoQuiz.style.display = tipo === 'Quiz' ? 'block' : 'none';
+            contenidoSopa.style.display = tipo === 'SopaDeLetras' ? 'block' : 'none';
+            contenidoEncuentra.style.display = tipo === 'EncuentraLaPalabra' ? 'block' : 'none';
+        }
+        tipoSelect.addEventListener('change', actualizarCampos);
+        actualizarCampos();
+
+        // Quiz
+        agregarPreguntaBtn?.addEventListener('click', () => {
+            const div = document.createElement('div');
+            div.classList.add('border', 'p-2', 'mb-2', 'rounded');
+            div.innerHTML = `
+                <input type="text" class="form-control mb-1" placeholder="Texto de la pregunta" />
+                <input type="text" class="form-control mb-1" placeholder="Respuesta 1" />
+                <input type="text" class="form-control mb-1" placeholder="Respuesta 2" />
+                <input type="text" class="form-control mb-1" placeholder="Respuesta 3" />
+                <input type="number" min="1" max="3" class="form-control mb-1" placeholder="Número de respuesta correcta (1-3)" required />
+                <button type="button" class="btn btn-outline-danger btn-sm mt-1" onclick="this.parentElement.remove()">Eliminar</button>
+            `;
+            preguntasList.appendChild(div);
+        });
+
+        // Sopa
+        agregarPalabraSopaBtn?.addEventListener('click', () => {
+            const div = document.createElement('div');
+            div.classList.add('input-group', 'mb-1');
+            div.innerHTML = `
+                <input type="text" class="form-control" placeholder="Palabra" />
+                <button type="button" class="btn btn-outline-danger" onclick="this.parentElement.remove()">Eliminar</button>
+            `;
+            palabrasSopaList.appendChild(div);
+        });
+
+        // Encuentra
+        agregarPalabraBtn?.addEventListener('click', () => {
+            const div = document.createElement('div');
+            div.classList.add('input-group', 'mb-1');
+            div.innerHTML = `
+                <input type="text" class="form-control" placeholder="Palabra clave" />
+                <button type="button" class="btn btn-outline-danger" onclick="this.parentElement.remove()">Eliminar</button>
+            `;
+            palabrasClaveList.appendChild(div);
+        });
+
+        // Serializar JSON y validar antes de enviar
+                form.addEventListener('submit', (e) => {
+            const tipo = tipoSelect.value;
+            let data = null;
+            const statusDiv = document.getElementById('statusMessageJS');
+            statusDiv.innerText = ""; // limpiar mensaje previo
+
+            if (tipo === 'Quiz') {
+                data = Array.from(preguntasList.children).map(div => {
+                    const correcta = parseInt(div.children[4].value);
+                    if (isNaN(correcta) || correcta < 1 || correcta > 3) {
+                        e.preventDefault();
+                        statusDiv.innerText = "❌ Cada pregunta debe tener un número de respuesta correcta entre 1 y 3.";
+                        return null;
+                    }
+                    return {
+                        Pregunta: div.children[0].value,
+                        Respuestas: [
+                            div.children[1].value,
+                            div.children[2].value,
+                            div.children[3].value
+                        ],
+                        Correcta: correcta
+                    };
+                });
+                if (!data) return false;
+            } else if (tipo === 'SopaDeLetras') {
+                data = Array.from(palabrasSopaList.querySelectorAll('input')).map(i => i.value);
+            } else if (tipo === 'EncuentraLaPalabra') {
+                data = {
+                    Texto: contenidoEncuentra.querySelector('textarea').value,
+                    PalabrasClave: Array.from(palabrasClaveList.querySelectorAll('input')).map(i => i.value)
+                };
+            }
+
+            contenidoJsonHidden.value = data ? JSON.stringify(data) : "[]";
+        });
+
+    </script>
 }

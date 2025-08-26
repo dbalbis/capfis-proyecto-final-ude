@@ -1,0 +1,117 @@
+﻿@page
+@model CAPFIS.Pages.Admin.Etapas.EditarEtapaModuloModel
+@using CAPFIS.Models
+@{
+    Layout = "/Pages/Shared/_LayoutAdmin.cshtml";
+    ViewData["Title"] = "Editar Etapa";
+}
+
+<div class="row">
+    <div class="col-md-8 mx-auto">
+        <h3 style="color: #FFA500;">Editar Etapa</h3>
+        <hr class="text-secondary my-3" style="border: none; border-bottom: 2px solid rgba(255, 165, 0, 0.4);" />
+
+        <partial name="_StatusMessage" model="Model.StatusMessage" />
+
+        <!-- Selector de etapa -->
+        <form method="get">
+            <label for="etapaSelect" class="form-label">Seleccione una etapa:</label>
+            <select class="form-select mb-3" id="etapaSelect" name="SelectedEtapaId" onchange="this.form.submit()">
+                <option value="">-- Seleccione --</option>
+                @foreach (var etapa in Model.EtapasList)
+                {
+                    <option value="@etapa.Value" selected="@(etapa.Value == Model.SelectedEtapaId?.ToString() ? true : (bool?)null)">
+                        @etapa.Text
+                    </option>
+                }
+            </select>
+        </form>
+
+        @if (Model.SelectedEtapaId != null)
+        {
+            <form method="post">
+                <input type="hidden" asp-for="SelectedEtapaId" />
+
+                <!-- Módulo -->
+                <div class="form-floating mb-3">
+                    <select asp-for="Input.ModuloInteractivoId" class="form-select" asp-items="Model.ModulosList"></select>
+                    <label asp-for="Input.ModuloInteractivoId">Módulo</label>
+                    <span asp-validation-for="Input.ModuloInteractivoId" class="text-danger"></span>
+                </div>
+
+                <!-- Título -->
+                <div class="form-floating mb-3">
+                    <input asp-for="Input.Titulo" class="form-control" placeholder="Título" />
+                    <label asp-for="Input.Titulo">Título</label>
+                    <span asp-validation-for="Input.Titulo" class="text-danger"></span>
+                </div>
+
+                <!-- Tipo (solo lectura) -->
+                <div class="form-floating mb-3">
+                    <input asp-for="Input.Tipo" class="form-control" readonly />
+                    <label asp-for="Input.Tipo">Tipo de Etapa</label>
+                </div>
+
+                <!-- Campos según tipo -->
+                <div id="contenidoVideo" class="mb-3" style="display:none;">
+                    <label class="form-label">URL del Video</label>
+                    <input asp-for="Input.ContenidoUrl" class="form-control" placeholder="https://..." />
+                </div>
+
+                <div id="contenidoAhorcado" class="mb-3" style="display:none;">
+                    <label class="form-label">Palabra a adivinar</label>
+                    <input asp-for="Input.ContenidoTexto" class="form-control" />
+                </div>
+
+                <div id="contenidoQuiz" class="mb-3" style="display:none;">
+                    <label class="form-label">Preguntas del Quiz</label>
+                    <div id="preguntasList"></div>
+                    <button type="button" class="btn btn-outline-warning btn-sm mt-2" id="agregarPreguntaBtn">Agregar Pregunta</button>
+                </div>
+
+                <div id="contenidoSopa" class="mb-3" style="display:none;">
+                    <label class="form-label">Palabras de la Sopa de Letras</label>
+                    <div id="palabrasSopaList"></div>
+                    <button type="button" class="btn btn-outline-warning btn-sm mt-2" id="agregarPalabraSopaBtn">Agregar palabra</button>
+                </div>
+
+                <div id="contenidoEncuentra" class="mb-3" style="display:none;">
+                    <label class="form-label">Texto base</label>
+                    <textarea asp-for="Input.ContenidoTexto" class="form-control" rows="5"></textarea>
+
+                    <label class="form-label mt-2">Palabras clave</label>
+                    <div id="palabrasClaveList"></div>
+                    <button type="button" class="btn btn-outline-warning btn-sm mt-2" id="agregarPalabraBtn">Agregar palabra</button>
+                </div>
+
+                <!-- Campo oculto para JSON -->
+                <input type="hidden" asp-for="Input.ContenidoJson" id="contenidoJsonHidden" />
+
+                <button type="submit" class="btn btn-outline-warning fw-bold w-100 mt-3">Guardar</button>
+            </form>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        const tipo = "@Model.Input.Tipo";
+        const contenidoVideo = document.getElementById('contenidoVideo');
+        const contenidoAhorcado = document.getElementById('contenidoAhorcado');
+        const contenidoQuiz = document.getElementById('contenidoQuiz');
+        const contenidoSopa = document.getElementById('contenidoSopa');
+        const contenidoEncuentra = document.getElementById('contenidoEncuentra');
+
+        // Mostrar campos según tipo
+        switch(tipo){
+            case "Video": contenidoVideo.style.display="block"; break;
+            case "Ahorcado": contenidoAhorcado.style.display="block"; break;
+            case "Quiz": contenidoQuiz.style.display="block"; break;
+            case "SopaDeLetras": contenidoSopa.style.display="block"; break;
+            case "EncuentraLaPalabra": contenidoEncuentra.style.display="block"; break;
+        }
+
+        // Aquí agregás tu JS para serializar JSON, agregar preguntas, palabras, etc.
+    </script>
+}

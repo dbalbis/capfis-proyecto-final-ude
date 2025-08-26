@@ -1,73 +1,111 @@
-using Microsoft.AspNetCore.Mvc;
+ï»¿using CAPFIS.Data;
 using CAPFIS.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;
 
 namespace CAPFIS.Pages.Admin.Etapas
 {
-    public class CrearEtapaModel : PageModel
+    public class CrearEtapaModuloModel : PageModel
     {
+        private readonly ApplicationDbContext _context;
+
+        public CrearEtapaModuloModel(ApplicationDbContext context)
+        {
+            _context = context;
+        }
+
         [BindProperty]
         public InputModel Input { get; set; } = new();
+
+        public List<ModuloInteractivo> Modulos { get; set; } = new();
 
         public string? StatusMessage { get; set; }
 
         public class InputModel
         {
-            [Required(ErrorMessage = "El título es obligatorio")]
+            [Required(ErrorMessage = "Debe seleccionar un mÃ³dulo")]
+            public int ModuloInteractivoId { get; set; }
+
+            [Required(ErrorMessage = "El tÃ­tulo es obligatorio")]
             public string Titulo { get; set; } = string.Empty;
 
             [Required(ErrorMessage = "Debe seleccionar un tipo")]
             public TipoEtapa? Tipo { get; set; }
 
-            [Url(ErrorMessage = "Ingrese una URL válida")]
+            [Url(ErrorMessage = "Ingrese una URL vÃ¡lida")]
             public string? ContenidoUrl { get; set; }
-
-            public string? ContenidoJson { get; set; }
 
             public string? ContenidoTexto { get; set; }
 
+            public string? ContenidoJson { get; set; }
+
             [Range(1, int.MaxValue, ErrorMessage = "El orden debe ser mayor a cero")]
-            public int Orden { get; set; }
+            public int Orden { get; set; } = 1;
 
             public bool EstaPublicado { get; set; }
-
-            public string? StatusMessage { get; set; }
         }
 
         public void OnGet()
         {
-            // Inicializaciones si necesitas
+            Modulos = _context.Modulos.OrderBy(m => m.Titulo).ToList();
         }
 
         public IActionResult OnPost()
         {
             if (!ModelState.IsValid)
             {
+                Modulos = _context.Modulos.OrderBy(m => m.Titulo).ToList();
                 return Page();
             }
 
-            // Aquí guardas la etapa, por ejemplo con EF Core
-            // Ejemplo:
-            // var etapa = new EtapaModulo {
-            //     Titulo = Input.Titulo,
-            //     Tipo = Input.Tipo!.Value,
-            //     ContenidoUrl = Input.ContenidoUrl,
-            //     ContenidoJson = Input.ContenidoJson,
-            //     ContenidoTexto = Input.ContenidoTexto,
-            //     Orden = Input.Orden,
-            //     EstaPublicado = Input.EstaPublicado,
-            //     ModuloInteractivoId = algún_id, // debe venir o seleccionarse también
-            // };
+            // Validar JSON obligatorio para ciertos tipos
+            if ((Input.Tipo == TipoEtapa.Quiz || Input.Tipo == TipoEtapa.SopaDeLetras || Input.Tipo == TipoEtapa.EncuentraLaPalabra)
+                && string.IsNullOrWhiteSpace(Input.ContenidoJson))
+            {
+                ModelState.AddModelError(string.Empty, "El contenido JSON no puede estar vacÃ­o.");
+                Modulos = _context.Modulos.OrderBy(m => m.Titulo).ToList();
+                return Page();
+            }
 
-            // _context.Etapas.Add(etapa);
-            // await _context.SaveChangesAsync();
+            var etapa = new EtapaModulo
+            {
+                ModuloInteractivoId = Input.ModuloInteractivoId,
+                Titulo = Input.Titulo,
+                Tipo = Input.Tipo!.Value,
+                Orden = Input.Orden,
+                EstaPublicado = Input.EstaPublicado
+            };
 
-            StatusMessage = "Etapa creada correctamente.";
+            switch (Input.Tipo)
+            {
+                case TipoEtapa.Video:
+                    etapa.ContenidoUrl = Input.ContenidoUrl;
+                    break;
 
-            // Limpiar formulario (opcional)
+                case TipoEtapa.Ahorcado:
+                    etapa.ContenidoTexto = Input.ContenidoTexto;
+                    break;
+
+                case TipoEtapa.Quiz:
+                case TipoEtapa.SopaDeLetras:
+                    etapa.ContenidoJson = Input.ContenidoJson;
+                    break;
+
+                case TipoEtapa.EncuentraLaPalabra:
+                    etapa.ContenidoTexto = Input.ContenidoTexto;
+                    etapa.ContenidoJson = Input.ContenidoJson;
+                    break;
+            }
+
+            _context.Etapas.Add(etapa);
+            _context.SaveChanges();
+
+            StatusMessage = "âœ… Etapa creada correctamente.";
+
             ModelState.Clear();
             Input = new InputModel();
+            Modulos = _context.Modulos.OrderBy(m => m.Titulo).ToList();
 
             return Page();
         }
