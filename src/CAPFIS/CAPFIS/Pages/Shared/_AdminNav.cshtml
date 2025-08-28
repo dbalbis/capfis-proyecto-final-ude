@@ -41,6 +41,10 @@
                asp-page="/Admin/Etapas/EditarEtapa">
                 Editar Etapa
             </a>
+            <a class="nav-link btn btn-outline-warning fw-bold px-4 mb-2 @(isActive("/Admin/Etapas/EliminarEtapa") ? "active" : "")"
+               asp-page="/Admin/Etapas/EliminarEtapa">
+                Eliminar Etapa
+            </a>
         </li>
         <!-- Aquí podrías agregar más enlaces de etapas -->
     </ul>

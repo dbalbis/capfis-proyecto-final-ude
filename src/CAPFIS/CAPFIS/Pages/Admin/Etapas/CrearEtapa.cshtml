@@ -8,6 +8,8 @@
 <div class="row">
     <div class="col-md-6 mx-auto">
         <h3 style="color: #FFA500;">Crear Etapa de Módulo</h3>
+
+        <!-- Separador -->
         <hr class="text-secondary my-3"
             style="border: none; border-bottom: 2px solid rgba(255, 165, 0, 0.4); margin: 0 1rem 0.5rem 1rem;" />
 
@@ -31,9 +33,9 @@
             </div>
 
             <!-- Título -->
-            <div class="mb-3">
-                <label asp-for="Input.Titulo" class="form-label">Título</label>
-                <input asp-for="Input.Titulo" class="form-control" />
+            <div class="form-floating mb-3">
+                <input asp-for="Input.Titulo" class="form-control" placeholder="Título de la etapa" />
+                <label asp-for="Input.Titulo">Título de la etapa</label>
                 <span asp-validation-for="Input.Titulo" class="text-danger"></span>
             </div>
 
@@ -86,7 +88,11 @@
                 <button type="button" class="btn btn-outline-warning btn-sm mt-2" id="agregarPalabraBtn">Agregar palabra</button>
             </div>
 
-            <button type="submit" class="btn btn-outline-warning w-100 mt-3">Crear Etapa</button>
+            <button type="submit"
+                    class="btn btn-outline-warning fw-bold px-4 login-btn w-100"
+                    style="border-width:2px; color:#FFA500; border-color:#FFA500; background-color:transparent;">
+                Crear Etapa
+            </button>
         </form>
     </div>
 </div>
@@ -95,6 +101,7 @@
     <partial name="_ValidationScriptsPartial" />
 
     <script>
+        // Mostrar campos según tipo de etapa
         const tipoSelect = document.getElementById('tipoEtapaSelect');
         const contenidoVideo = document.getElementById('contenidoVideo');
         const contenidoAhorcado = document.getElementById('contenidoAhorcado');
@@ -113,6 +120,7 @@
 
         const contenidoJsonHidden = document.getElementById('contenidoJsonHidden');
         const form = document.getElementById('formCrearEtapa');
+        const statusDiv = document.getElementById('statusMessageJS');
 
         function actualizarCampos() {
             const tipo = tipoSelect.value;
@@ -126,6 +134,20 @@
         actualizarCampos();
 
         // Quiz
+                // Función para enumerar las preguntas
+        function renderizarNumerosPreguntas() {
+            Array.from(preguntasList.children).forEach((div, idx) => {
+                let numeroSpan = div.querySelector('.numeroPregunta');
+                if (!numeroSpan) {
+                    numeroSpan = document.createElement('span');
+                    numeroSpan.classList.add('numeroPregunta', 'fw-bold', 'me-2');
+                    div.prepend(numeroSpan); // colocar al inicio del div
+                }
+                numeroSpan.innerText = `${idx + 1}.`;
+            });
+        }
+
+        // Quiz: agregar nueva pregunta
         agregarPreguntaBtn?.addEventListener('click', () => {
             const div = document.createElement('div');
             div.classList.add('border', 'p-2', 'mb-2', 'rounded');
@@ -135,9 +157,17 @@
                 <input type="text" class="form-control mb-1" placeholder="Respuesta 2" />
                 <input type="text" class="form-control mb-1" placeholder="Respuesta 3" />
                 <input type="number" min="1" max="3" class="form-control mb-1" placeholder="Número de respuesta correcta (1-3)" required />
-                <button type="button" class="btn btn-outline-danger btn-sm mt-1" onclick="this.parentElement.remove()">Eliminar</button>
+                <button type="button" class="btn btn-outline-danger btn-sm mt-1">Eliminar</button>
             `;
             preguntasList.appendChild(div);
+
+            // Botón eliminar
+            div.querySelector('button').addEventListener('click', () => {
+                div.remove();
+                renderizarNumerosPreguntas(); // actualizar numeración al eliminar
+            });
+
+            renderizarNumerosPreguntas(); // actualizar numeración al agregar
         });
 
         // Sopa
@@ -163,31 +193,37 @@
         });
 
         // Serializar JSON y validar antes de enviar
-                form.addEventListener('submit', (e) => {
+            form.addEventListener('submit', (e) => {
+            statusDiv.innerText = "";
             const tipo = tipoSelect.value;
             let data = null;
-            const statusDiv = document.getElementById('statusMessageJS');
-            statusDiv.innerText = ""; // limpiar mensaje previo
 
             if (tipo === 'Quiz') {
-                data = Array.from(preguntasList.children).map(div => {
-                    const correcta = parseInt(div.children[4].value);
-                    if (isNaN(correcta) || correcta < 1 || correcta > 3) {
+                const preguntas = Array.from(preguntasList.children);
+                const quizData = [];
+
+                for (const div of preguntas) {
+                    const inputs = div.querySelectorAll('input');
+                    const preguntaText = inputs[0].value.trim();
+                    const respuestas = [inputs[1].value.trim(), inputs[2].value.trim(), inputs[3].value.trim()];
+                    const correcta = parseInt(inputs[4].value);
+
+                    // Validación
+                    if (!preguntaText || respuestas.some(r => !r) || isNaN(correcta) || correcta < 1 || correcta > 3) {
+                        statusDiv.innerText = "❌ Cada pregunta debe tener texto, 3 respuestas y una respuesta correcta entre 1 y 3.";
                         e.preventDefault();
-                        statusDiv.innerText = "❌ Cada pregunta debe tener un número de respuesta correcta entre 1 y 3.";
-                        return null;
+                        return false;
                     }
-                    return {
-                        Pregunta: div.children[0].value,
-                        Respuestas: [
-                            div.children[1].value,
-                            div.children[2].value,
-                            div.children[3].value
-                        ],
+
+                    quizData.push({
+                        Pregunta: preguntaText,
+                        Respuestas: respuestas,
                         Correcta: correcta
-                    };
-                });
-                if (!data) return false;
+                    });
+                }
+
+                data = quizData;
+
             } else if (tipo === 'SopaDeLetras') {
                 data = Array.from(palabrasSopaList.querySelectorAll('input')).map(i => i.value);
             } else if (tipo === 'EncuentraLaPalabra') {
@@ -199,6 +235,7 @@
 
             contenidoJsonHidden.value = data ? JSON.stringify(data) : "[]";
         });
+
 
     </script>
 }

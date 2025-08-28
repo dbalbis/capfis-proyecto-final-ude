@@ -1,0 +1,59 @@
+﻿@page
+@model CAPFIS.Pages.Admin.Etapas.EliminarEtapaModel
+@{
+    Layout = "/Pages/Shared/_LayoutAdmin.cshtml";
+    ViewData["Title"] = "Eliminar Etapa";
+}
+
+<div class="row">
+    <div class="col-md-6 mx-auto">
+        <h3 style="color: #FFA500;">Eliminar Etapa</h3>
+
+        <!-- Separador -->
+        <hr class="text-secondary my-3"
+            style="border: none; border-bottom: 2px solid rgba(255, 165, 0, 0.4); margin: 0 1rem 0.5rem 1rem;" />
+
+        <partial name="_StatusMessage" model="Model.StatusMessage" />
+
+        <!-- Select de etapa -->
+        <label for="etapaSelect" class="form-label">Seleccione una etapa:</label>
+        <form method="get">
+            <select class="form-select" id="etapaSelect" name="SelectedId" onchange="this.form.submit()">
+                <option value="">-- Seleccione --</option>
+                @foreach (var etapa in Model.Etapas)
+                {
+                    <option value="@etapa.Id" selected="@(etapa.Id == Model.SelectedId ? true : (bool?)null)">
+                        @etapa.Titulo
+                    </option>
+                }
+            </select>
+        </form>
+
+        <!-- Separador -->
+        <hr class="text-secondary my-3"
+            style="border: none; border-bottom: 2px solid rgba(255, 165, 0, 0.4); margin: 0 1rem 0.5rem 1rem;" />
+
+        <!-- Card de detalles y botón de eliminación -->
+        @if (Model.SelectedEtapa != null)
+        {
+            <div class="mb-3">
+                <h5 style="color:white;">@Model.SelectedEtapa.Titulo</h5>
+                <div class="border p-2 mb-3" style="background-color:#1c1c1c; color:white; min-height:50px;">
+                    Tipo: @Model.SelectedEtapa.Tipo
+                </div>
+
+                <div class="alert alert-danger small mb-3">
+                    ⚠️ Esta acción eliminará la etapa permanentemente.
+                </div>
+
+                <form method="post">
+                    <input type="hidden" asp-for="SelectedEtapa.Id" />
+                    <button type="submit" class="btn btn-outline-danger px-4 fw-bold w-100"
+                            style="border-width:2px;">
+                        Eliminar etapa
+                    </button>
+                </form>
+            </div>
+        }
+    </div>
+</div>
