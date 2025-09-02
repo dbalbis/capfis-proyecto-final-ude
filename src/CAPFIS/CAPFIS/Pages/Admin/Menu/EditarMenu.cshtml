@@ -1,0 +1,92 @@
+﻿@page
+@model CAPFIS.Pages.Admin.Menu.EditarMenuModel
+@{
+    Layout = "/Pages/Shared/_LayoutAdmin.cshtml";
+    ViewData["Title"] = "Editar Menú";
+}
+
+<div class="row">
+    <div class="col-md-8 mx-auto">
+        <h3 style="color: #FFA500;">Editar Menú</h3>
+
+        <hr class="text-secondary my-3"
+            style="border: none; border-bottom: 2px solid rgba(255, 165, 0, 0.4); margin: 0 1rem 0.5rem 1rem;" />
+
+        <partial name="_StatusMessage" model="Model.StatusMessage" />
+
+        <form method="post" id="orden-form">
+            <ul id="modulos-list" class="list-group mb-3">
+                @foreach (var modulo in Model.Modulos.OrderBy(m => m.Orden ?? int.MaxValue))
+                {
+                    <li class="list-group-item bg-dark text-white d-flex justify-content-between align-items-center"
+                        data-id="@modulo.Id"
+                        style="cursor:grab;">
+                        <strong class="me-2">@modulo.Titulo</strong>
+                        <span class="badge bg-secondary order-badge">Orden: @(modulo.Orden ?? 0)</span>
+                    </li>
+                }
+            </ul>
+
+            <input type="hidden" id="ordenJson" name="OrdenJson" />
+
+            <button type="submit"
+                    class="btn btn-outline-warning fw-bold px-4 w-100"
+                    style="border-width:2px; color:#FFA500; border-color:#FFA500; background-color:transparent;">
+                Guardar Orden
+            </button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <!-- Si el CDN falla por políticas de integridad/CSP, probá eliminar el integrity/crossorigin o usar otro CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const lista = document.getElementById("modulos-list");
+            const ordenInput = document.getElementById("ordenJson");
+
+            if (!lista) return;
+
+            // Inicializar Sortable (create o new Sortable)
+            const sortable = Sortable.create(lista, {
+                animation: 180,
+                ghostClass: 'sortable-ghost',
+                onEnd: function (evt) {
+                    // Actualizamos las badges visualmente cada vez que termine el drag
+                    actualizarBadgesOrden();
+                }
+            });
+
+            // Actualiza badges "Orden: N" en cada LI
+            function actualizarBadgesOrden() {
+                [...lista.querySelectorAll("li")].forEach((li, index) => {
+                    const badge = li.querySelector(".order-badge");
+                    if (badge) badge.textContent = "Orden: " + (index + 1);
+                });
+            }
+
+            // Inicializar badges al cargar
+            actualizarBadgesOrden();
+
+            // Al enviar el formulario, serializamos el orden actual
+            document.getElementById("orden-form").addEventListener("submit", function (e) {
+                const items = [...lista.querySelectorAll("li")].map((li, index) => ({
+                    id: parseInt(li.dataset.id, 10),
+                    orden: index + 1
+                }));
+                ordenInput.value = JSON.stringify(items);
+                // Dejar que el form se envíe normalmente
+            });
+        });
+    </script>
+
+    <style>
+        /* pequeña mejora visual al arrastrar */
+        .sortable-ghost {
+            opacity: 0.8;
+            transform: rotate(-1deg);
+        }
+    </style>
+}
