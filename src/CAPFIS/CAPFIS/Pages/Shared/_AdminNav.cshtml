@@ -21,6 +21,12 @@
                asp-page="/Admin/Modulos/EditarModulo">
                 Editar Módulo
             </a>
+
+            <a class="nav-link btn btn-outline-warning fw-bold px-4 mb-2 @(isActive("/Admin/Modulos/OrdenarModulo") ? "active" : "")"
+               asp-page="/Admin/Modulos/OrdenarModulo">
+                Ordenar Módulo
+            </a>
+
             <a class="nav-link btn btn-outline-warning fw-bold px-4 mb-2 @(isActive("/Admin/Modulos/EliminarModulo") ? "active" : "")"
                asp-page="/Admin/Modulos/EliminarModulo">
                 Eliminar Módulo
@@ -54,7 +60,7 @@
     <ul class="nav nav-pills flex-column">
         <li class="nav-item">
             <a class="nav-link btn btn-outline-warning fw-bold px-4 mb-2 @(isActive("/Admin/Usuarios/EditarUsuario") ? "active" : "")"
-               asp-page="/Admin/Etapas/EditarUsuario">
+               asp-page="/Admin/Usuarios/EditarUsuario">
                 Editar Usuario
             </a>
         </li>

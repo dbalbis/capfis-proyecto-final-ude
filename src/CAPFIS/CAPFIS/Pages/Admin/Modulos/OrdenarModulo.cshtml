@@ -1,0 +1,85 @@
+﻿@page
+@model CAPFIS.Pages.Admin.Modulos.OrdenarModuloModel
+@{
+    Layout = "/Pages/Shared/_LayoutAdmin.cshtml";
+    ViewData["Title"] = "Ordenar Etapas de un Módulo";
+}
+
+<div class="row">
+    <div class="col-md-6 mx-auto">
+        <h3 style="color: #FFA500;">Ordenar Módulo</h3>
+
+        <hr class="text-secondary my-3"
+            style="border: none; border-bottom: 2px solid rgba(255, 165, 0, 0.4);" />
+
+        <partial name="_StatusMessage" model="Model.StatusMessage" />
+
+        <!-- Select de módulo -->
+        <form method="get">
+            <label for="moduloSelect" class="form-label">Seleccione un módulo:</label>
+            <select class="form-select" id="moduloSelect" name="SelectedId" onchange="this.form.submit()">
+                <option value="">-- Seleccione --</option>
+                @foreach (var mod in Model.Modulos)
+                {
+                    <option value="@mod.Id" selected="@(mod.Id == Model.SelectedId ? true : (bool?)null)">
+                        @mod.Titulo
+                    </option>
+                }
+            </select>
+        </form>
+
+        <hr class="text-secondary my-3"
+            style="border: none; border-bottom: 2px solid rgba(255, 165, 0, 0.4);" />
+
+        @if (Model.SelectedModulo != null && Model.Etapas.Any())
+        {
+            <form method="post" id="orden-etapas-form">
+                <input type="hidden" name="OrdenJson" id="ordenEtapasJson" />
+                <input type="hidden" name="SelectedId" value="@Model.SelectedId" />
+
+                <ul id="etapas-list" class="list-group mb-3">
+                    @foreach (var etapa in Model.Etapas.OrderBy(e => e.Orden))
+                    {
+                        <li class="list-group-item bg-dark text-white d-flex justify-content-between align-items-center"
+                            data-id="@etapa.Id"
+                            style="cursor: grab;">
+
+                            <div>
+                                <strong>@etapa.Titulo</strong>
+                                <div class="text-white-50 small">Tipo: @etapa.Tipo</div>
+                            </div>
+
+                            <span class="badge bg-secondary">Orden: @etapa.Orden</span>
+                        </li>
+                    }
+                </ul>
+
+
+                <button type="submit" class="btn btn-outline-warning fw-bold w-100">
+                    Guardar Orden
+                </button>
+            </form>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"></script>
+    <script>
+        const listaEtapas = document.getElementById("etapas-list");
+        if (listaEtapas) {
+            new Sortable(listaEtapas, {
+                animation: 150,
+                ghostClass: "bg-secondary"
+            });
+
+            document.getElementById("orden-etapas-form").addEventListener("submit", function () {
+                const ids = [...listaEtapas.querySelectorAll("li")].map((li, index) => ({
+                    id: li.dataset.id,
+                    orden: index + 1
+                }));
+                document.getElementById("ordenEtapasJson").value = JSON.stringify(ids);
+            });
+        }
+    </script>
+}

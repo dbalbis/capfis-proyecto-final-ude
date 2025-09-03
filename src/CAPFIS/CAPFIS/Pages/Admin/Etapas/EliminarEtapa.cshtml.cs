@@ -2,6 +2,7 @@
 using CAPFIS.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 
 namespace CAPFIS.Pages.Admin.Etapas
 {
@@ -20,13 +21,15 @@ namespace CAPFIS.Pages.Admin.Etapas
         public List<EtapaModulo> Etapas { get; set; } = new();
 
         [BindProperty]
-        public EtapaModulo SelectedEtapa { get; set; } = new();
+        public EtapaModulo? SelectedEtapa { get; set; }
 
         public string? StatusMessage { get; set; }
 
         public void OnGet()
         {
-            Etapas = _context.Etapas.OrderBy(e => e.Titulo).ToList();
+            Etapas = _context.Etapas
+                .OrderBy(e => e.Titulo)
+                .ToList();
 
             if (SelectedId.HasValue)
             {
@@ -53,12 +56,28 @@ namespace CAPFIS.Pages.Admin.Etapas
                 return Page();
             }
 
+            int moduloId = etapa.ModuloInteractivoId;
+
+            // 1. Eliminar la etapa
             _context.Etapas.Remove(etapa);
             _context.SaveChanges();
 
-            StatusMessage = "✅ Etapa eliminada correctamente.";
+            // 2. Reordenar las etapas del mismo módulo
+            var etapasModulo = _context.Etapas
+                .Where(e => e.ModuloInteractivoId == moduloId)
+                .OrderBy(e => e.Orden)
+                .ToList();
 
-            // Recargar lista y limpiar selección
+            for (int i = 0; i < etapasModulo.Count; i++)
+            {
+                etapasModulo[i].Orden = i + 1;
+            }
+
+            _context.SaveChanges();
+
+            StatusMessage = "✅ Etapa eliminada y orden reacomodado.";
+
+            // 3. Recargar lista y limpiar selección
             Etapas = _context.Etapas.OrderBy(e => e.Titulo).ToList();
             SelectedEtapa = null;
             SelectedId = null;

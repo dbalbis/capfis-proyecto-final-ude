@@ -68,12 +68,19 @@ namespace CAPFIS.Pages.Admin.Etapas
                 return Page();
             }
 
+            // 🔹 Calcular el orden automáticamente
+            var ultimoOrden = _context.Etapas
+                .Where(e => e.ModuloInteractivoId == Input.ModuloInteractivoId)
+                .Max(e => (int?)e.Orden) ?? 0;
+
+            int nuevoOrden = ultimoOrden + 1;
+
             var etapa = new EtapaModulo
             {
                 ModuloInteractivoId = Input.ModuloInteractivoId,
                 Titulo = Input.Titulo,
                 Tipo = Input.Tipo!.Value,
-                Orden = Input.Orden,
+                Orden = nuevoOrden, // 👈 Se asigna el nuevo orden
                 EstaPublicado = Input.EstaPublicado
             };
 

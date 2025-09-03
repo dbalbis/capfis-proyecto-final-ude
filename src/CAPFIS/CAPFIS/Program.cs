@@ -6,11 +6,13 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
+                       ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
+// Identity
 builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
 {
     options.SignIn.RequireConfirmedAccount = false;
@@ -24,9 +26,32 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
     // Tiempo de bloqueo tras llegar al límite (ejemplo: 5 minutos)
     options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
 })
-    .AddRoles<IdentityRole>()
-    .AddEntityFrameworkStores<ApplicationDbContext>();
-builder.Services.AddRazorPages();
+.AddRoles<IdentityRole>()
+.AddEntityFrameworkStores<ApplicationDbContext>();
+
+// Configuración de la cookie para redirigir si el usuario no tiene permisos
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.AccessDeniedPath = "/"; // Redirige al Index si no tiene permisos
+});
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("SoloAdmins", policy =>
+        policy.RequireRole("Administrador"));
+});
+
+builder.Services.AddRazorPages(options =>
+{
+    options.Conventions.AuthorizeFolder("/Admin", "SoloAdmins");
+});
+
+// Configurar la cookie para redirigir al Index si no tiene acceso
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = "/";         // Redirige al index si no está autenticado
+    options.AccessDeniedPath = "/";  // Redirige al index si no tiene permisos
+});
 
 var app = builder.Build();
 
@@ -38,7 +63,6 @@ if (app.Environment.IsDevelopment())
 else
 {
     app.UseExceptionHandler("/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
@@ -46,27 +70,28 @@ app.UseHttpsRedirection();
 
 app.UseRouting();
 
-app.UseAuthentication(); // <-- ¡IMPORTANTE! Debe estar antes de UseAuthorization
+app.UseAuthentication(); // Debe ir antes de UseAuthorization
 app.UseAuthorization();
 
 app.MapStaticAssets();
 app.MapRazorPages()
    .WithStaticAssets();
 
-var scope = app.Services.CreateScope();
-var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-await CrearRoles(roleManager);
+// Crear roles y usuario admin
+using (var scope = app.Services.CreateScope())
+{
+    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+    await CrearRoles(roleManager);
 
-var services = scope.ServiceProvider;
-var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
-
-await CrearUsuarioAdministrador(userManager, services);
+    var services = scope.ServiceProvider;
+    var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
+    await CrearUsuarioAdministrador(userManager, services);
+}
 
 app.Run();
 
 async Task CrearUsuarioAdministrador(UserManager<ApplicationUser> userManager, IServiceProvider services)
 {
-    //ESTO TIENE QUE IR EN UN ARCHIVO DE CONFIGURACION Y NO PLANO
     string adminEmail = "admin@capfis.com";
     string adminPassword = "Admin123!";
 
