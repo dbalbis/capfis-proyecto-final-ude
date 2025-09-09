@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace CAPFIS.Migrations
 {
     /// <inheritdoc />
-    public partial class MigracionInicial : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -63,6 +63,7 @@ namespace CAPFIS.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Titulo = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Slug = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TituloDetallado = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Descripcion = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Orden = table.Column<int>(type: "int", nullable: true),
                     EstaPublicado = table.Column<bool>(type: "bit", nullable: false),
@@ -207,6 +208,35 @@ namespace CAPFIS.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "ModulosUsuarios",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ModuloId = table.Column<int>(type: "int", nullable: false),
+                    FechaInscripcion = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Progreso = table.Column<int>(type: "int", nullable: false),
+                    Completado = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ModulosUsuarios", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ModulosUsuarios_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ModulosUsuarios_Modulos_ModuloId",
+                        column: x => x.ModuloId,
+                        principalTable: "Modulos",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -250,6 +280,16 @@ namespace CAPFIS.Migrations
                 name: "IX_Etapas_ModuloInteractivoId",
                 table: "Etapas",
                 column: "ModuloInteractivoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ModulosUsuarios_ModuloId",
+                table: "ModulosUsuarios",
+                column: "ModuloId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ModulosUsuarios_UserId",
+                table: "ModulosUsuarios",
+                column: "UserId");
         }
 
         /// <inheritdoc />
@@ -272,6 +312,9 @@ namespace CAPFIS.Migrations
 
             migrationBuilder.DropTable(
                 name: "Etapas");
+
+            migrationBuilder.DropTable(
+                name: "ModulosUsuarios");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

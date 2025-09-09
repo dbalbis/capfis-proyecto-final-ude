@@ -101,6 +101,37 @@ body {
         color: #fff !important;
     }
 
+.indexHero-bg {
+    position: relative;
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+    background-image: url('/images/hero.jpg');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    width: 100vw;
+    min-height: 420px;
+    margin-left: calc(-50vw + 50%);
+    margin-right: calc(-50vw + 50%);
+    z-index: 1;
+    overflow: hidden;
+}
+
+    .indexHero-bg::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: rgba(0,0,0,0.65); /* Ajusta la opacidad aquí */
+        z-index: 2;
+        pointer-events: none;
+    }
+
+    .indexHero-bg > .container,
+    .indexHero-bg > .container > .row {
+        position: relative;
+        z-index: 3;
+    }
+
 .feature-card {
     background-color: #111;
     border-radius: 1rem;
@@ -326,8 +357,6 @@ body {
     }
 }
 
-
-
 .ingsocial-bg {
     position: relative;
     margin-top: 0 !important;
@@ -361,7 +390,6 @@ body {
         color: #fff !important;
     }
 
-
 .pretexting-bg {
     position: relative;
     margin-top: 0 !important;
@@ -394,7 +422,6 @@ body {
         z-index: 3;
         color: #fff !important;
     }
-
 
 .vishing-bg {
     position: relative;
@@ -461,7 +488,6 @@ body {
         z-index: 3;
         color: #fff !important;
     }
-
 
 .phishing-bg {
     position: relative;
@@ -535,5 +561,4 @@ body {
     color: black !important;
     border-color: #FFA500 !important;
 }
-
 

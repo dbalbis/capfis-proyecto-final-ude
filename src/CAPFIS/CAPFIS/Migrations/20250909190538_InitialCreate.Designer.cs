@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CAPFIS.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250909002822_AgregarTituloDetalladoModulo")]
-    partial class AgregarTituloDetalladoModulo
+    [Migration("20250909190538_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -330,6 +330,39 @@ namespace CAPFIS.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("ModuloUsuario", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("Completado")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("FechaInscripcion")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("ModuloId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Progreso")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ModuloId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("ModulosUsuarios");
+                });
+
             modelBuilder.Entity("CAPFIS.Models.EtapaModulo", b =>
                 {
                     b.HasOne("CAPFIS.Models.ModuloInteractivo", "Modulo")
@@ -390,6 +423,25 @@ namespace CAPFIS.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("ModuloUsuario", b =>
+                {
+                    b.HasOne("CAPFIS.Models.ModuloInteractivo", "Modulo")
+                        .WithMany()
+                        .HasForeignKey("ModuloId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CAPFIS.Models.ApplicationUser", "Usuario")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Modulo");
+
+                    b.Navigation("Usuario");
                 });
 
             modelBuilder.Entity("CAPFIS.Models.ModuloInteractivo", b =>
