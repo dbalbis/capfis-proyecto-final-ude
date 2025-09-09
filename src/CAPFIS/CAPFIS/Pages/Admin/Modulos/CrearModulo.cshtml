@@ -25,6 +25,14 @@
                 <span asp-validation-for="Input.Titulo" class="text-danger"></span>
             </div>
 
+            <!-- Título Detallado -->
+            <div class="form-floating mb-3">
+                <input asp-for="Input.TituloDetallado" class="form-control" placeholder="Título Detallado del módulo" />
+                <label asp-for="Input.TituloDetallado">Título Detallado del módulo</label>
+                <span asp-validation-for="Input.TituloDetallado" class="text-danger"></span>
+            </div>
+
+
 
             <!-- Descripción -->
             <div class="mb-3">
@@ -58,7 +66,7 @@
                 <div class="mt-2 p-2 rounded bg-dark border border-secondary small text-white">
                     <div>📐 Resolución recomendada: <strong>1920x1080 px (mínimo)</strong></div>
                     <div>🖼️ Formatos permitidos: <strong>JPG, JPEG, PNG, GIF, WebP</strong></div>
-                    <div>💾 Tamaño máximo: <strong>2 MB</strong></div>
+                    <div>💾 Tamaño máximo: <strong>5 MB</strong></div>
                 </div>
 
                 <span asp-validation-for="Input.HeroImageFile" class="text-danger"></span>

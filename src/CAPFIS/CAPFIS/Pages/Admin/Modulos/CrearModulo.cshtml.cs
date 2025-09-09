@@ -28,6 +28,9 @@ namespace CAPFIS.Pages.Admin.Modulos
             [Required(ErrorMessage = "El título es obligatorio")]
             public string Titulo { get; set; } = string.Empty;
 
+            [Required(ErrorMessage = "El título detallado es obligatorio")]
+            public string TituloDetallado { get; set; } = string.Empty;
+
             [Required(ErrorMessage = "La descripción es obligatoria")]
             public string Descripcion { get; set; } = string.Empty;
 
@@ -70,7 +73,7 @@ namespace CAPFIS.Pages.Admin.Modulos
 
             if (Input.HeroImageFile != null && Input.HeroImageFile.Length > 0)
             {
-                const long maxFileSize = 2 * 1024 * 1024; // 2 MB
+                const long maxFileSize = 5 * 1024 * 1024; // 5 MB
                 if (Input.HeroImageFile.Length > maxFileSize)
                 {
                     ModelState.AddModelError("Input.HeroImageFile", "El archivo no debe superar los 2 MB.");
@@ -108,6 +111,7 @@ namespace CAPFIS.Pages.Admin.Modulos
             var modulo = new ModuloInteractivo
             {
                 Titulo = Input.Titulo,
+                TituloDetallado = Input.TituloDetallado,
                 Slug = slug,
                 Descripcion = InputSanitizer.SanitizeHtml(Input.Descripcion),
                 EstaPublicado = Input.Publicado,

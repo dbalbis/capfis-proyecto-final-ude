@@ -16,41 +16,31 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
 {
     options.SignIn.RequireConfirmedAccount = false;
-
-    // Habilitar lockout para nuevos usuarios
     options.Lockout.AllowedForNewUsers = true;
-
-    // Cantidad máxima de intentos fallidos antes de bloquear
     options.Lockout.MaxFailedAccessAttempts = 3;
-
-    // Tiempo de bloqueo tras llegar al límite (ejemplo: 5 minutos)
     options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
 })
 .AddRoles<IdentityRole>()
 .AddEntityFrameworkStores<ApplicationDbContext>();
 
-// Configuración de la cookie para redirigir si el usuario no tiene permisos
+// Configuración de la cookie
 builder.Services.ConfigureApplicationCookie(options =>
 {
-    options.AccessDeniedPath = "/"; // Redirige al Index si no tiene permisos
+    options.LoginPath = "/";         // Si no está autenticado, redirige al Index
+    options.AccessDeniedPath = "/";  // Si no tiene permisos, redirige al Index
 });
 
+// Autorización: policy para administradores
 builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("SoloAdmins", policy =>
         policy.RequireRole("Administrador"));
 });
 
+// Autorizar todas las páginas dentro de /Admin
 builder.Services.AddRazorPages(options =>
 {
     options.Conventions.AuthorizeFolder("/Admin", "SoloAdmins");
-});
-
-// Configurar la cookie para redirigir al Index si no tiene acceso
-builder.Services.ConfigureApplicationCookie(options =>
-{
-    options.LoginPath = "/";         // Redirige al index si no está autenticado
-    options.AccessDeniedPath = "/";  // Redirige al index si no tiene permisos
 });
 
 var app = builder.Build();
@@ -67,7 +57,6 @@ else
 }
 
 app.UseHttpsRedirection();
-
 app.UseRouting();
 
 app.UseAuthentication(); // Debe ir antes de UseAuthorization

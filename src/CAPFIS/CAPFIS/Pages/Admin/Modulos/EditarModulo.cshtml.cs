@@ -57,6 +57,7 @@ namespace CAPFIS.Pages.Admin.Modulos
 
             // Sanitizar inputs
             modulo.Titulo = InputSanitizer.SanitizeText(SelectedModulo.Titulo);
+            modulo.TituloDetallado = InputSanitizer.SanitizeText(SelectedModulo.TituloDetallado);
             modulo.Descripcion = InputSanitizer.SanitizeHtml(SelectedModulo.Descripcion);
             modulo.EstaPublicado = SelectedModulo.EstaPublicado;
 
@@ -72,6 +73,13 @@ namespace CAPFIS.Pages.Admin.Modulos
             // Subir imagen nueva si se seleccionó
             if (HeroImageFile != null && HeroImageFile.Length > 0)
             {
+                const long maxFileSize = 5 * 1024 * 1024; // 5 MB
+                if (HeroImageFile.Length > maxFileSize)
+                {
+                    ModelState.AddModelError("HeroImageFile", "El archivo no debe superar los 5 MB.");
+                    return Page();
+                }
+
                 var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/uploads/modulos");
                 Directory.CreateDirectory(uploadsFolder);
 

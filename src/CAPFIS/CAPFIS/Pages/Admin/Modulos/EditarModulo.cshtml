@@ -49,6 +49,13 @@
                     <span asp-validation-for="SelectedModulo.Titulo" class="text-danger"></span>
                 </div>
 
+                <!-- Título Detallado -->
+                <div class="form-floating mb-3">
+                    <input asp-for="SelectedModulo.TituloDetallado" class="form-control" placeholder="Título Detallado del módulo" />
+                    <label asp-for="SelectedModulo.TituloDetallado">Título Detallado del módulo</label>
+                    <span asp-validation-for="SelectedModulo.TituloDetallado" class="text-danger"></span>
+                </div>
+
                 <!-- Descripción -->
                 <div class="mb-3">
                     <input type="hidden" asp-for="SelectedModulo.Descripcion" id="descripcion-hidden" />
@@ -81,6 +88,7 @@
                                id="HeroImageFile" />
                         <label class="input-group-text" for="HeroImageFile">📂 Seleccionar</label>
                     </div>
+                    <span asp-validation-for="HeroImageFile" class="text-danger"></span>
 
                     <script>
                         const heroInput = document.getElementById("HeroImageFile");
@@ -101,7 +109,7 @@
                     <div class="mt-2 p-2 rounded bg-dark border border-secondary small text-white">
                         <div>📐 Resolución recomendada: <strong>1920x1080 px (mínimo)</strong></div>
                         <div>🖼️ Formatos permitidos: <strong>JPG, JPEG, PNG, GIF, WebP</strong></div>
-                        <div>💾 Tamaño máximo: <strong>2 MB</strong></div>
+                        <div>💾 Tamaño máximo: <strong>5 MB</strong></div>
                     </div>
                 </div>
 
