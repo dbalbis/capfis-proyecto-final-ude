@@ -1,0 +1,93 @@
+﻿@page
+@model CAPFIS.Pages.Aprendizaje.MiAprendizajeModel
+@{
+    Layout = "/Pages/Shared/_LayoutMiAprendizaje.cshtml";
+    ViewData["Title"] = "Mi Aprendizaje";
+}
+@using CAPFIS.Models
+
+<div class="row">
+    <div class="col-md-6 mx-auto">
+        <h3 style="color: #FFA500;">Módulos Activos</h3>
+
+        <!-- Separador -->
+        <hr class="text-secondary my-3"
+            style="border: none; border-bottom: 2px solid rgba(255, 165, 0, 0.4); margin: 0 1rem 0.5rem 1rem;" />
+
+        @if (!Model.ModulosSubscripto.Any())
+        {
+            <p class="text-center">Aún no te has suscrito a ningún módulo.</p>
+        }
+        else
+        {
+            <div class="d-flex flex-column align-items-center gap-4">
+                @foreach (var mu in Model.ModulosSubscripto)
+                {
+                    <div class="bg-dark text-light p-4 rounded w-100" style="max-width:500px; display:flex; flex-direction:column; align-items:center;">
+
+                        <!-- Imagen -->
+                        <img src="@mu.Modulo.ImagenHero" alt="@mu.Modulo.Titulo" class="img-fluid mb-3 rounded" style="max-height:250px; object-fit:cover;" />
+
+                        <!-- Título -->
+                        <h4 class="text-center mb-3">@mu.Modulo.Titulo</h4>
+
+                        <!-- Texto de Progreso -->
+                        <p class="mb-1 w-100 text-start text-white-50 small">Progreso:</p>
+
+                        <!-- Barra de progreso -->
+                        <div class="progress w-100 mb-3" style="height:25px; border-radius:12px; overflow:hidden;">
+                            <div class="progress-bar bg-primary fw-bold fs-6 progress-animated"
+                                 data-progress="@mu.Progreso"
+                                 style="border-radius:12px 0 0 12px;">
+                                0%
+                            </div>
+                        </div>
+
+                        <!-- Botones -->
+                        <div class="d-flex flex-column gap-2 w-100">
+                            <a class="btn btn-outline-warning fw-bold w-100" href="/modulos/@mu.ModuloId"
+                               style="border-width:2px; color:#FFA500; border-color:#FFA500; background-color:transparent;">
+                                Continuar
+                            </a>
+
+                            <form method="post" asp-page-handler="DarseDeBaja">
+                                <input type="hidden" name="moduloId" value="@mu.ModuloId" />
+                                <button type="submit" class="btn btn-outline-danger fw-bold w-100" style="border-width:2px;">
+                                    Darse de baja
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Separador entre cards -->
+                    <hr class="text-secondary w-75 my-3" style="border: none; border-bottom: 2px solid rgba(255, 165, 0, 0.3);" />
+                }
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            document.querySelectorAll('.progress-animated').forEach(bar => {
+                const value = parseInt(bar.dataset.progress) || 0;
+                bar.style.width = '0%';
+
+                let current = 0;
+                const increment = value > 50 ? 2 : 1;
+                const interval = setInterval(() => {
+                    if(current >= value) {
+                        clearInterval(interval);
+                        bar.textContent = value + '%';
+                    } else {
+                        current += increment;
+                        if(current > value) current = value;
+                        bar.style.width = current + '%';
+                        bar.textContent = current + '%';
+                    }
+                }, 30);
+            });
+        });
+    </script>
+}

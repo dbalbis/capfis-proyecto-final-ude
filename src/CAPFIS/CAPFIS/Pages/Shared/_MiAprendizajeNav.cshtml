@@ -1,0 +1,52 @@
+﻿@using System
+@{
+    var currentPage = (ViewContext.RouteData.Values["page"] as string) ?? "";
+
+    Func<string, bool> isActive = p =>
+        string.Equals(currentPage, p, StringComparison.OrdinalIgnoreCase)
+        || currentPage.EndsWith(p, StringComparison.OrdinalIgnoreCase)
+        || currentPage.Contains(p, StringComparison.OrdinalIgnoreCase);
+}
+
+<div>
+    <h5 style="color: rgba(255, 165, 0, 0.3); margin-top:1rem;">Aprendizaje</h5>
+    <hr class="separator">
+    <ul class="nav nav-pills flex-column mb-3">
+        <li class="nav-item">
+            <a class="nav-link btn btn-outline-warning fw-bold px-4 mb-2 @(isActive("/Aprendizaje/MiAprendizaje") ? "active" : "")"
+               asp-page="/Aprendizaje/MiAprendizaje">
+                Módulos
+            </a>
+        </li>
+        <!-- Aquí podrías agregar más enlaces de módulos -->
+    </ul>
+
+
+ </div>
+<style>
+    .btn-outline-warning {
+        border-width: 2px;
+        border-color: #FFA500;
+        color: #FFA500;
+        background-color: transparent;
+    }
+
+        .btn-outline-warning:hover,
+        .btn-outline-warning:focus {
+            background-color: rgba(255,165,0,0.2);
+            color: #FFA500;
+        }
+
+        .btn-outline-warning.active,
+        .btn-outline-warning.active:hover,
+        .btn-outline-warning.active:focus {
+            background-color: #FFA500 !important;
+            color: black !important;
+        }
+
+    .separator {
+        border: none;
+        border-bottom: 1px solid rgba(255, 165, 0, 0.3); /* línea naranja muy sutil */
+        margin: 0 1rem 0.5rem 1rem; /* margen para que no quede pegada al texto ni a los bordes */
+    }
+</style>
