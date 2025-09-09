@@ -1,7 +1,9 @@
 ﻿@using CAPFIS.Models
+@using CAPFIS.Models
 @using Microsoft.AspNetCore.Identity
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -44,14 +46,9 @@
 							<a class="nav-link dropdown-toggle fs-5 fw-bold text-white" href="#" id="modulosDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 								Módulos
 							</a>
-							<ul class="dropdown-menu" aria-labelledby="modulosDropdown">
-								<li><a class="dropdown-item fs-5" asp-area="" asp-page="/Que-es-un-ataque-de-ingenieria-social">¿Qué es un ataque de Ingeniería Social?</a></li>
-								<li><a class="dropdown-item fs-5" asp-area="" asp-page="/Phishing">Phishing</a></li>
-								<li><a class="dropdown-item fs-5" asp-area="" asp-page="/Vishing">Vishing</a></li>
-								<li><a class="dropdown-item fs-5" asp-area="" asp-page="/Smishing">Smishing</a></li>
-								<li><a class="dropdown-item fs-5" asp-area="" asp-page="/Baiting">Baiting</a></li>
-								<li><a class="dropdown-item fs-5" asp-area="" asp-page="/Pretexting">Pretexting</a></li>
-							</ul>
+							<!-- Menú dinamico -->
+							 @await Component.InvokeAsync("ModulosDropdown")
+							
 						</li>
 						<li class="nav-item ms-3">
 							<a class="nav-link fs-5 fw-bold text-white" asp-area="" asp-page="/Contacto">Contacto</a>

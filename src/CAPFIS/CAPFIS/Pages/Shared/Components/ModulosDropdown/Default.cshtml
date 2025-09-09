@@ -1,0 +1,12 @@
+﻿@model IEnumerable<CAPFIS.Models.ModuloInteractivo>
+
+<ul class="dropdown-menu" aria-labelledby="modulosDropdown">
+    @foreach (var m in Model)
+    {
+        <li>
+            <a class="dropdown-item fs-5" href="@("/" + m.Slug)">
+                @m.Titulo
+            </a>
+        </li>
+    }
+</ul>
