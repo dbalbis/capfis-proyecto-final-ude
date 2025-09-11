@@ -12,6 +12,9 @@ namespace CAPFIS.Pages.Aprendizaje
         private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
 
+        [TempData]
+        public string? StatusMessage { get; set; }
+
         public MiAprendizajeModel(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
@@ -38,12 +41,20 @@ namespace CAPFIS.Pages.Aprendizaje
             if (user == null) return RedirectToPage();
 
             var suscripcion = await _context.ModulosUsuarios
-                .FirstOrDefaultAsync(mu => mu.UserId == user.Id && mu.ModuloId == moduloId);
+    .Include(mu => mu.Modulo)
+    .FirstOrDefaultAsync(mu => mu.UserId == user.Id && mu.ModuloId == moduloId);
 
             if (suscripcion != null)
             {
+                var titulo = suscripcion.Modulo?.Titulo ?? "desconocido";
                 _context.ModulosUsuarios.Remove(suscripcion);
                 await _context.SaveChangesAsync();
+
+                StatusMessage = $"Te diste de baja del módulo \"{titulo}\".";
+            }
+            else
+            {
+                StatusMessage = "No se encontró la suscripción al módulo.";
             }
 
             return RedirectToPage();
