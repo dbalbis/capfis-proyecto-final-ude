@@ -81,7 +81,7 @@ namespace CAPFIS.Pages.Admin.Etapas
                 Titulo = Input.Titulo,
                 Tipo = Input.Tipo!.Value,
                 Orden = nuevoOrden, // 👈 Se asigna el nuevo orden
-                EstaPublicado = Input.EstaPublicado
+                EstaPublicado = true,
             };
 
             switch (Input.Tipo)

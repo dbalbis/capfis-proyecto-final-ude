@@ -15,6 +15,9 @@ public class ModuloUsuario
     public DateTime FechaInscripcion { get; set; } = DateTime.UtcNow;
 
     public int Progreso { get; set; } = 0;
+
+    public int EtapaActualOrden { get; set; } = 1;
+
     public bool Completado { get; set; } = false;
 
     // Relaciones

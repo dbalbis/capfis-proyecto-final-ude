@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CAPFIS.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250909213403_Inicial")]
-    partial class Inicial
+    [Migration("20250915143052_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -340,6 +340,9 @@ namespace CAPFIS.Migrations
 
                     b.Property<bool>("Completado")
                         .HasColumnType("bit");
+
+                    b.Property<int>("EtapaActualOrden")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("FechaInscripcion")
                         .HasColumnType("datetime2");

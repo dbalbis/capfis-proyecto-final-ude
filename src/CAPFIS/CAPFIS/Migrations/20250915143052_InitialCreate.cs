@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace CAPFIS.Migrations
 {
     /// <inheritdoc />
-    public partial class Inicial : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -218,6 +218,7 @@ namespace CAPFIS.Migrations
                     ModuloId = table.Column<int>(type: "int", nullable: false),
                     FechaInscripcion = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Progreso = table.Column<int>(type: "int", nullable: false),
+                    EtapaActualOrden = table.Column<int>(type: "int", nullable: false),
                     Completado = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>

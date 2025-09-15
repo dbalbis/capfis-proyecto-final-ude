@@ -100,7 +100,7 @@ namespace CAPFIS.Pages.Admin.Etapas
             etapa.Titulo = Input.Titulo;
             etapa.Tipo = Input.Tipo!.Value;
             etapa.Orden = Input.Orden;
-            etapa.EstaPublicado = Input.EstaPublicado;
+            etapa.EstaPublicado = true;
 
             switch (Input.Tipo)
             {

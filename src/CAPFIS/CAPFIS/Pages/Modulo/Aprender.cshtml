@@ -1,0 +1,87 @@
+﻿@page "/Modulo/Aprender/{slug}"
+@model CAPFIS.Pages.Modulo.AprenderModel
+@using CAPFIS.Models
+@{
+    Layout = "/Pages/Shared/_LayoutModulo.cshtml";
+    ViewData["Title"] = Model.Modulo?.Titulo ?? "Aprender";
+
+    // Preparar la URL del video si existe
+    string videoUrl = "";
+    if (Model.EtapaActual != null && Model.EtapaActual.Tipo == TipoEtapa.Video)
+    {
+        videoUrl = Model.EtapaActual.ContenidoUrl ?? "";
+
+        if (videoUrl.Contains("youtu.be/"))
+        {
+            var videoId = videoUrl.Split("/").Last().Split("?").First();
+            videoUrl = $"https://www.youtube.com/embed/{videoId}";
+        }
+        else if (videoUrl.Contains("watch?v="))
+        {
+            videoUrl = videoUrl.Replace("watch?v=", "embed/");
+        }
+    }
+}
+
+@if (Model.Modulo != null && Model.EtapaActual != null)
+{
+    <div class="container py-5 d-flex flex-column align-items-center justify-content-center">
+        <h2 class="text-center mb-3">@Model.Modulo.Titulo</h2>
+        <h4 class="text-center mb-4">@Model.EtapaActual.Titulo</h4>
+
+        <div class="w-100 d-flex justify-content-center mb-4">
+            @switch (Model.EtapaActual.Tipo)
+            {
+                case TipoEtapa.Video:
+                    <div class="ratio ratio-16x9 w-75 mx-auto mb-4">
+                        <iframe width="560" height="315"
+                                src="@videoUrl"
+                                title="@Model.EtapaActual.Titulo"
+                                frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                referrerpolicy="strict-origin-when-cross-origin"
+                                allowfullscreen>
+                        </iframe>
+                    </div>
+                    break;
+
+                case TipoEtapa.Quiz:
+                    <div class="w-75 text-center p-3 border rounded bg-light text-dark">
+                        <p>Mostrar quiz (contenido JSON)</p>
+                    </div>
+                    break;
+
+                case TipoEtapa.Ahorcado:
+                    <div class="w-75 text-center p-3 border rounded bg-light text-dark">
+                        <p>Mostrar juego Ahorcado</p>
+                    </div>
+                    break;
+
+                case TipoEtapa.SopaDeLetras:
+                    <div class="w-75 text-center p-3 border rounded bg-light text-dark">
+                        <p>Mostrar Sopa de Letras</p>
+                    </div>
+                    break;
+
+                case TipoEtapa.EncuentraLaPalabra:
+                    <div class="w-75 text-center p-3 border rounded bg-light text-dark">
+                        <p>Mostrar Encuentra la Palabra</p>
+                    </div>
+                    break;
+            }
+        </div>
+
+        <form method="post" class="mt-3 d-flex justify-content-center">
+            <input type="hidden" name="ModuloId" value="@Model.Modulo.Id" />
+            <button type="submit" class="btn btn-primary btn-lg px-4 py-3">
+                Continuar
+            </button>
+        </form>
+    </div>
+}
+else
+{
+    <div class="container py-5 text-center">
+        <p class="text-danger fw-bold">Módulo o etapa no encontrado.</p>
+    </div>
+}
