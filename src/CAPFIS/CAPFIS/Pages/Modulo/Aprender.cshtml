@@ -29,7 +29,21 @@
         quizData = System.Text.Json.JsonSerializer
             .Deserialize<List<QuizPregunta>>(Model.EtapaActual.ContenidoJson)!;
     }
+
+    string textoEncuentraPalabra = "";
+    List<string> palabrasClaveEncuentra = new List<string>();
+
+    if (Model.EtapaActual?.Tipo == TipoEtapa.EncuentraLaPalabra && !string.IsNullOrEmpty(Model.EtapaActual.ContenidoJson))
+    {
+        var contenido = JsonNode.Parse(Model.EtapaActual.ContenidoJson);
+        textoEncuentraPalabra = contenido?["Texto"]?.ToString() ?? "";
+        palabrasClaveEncuentra = contenido?["PalabrasClave"]?.AsArray().Select(p => p.ToString()).ToList() ?? new List<string>();
+    }
+
+
+
 }
+
 
 @if (Model.Modulo != null && Model.EtapaActual != null)
 {
@@ -125,13 +139,30 @@
                     break;
 
                 case TipoEtapa.EncuentraLaPalabra:
+
                     <div class="w-75 text-start p-3 border rounded bg-light text-dark">
                         <h5 class="mb-3">Encuentra las palabras clave</h5>
-                        <p>Lee atentamente el texto y haz clic sobre todas las palabras importantes que consideres clave.</p>
-                        <div id="encTexto" class="mb-3" style="line-height:1.6;"></div>
+
+                        <!-- Consigna: fondo gris suave, padding, borde redondeado -->
+                        <p class="consigna mb-3 p-2 text-dark">
+                            Lee atentamente el texto y haz clic sobre todas las palabras importantes que consideres clave.
+                        </p>
+
+                        <!-- Contador de palabras restantes -->
+                        <div id="encContador" class="mb-2 fw-semibold text-dark" style="font-size: 0.95rem;">
+                            Palabras restantes: <span id="encRestantes">@palabrasClaveEncuentra.Count</span>
+                        </div>
+
+                        <!-- Texto de la actividad -->
+                        <div id="encTexto" class="actividad mb-3 p-3 border rounded" style="line-height:1.6; background-color: #ffffff; border: 1px solid #ced4da; cursor: pointer;">
+                        </div>
+
                         <div id="encMensaje" class="fw-bold text-danger mb-3"></div>
                     </div>
                     break;
+
+
+
 
             }
         </div>
@@ -200,9 +231,16 @@
 
                 let errores = 0;
                 let maxErrores = 6;
-                let progreso = Array(palabra.length).fill("_");
 
-                palabraDiv.innerText = progreso.join(" ");
+                // Inicializar progreso respetando espacios
+                let progreso = palabra.split("").map(c => c === " " ? " " : "_");
+
+                // Función para mostrar el progreso con espacios
+                function mostrarProgreso() {
+                    palabraDiv.innerHTML = progreso.map(c => c === " " ? "&nbsp;&nbsp;&nbsp;" : `<span style="display:inline-block; min-width:20px;">${c}</span>`).join("");
+                }
+
+                mostrarProgreso();
 
                 letras.forEach(l => {
                     const btn = document.createElement("button");
@@ -224,7 +262,7 @@
                                 progreso[i] = letra;
                             }
                         }
-                        palabraDiv.innerText = progreso.join(" ");
+                        mostrarProgreso();
                         if (!progreso.includes("_")) {
                             mensajeDiv.innerHTML = `<span class="text-success">🎉 ¡Ganaste! La palabra era <b>${palabra}</b>.</span>`;
                         }
@@ -249,8 +287,8 @@
 
                 function reiniciarJuego() {
                     errores = 0;
-                    progreso = Array(palabra.length).fill("_");
-                    palabraDiv.innerText = progreso.join(" ");
+                    progreso = palabra.split("").map(c => c === " " ? " " : "_");
+                    mostrarProgreso();
                     mensajeDiv.innerHTML = "";
                     document.querySelectorAll("#ahorcadoCanvas [id]").forEach(p => p.style.display = "none");
 
@@ -284,6 +322,7 @@
             });
         </script>
     }
+
     @* Script validación Sopa de letras *@
     @if (Model.EtapaActual.Tipo == TipoEtapa.SopaDeLetras && !string.IsNullOrEmpty(Model.EtapaActual.ContenidoJson))
     {
@@ -412,14 +451,75 @@
 
     }
 
-    @* Script validación Encuentra la Palabra *@
-    @if (Model.EtapaActual.Tipo == TipoEtapa.EncuentraLaPalabra)
+
+    @* Script encuentra la palabra *@
+    @if (Model.EtapaActual.Tipo == TipoEtapa.EncuentraLaPalabra && !string.IsNullOrEmpty(Model.EtapaActual.ContenidoJson))
     {
-        <h5>DEBUG ContenidoJson:</h5>
-        <pre style="background:#f8f9fa; padding:10px; border:1px solid #ddd;">
-                        @Model.EtapaActual.ContenidoJson
-                    </pre>
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+                const encTextoDiv = document.getElementById("encTexto");
+                const encMensajeDiv = document.getElementById("encMensaje");
+                const continuarForm = document.getElementById("continuarForm");
+
+                const texto = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(textoEncuentraPalabra));
+                const palabrasClave = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(palabrasClaveEncuentra));
+
+                let encontradas = [];
+
+                // Aplicar cursor siempre manito al contenedor
+                encTextoDiv.style.cursor = "pointer";
+
+                // Renderizar texto con spans para palabras clave
+                function renderTexto() {
+                    let textoHTML = texto;
+                    palabrasClave.forEach(palabra => {
+                        const regex = new RegExp(`\\b(${palabra})\\b`, 'gi');
+                        // Sin negrita ni estilos de cursor aquí
+                        textoHTML = textoHTML.replace(regex, `<span class="palabraClave">$1</span>`);
+                    });
+                    encTextoDiv.innerHTML = textoHTML;
+
+                    document.querySelectorAll(".palabraClave").forEach(span => {
+                        span.addEventListener("click", () => {
+                            const palabra = span.innerText.toLowerCase();
+
+                            // Si ya fue encontrada, no hacer nada
+                            if (span.classList.contains("bg-success")) return;
+
+                            // Marcar como encontrada → verde y bloqueada
+                            span.classList.add("bg-success", "text-white");
+                            span.style.pointerEvents = "none";
+                            encontradas.push(palabra);
+                            // Actualizar contador
+            document.getElementById("encRestantes").innerText = palabrasClave.length - encontradas.length;
+
+                            encMensajeDiv.innerHTML = "";
+
+                            // Mensaje si encontró todas las palabras
+                            if (encontradas.length === palabrasClave.length) {
+                                encMensajeDiv.innerHTML = `<span class="text-success">🎉 ¡Encontraste todas las palabras!</span>`;
+                            }
+                        });
+                    });
+                }
+
+                renderTexto();
+
+                // Validación al presionar Continuar
+                continuarForm.addEventListener("submit", (e) => {
+                    if (encontradas.length < palabrasClave.length) {
+                        e.preventDefault();
+                        encMensajeDiv.innerHTML = `<span class="text-danger">Debes encontrar todas las palabras clave para continuar.</span>`;
+                    }
+                });
+            });
+        </script>
     }
+
+
+
+ 
+
 }
 
 else
