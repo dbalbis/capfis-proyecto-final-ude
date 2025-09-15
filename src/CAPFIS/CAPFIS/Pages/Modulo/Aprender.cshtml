@@ -1,6 +1,7 @@
 ﻿@page "/Modulo/Aprender/{slug}"
 @model CAPFIS.Pages.Modulo.AprenderModel
 @using CAPFIS.Models
+@using System.Text.Json.Nodes
 
 @{
     Layout = "/Pages/Shared/_LayoutModulo.cshtml";
@@ -90,21 +91,48 @@
 
                 case TipoEtapa.Ahorcado:
                     <div class="w-75 text-center p-3 border rounded bg-light text-dark">
-                        <p>Mostrar juego Ahorcado</p>
+                        <h5>Adivina la palabra</h5>
+                        <div id="ahorcadoPalabra" class="fs-3 mb-4"></div>
+
+                        <div class="d-flex justify-content-center mb-4">
+                            <svg id="ahorcadoCanvas" width="150" height="200" class="border">
+                                <line x1="10" y1="190" x2="140" y2="190" stroke="black" stroke-width="3" />
+                                <line x1="40" y1="190" x2="40" y2="20" stroke="black" stroke-width="3" />
+                                <line x1="40" y1="20" x2="100" y2="20" stroke="black" stroke-width="3" />
+                                <line x1="100" y1="20" x2="100" y2="50" stroke="black" stroke-width="3" />
+
+                                <circle id="head" cx="100" cy="70" r="20" stroke="black" stroke-width="3" fill="none" style="display:none" />
+                                <line id="body" x1="100" y1="90" x2="100" y2="140" stroke="black" stroke-width="3" style="display:none" />
+                                <line id="armLeft" x1="100" y1="100" x2="70" y2="120" stroke="black" stroke-width="3" style="display:none" />
+                                <line id="armRight" x1="100" y1="100" x2="130" y2="120" stroke="black" stroke-width="3" style="display:none" />
+                                <line id="legLeft" x1="100" y1="140" x2="80" y2="170" stroke="black" stroke-width="3" style="display:none" />
+                                <line id="legRight" x1="100" y1="140" x2="120" y2="170" stroke="black" stroke-width="3" style="display:none" />
+                            </svg>
+                        </div>
+
+                        <div id="ahorcadoLetras" class="d-flex flex-wrap justify-content-center gap-2"></div>
+                        <div id="ahorcadoMensaje" class="mt-3 fw-bold text-danger"></div>
                     </div>
                     break;
 
                 case TipoEtapa.SopaDeLetras:
-                    <div class="w-75 text-center p-3 border rounded bg-light text-dark">
-                        <p>Mostrar Sopa de Letras</p>
+                    <div class="w-100 text-center p-3 border rounded bg-light text-dark">
+                        <h5>Encuentra las palabras</h5>
+                        <div id="sopaContainer" class="d-flex justify-content-center mb-3"></div>
+                        <div id="sopaPalabras" class="mb-3"></div>
+                        <div id="sopaMensaje" class="fw-bold text-danger"></div>
                     </div>
                     break;
 
                 case TipoEtapa.EncuentraLaPalabra:
-                    <div class="w-75 text-center p-3 border rounded bg-light text-dark">
-                        <p>Mostrar Encuentra la Palabra</p>
+                    <div class="w-75 text-start p-3 border rounded bg-light text-dark">
+                        <h5 class="mb-3">Encuentra las palabras clave</h5>
+                        <p>Lee atentamente el texto y haz clic sobre todas las palabras importantes que consideres clave.</p>
+                        <div id="encTexto" class="mb-3" style="line-height:1.6;"></div>
+                        <div id="encMensaje" class="fw-bold text-danger mb-3"></div>
                     </div>
                     break;
+
             }
         </div>
 
@@ -116,6 +144,7 @@
         </form>
     </div>
 
+    @* Script validación Quiz *@
     @if (Model.EtapaActual.Tipo == TipoEtapa.Quiz && quizData.Count > 0)
     {
         <script>
@@ -131,10 +160,9 @@
                         let answered = false;
                         radios.forEach(r => {
                             if (r.checked) answered = true;
-                            // Ajuste aquí: sumamos 1 al índice porque tu JSON es 1-indexed
                             if (r.checked && (parseInt(r.value) + 1) === quizData[i].Correcta) score++;
                         });
-                        if (!answered) return -1; // falta responder alguna
+                        if (!answered) return -1;
                     }
                     return score;
                 }
@@ -152,13 +180,248 @@
                         quizError.innerText = `Debes responder al menos el 90% correctamente para continuar. Has respondido ${score} de ${quizData.length}.`;
                         return;
                     }
-                    quizError.innerText = ""; // todo correcto, envía formulario
+                    quizError.innerText = "";
+                });
+            });
+        </script>
+    }
+
+    @* Script validación Ahorcado *@
+    @if (Model.EtapaActual.Tipo == TipoEtapa.Ahorcado && !string.IsNullOrEmpty(Model.EtapaActual.ContenidoTexto))
+    {
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+                const palabra = "@Model.EtapaActual.ContenidoTexto".toUpperCase();
+                const letras = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+                const letrasDiv = document.getElementById("ahorcadoLetras");
+                const palabraDiv = document.getElementById("ahorcadoPalabra");
+                const mensajeDiv = document.getElementById("ahorcadoMensaje");
+                const continuarForm = document.getElementById("continuarForm");
+
+                let errores = 0;
+                let maxErrores = 6;
+                let progreso = Array(palabra.length).fill("_");
+
+                palabraDiv.innerText = progreso.join(" ");
+
+                letras.forEach(l => {
+                    const btn = document.createElement("button");
+                    btn.innerText = l;
+                    btn.className = "btn btn-outline-primary btn-sm";
+                    btn.onclick = (ev) => {
+                        ev.preventDefault();
+                        jugarLetra(l, btn);
+                    };
+                    letrasDiv.appendChild(btn);
+                });
+
+                function jugarLetra(letra, btn) {
+                    btn.disabled = true;
+                    mensajeDiv.innerHTML = "";
+                    if (palabra.includes(letra)) {
+                        for (let i = 0; i < palabra.length; i++) {
+                            if (palabra[i] === letra) {
+                                progreso[i] = letra;
+                            }
+                        }
+                        palabraDiv.innerText = progreso.join(" ");
+                        if (!progreso.includes("_")) {
+                            mensajeDiv.innerHTML = `<span class="text-success">🎉 ¡Ganaste! La palabra era <b>${palabra}</b>.</span>`;
+                        }
+                    } else {
+                        errores++;
+                        dibujarAhorcado(errores);
+                        if (errores >= maxErrores) {
+                            mensajeDiv.innerHTML = `
+                                <span class="text-danger">❌ Perdiste. La palabra era <b>${palabra}</b>.</span>
+                                <br>
+                                <button id="btnReiniciar" class="btn btn-secondary mt-2">🔄 Reiniciar</button>
+                            `;
+                            deshabilitarBotones();
+
+                            document.getElementById("btnReiniciar").addEventListener("click", (ev) => {
+                                ev.preventDefault();
+                                reiniciarJuego();
+                            });
+                        }
+                    }
+                }
+
+                function reiniciarJuego() {
+                    errores = 0;
+                    progreso = Array(palabra.length).fill("_");
+                    palabraDiv.innerText = progreso.join(" ");
+                    mensajeDiv.innerHTML = "";
+                    document.querySelectorAll("#ahorcadoCanvas [id]").forEach(p => p.style.display = "none");
+
+                    document.querySelectorAll("#ahorcadoLetras button").forEach(b => b.disabled = false);
+                }
+
+                function deshabilitarBotones() {
+                    document.querySelectorAll("#ahorcadoLetras button").forEach(b => b.disabled = true);
+                }
+
+                function dibujarAhorcado(err) {
+                    const partes = ["head","body","armLeft","armRight","legLeft","legRight"];
+                    if (err <= partes.length) {
+                        document.getElementById(partes[err-1]).style.display = "block";
+                    }
+                }
+
+                // Validación botón Continuar
+                continuarForm.addEventListener("submit", (e) => {
+                    if (progreso.includes("_")) {
+                        e.preventDefault();
+                        mensajeDiv.innerHTML = `<span class="text-danger">Debes adivinar la palabra para continuar.</span>`;
+                        return;
+                    }
+                    if (errores >= maxErrores) {
+                        e.preventDefault();
+                        mensajeDiv.innerHTML = `<span class="text-danger">No puedes continuar, perdiste el juego. 🔄 Reinicia para intentarlo de nuevo.</span>`;
+                        return;
+                    }
+                });
+            });
+        </script>
+    }
+    @* Script validación Sopa de letras *@
+    @if (Model.EtapaActual.Tipo == TipoEtapa.SopaDeLetras && !string.IsNullOrEmpty(Model.EtapaActual.ContenidoJson))
+    {
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+                const palabras = @Html.Raw(Model.EtapaActual.ContenidoJson);
+                const gridSize = 12;
+                const grid = Array.from({ length: gridSize }, () => Array(gridSize).fill(""));
+
+                const sopaContainer = document.getElementById("sopaContainer");
+                const palabrasDiv = document.getElementById("sopaPalabras");
+                const mensajeDiv = document.getElementById("sopaMensaje");
+                const continuarForm = document.getElementById("continuarForm");
+
+                let encontradas = [];
+
+                // Mostrar lista de palabras
+                palabrasDiv.innerHTML = `<b>Palabras a encontrar:</b> ${palabras.map(p => `<span class='mx-2' id='pal-${p}'>${p}</span>`).join("")}`;
+
+                // Insertar palabras (simplificado H/V)
+                function colocarPalabra(palabra) {
+                    palabra = palabra.toUpperCase();
+                    let placed = false;
+                    while (!placed) {
+                        const vertical = Math.random() > 0.5;
+                        const row = Math.floor(Math.random() * gridSize);
+                        const col = Math.floor(Math.random() * gridSize);
+                        if (vertical && row + palabra.length <= gridSize) {
+                            let ok = true;
+                            for (let i = 0; i < palabra.length; i++) {
+                                if (grid[row + i][col] && grid[row + i][col] !== palabra[i]) { ok = false; break; }
+                            }
+                            if (ok) { for (let i = 0; i < palabra.length; i++) grid[row + i][col] = palabra[i]; placed = true; }
+                        } else if (!vertical && col + palabra.length <= gridSize) {
+                            let ok = true;
+                            for (let i = 0; i < palabra.length; i++) {
+                                if (grid[row][col + i] && grid[row][col + i] !== palabra[i]) { ok = false; break; }
+                            }
+                            if (ok) { for (let i = 0; i < palabra.length; i++) grid[row][col + i] = palabra[i]; placed = true; }
+                        }
+                    }
+                }
+                palabras.forEach(p => colocarPalabra(p));
+
+                // Completar con letras aleatorias
+                const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+                for (let r = 0; r < gridSize; r++) {
+                    for (let c = 0; c < gridSize; c++) {
+                        if (!grid[r][c]) grid[r][c] = letters[Math.floor(Math.random() * letters.length)];
+                    }
+                }
+
+                // Renderizar tabla
+                const table = document.createElement("table");
+                table.className = "table table-bordered border-dark";
+                for (let r = 0; r < gridSize; r++) {
+                    const row = document.createElement("tr");
+                    for (let c = 0; c < gridSize; c++) {
+                        const cell = document.createElement("td");
+                        cell.innerText = grid[r][c];
+                        cell.className = "p-1 text-center fw-bold sopaCell";
+                        cell.style.cursor = "pointer";
+                        cell.dataset.row = r;
+                        cell.dataset.col = c;
+                        row.appendChild(cell);
+                    }
+                    table.appendChild(row);
+                }
+                sopaContainer.appendChild(table);
+
+                // Selección de letras
+                let seleccion = [];
+                document.querySelectorAll(".sopaCell").forEach(cell => {
+                    cell.addEventListener("click", () => {
+                        mensajeDiv.innerHTML = "";
+                        // si ya fue marcada como correcta, no hacer nada
+                        if (cell.classList.contains("bg-success")) return;
+
+                        // toggle amarillo
+                        if (cell.classList.contains("bg-warning")) {
+                            cell.classList.remove("bg-warning");
+                            seleccion = seleccion.filter(c => c !== cell);
+                        } else {
+                            cell.classList.add("bg-warning");
+                            seleccion.push(cell);
+                        }
+
+                        verificarPalabra();
+                    });
+                });
+
+                function verificarPalabra() {
+                    const intento = seleccion.map(c => c.innerText).join("");
+
+                    palabras.forEach(p => {
+                        if (intento.endsWith(p.toUpperCase())) {
+                            // Marcar palabra en lista
+                            document.querySelector(`#pal-${p}`).classList.add("text-success", "fw-bold");
+                            encontradas.push(p);
+
+                            // Bloquear letras seleccionadas → verde y no clickeables
+                            seleccion.forEach(c => {
+                                c.classList.remove("bg-warning");
+                                c.classList.add("bg-success");
+                                c.style.pointerEvents = "none";
+                            });
+
+                            seleccion = [];
+
+                            if (encontradas.length === palabras.length) {
+                                mensajeDiv.innerHTML = `<span class="text-success">🎉 ¡Encontraste todas las palabras!</span>`;
+                            }
+                        }
+                    });
+                }
+
+                // Validación botón Continuar
+                continuarForm.addEventListener("submit", (e) => {
+                    if (encontradas.length < palabras.length) {
+                        e.preventDefault();
+                        mensajeDiv.innerHTML = `<span class="text-danger">Debes encontrar todas las palabras para continuar.</span>`;
+                    }
                 });
             });
         </script>
 
     }
+
+    @* Script validación Encuentra la Palabra *@
+    @if (Model.EtapaActual.Tipo == TipoEtapa.EncuentraLaPalabra)
+    {
+        <h5>DEBUG ContenidoJson:</h5>
+        <pre style="background:#f8f9fa; padding:10px; border:1px solid #ddd;">
+                        @Model.EtapaActual.ContenidoJson
+                    </pre>
+    }
 }
+
 else
 {
     <div class="container py-5 text-center">
