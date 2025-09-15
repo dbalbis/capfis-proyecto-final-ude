@@ -25,6 +25,8 @@ namespace CAPFIS.Pages.Modulo
         public EtapaModulo? EtapaActual { get; set; }
         public ModuloUsuario? ModuloUsuario { get; set; }
 
+        public string? StatusMessage { get; set; }
+
         public async Task<IActionResult> OnGetAsync(string slug)
         {
             var user = await _userManager.GetUserAsync(User);
@@ -41,7 +43,6 @@ namespace CAPFIS.Pages.Modulo
 
             if (ModuloUsuario == null)
             {
-                // Si no existe registro de usuario en este módulo, crearlo
                 ModuloUsuario = new ModuloUsuario
                 {
                     UserId = user.Id,
@@ -55,7 +56,6 @@ namespace CAPFIS.Pages.Modulo
                 await _context.SaveChangesAsync();
             }
 
-            // Obtener la etapa actual según EtapaActualOrden
             EtapaActual = Modulo.Etapas
                 .Where(e => e.EstaPublicado)
                 .OrderBy(e => e.Orden)
@@ -74,7 +74,6 @@ namespace CAPFIS.Pages.Modulo
 
             if (moduloUsuario == null) return NotFound();
 
-            // Avanzar a la siguiente etapa
             var modulo = await _context.Modulos
                 .Include(m => m.Etapas)
                 .FirstOrDefaultAsync(m => m.Id == moduloId);
