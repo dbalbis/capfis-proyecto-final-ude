@@ -21,6 +21,8 @@ namespace CAPFIS.Pages
         [BindProperty(SupportsGet = true)]
         public string Slug { get; set; } = string.Empty;
 
+        public bool EstaInscripto { get; set; } = false;
+
         public ModuloInteractivo? Modulo { get; set; }
 
         public async Task<IActionResult> OnGetAsync(string slug)
@@ -33,6 +35,13 @@ namespace CAPFIS.Pages
 
             if (Modulo == null)
                 return NotFound();
+
+            var user = await _userManager.GetUserAsync(User);
+            if (user != null)
+            {
+                EstaInscripto = await _context.ModulosUsuarios
+                    .AnyAsync(mu => mu.UserId == user.Id && mu.ModuloId == Modulo.Id);
+            }
 
             return Page();
         }
@@ -62,7 +71,7 @@ namespace CAPFIS.Pages
                 await _context.SaveChangesAsync();
             }
 
-            return RedirectToPage(new { slug = Slug });
+            return Redirect($"/Modulo/Aprender/{Slug}");
         }
     }
 }

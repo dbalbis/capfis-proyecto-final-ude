@@ -26,12 +26,22 @@
             <div class="d-flex gap-3 justify-content-center mt-4">
                 @if (User.Identity?.IsAuthenticated ?? false)
                 {
-                    <form method="post" asp-page-handler="Inscribirse" class="d-inline">
-                        <input type="hidden" name="ModuloId" value="@Model.Modulo.Id" />
-                        <button type="submit" class="btn btn-primary fw-bold px-4 py-3">
-                            🚀 Comenzar Entrenamiento
-                        </button>
-                    </form>
+                    @if (Model.EstaInscripto)
+                    {
+                        <a asp-page="/Modulo/Aprender" asp-route-slug="@Model.Modulo.Slug"
+                           class="btn btn-success fw-bold px-4 py-3">
+                            ✅ Continuar Entrenamiento
+                        </a>
+                    } else
+                    {
+                        <form method="post" asp-page-handler="Inscribirse" class="d-inline">
+                            <input type="hidden" name="ModuloId" value="@Model.Modulo.Id" />
+                            <button type="submit" class="btn btn-primary fw-bold px-4 py-3">
+                                🚀 Comenzar Entrenamiento
+                            </button>
+                        </form>
+                    }
+               
                 }
                 else
                 {

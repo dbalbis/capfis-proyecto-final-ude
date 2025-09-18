@@ -39,143 +39,134 @@
         textoEncuentraPalabra = contenido?["Texto"]?.ToString() ?? "";
         palabrasClaveEncuentra = contenido?["PalabrasClave"]?.AsArray().Select(p => p.ToString()).ToList() ?? new List<string>();
     }
-
-
-
 }
-
 
 @if (Model.Modulo != null && Model.EtapaActual != null)
 {
-    <div class="container py-5 d-flex flex-column align-items-center justify-content-center">
-        <h2 class="text-center mb-3">@Model.Modulo.Titulo</h2>
-        <h4 class="text-center mb-4">@Model.EtapaActual.Titulo</h4>
+    <div class="container-fluid">
+        <div class="main-container fade-in" style="background-color:#212529;">
+            <!-- Header del Módulo -->
+            <div class="module-header">
+                <h2 class="module-title">@Model.Modulo.Titulo</h2>
+                <h4 class="stage-title">@Model.EtapaActual.Titulo</h4>
+            </div>
 
-        <partial name="_StatusMessage" model="Model.StatusMessage" />
+            <partial name="_StatusMessage" model="Model.StatusMessage" />
 
-        <div class="w-100 d-flex justify-content-center mb-4">
-            @switch (Model.EtapaActual.Tipo)
-            {
-                case TipoEtapa.Video:
-                    <div class="ratio ratio-16x9 w-75 mx-auto mb-4">
-                        <iframe width="560" height="315"
-                                src="@videoUrl"
-                                title="@Model.EtapaActual.Titulo"
-                                frameborder="0"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                referrerpolicy="strict-origin-when-cross-origin"
-                                allowfullscreen>
-                        </iframe>
-                    </div>
-                    break;
-
-                case TipoEtapa.Quiz:
-                    @if (quizData.Count > 0)
-                    {
-                        <div class="w-75 text-start p-3 border rounded bg-light text-dark">
-                            <form id="quizForm">
-                                @for (int qNum = 0; qNum < quizData.Count; qNum++)
-                                {
-                                    var pregunta = quizData[qNum];
-                                    <div class="mb-4">
-                                        <p class="fw-bold">@(@qNum + 1). @pregunta.Pregunta</p>
-                                        @for (int idx = 0; idx < pregunta.Respuestas.Count; idx++)
-                                        {
-                                            var r = pregunta.Respuestas[idx];
-                                            <div class="form-check">
-                                                <input class="form-check-input"
-                                                       type="radio"
-                                                       name="pregunta@(@qNum + 1)"
-                                                       id="pregunta@(@qNum + 1)_@idx"
-                                                       value="@idx" />
-                                                <label class="form-check-label" for="pregunta@(@qNum + 1)_@idx">@r</label>
-                                            </div>
-                                        }
-                                    </div>
-                                }
-                            </form>
-                            <div id="quizResult" class="mb-3 fw-bold text-danger"></div>
-                        </div>
-                    }
-                    else
-                    {
-                        <p>No hay preguntas cargadas.</p>
-                    }
-                    break;
-
-                case TipoEtapa.Ahorcado:
-                    <div class="w-75 text-center p-3 border rounded bg-light text-dark">
-                        <h5>Adivina la palabra</h5>
-                        <div id="ahorcadoPalabra" class="fs-3 mb-4"></div>
-
-                        <div class="d-flex justify-content-center mb-4">
-                            <svg id="ahorcadoCanvas" width="150" height="200" class="border">
-                                <line x1="10" y1="190" x2="140" y2="190" stroke="black" stroke-width="3" />
-                                <line x1="40" y1="190" x2="40" y2="20" stroke="black" stroke-width="3" />
-                                <line x1="40" y1="20" x2="100" y2="20" stroke="black" stroke-width="3" />
-                                <line x1="100" y1="20" x2="100" y2="50" stroke="black" stroke-width="3" />
-
-                                <circle id="head" cx="100" cy="70" r="20" stroke="black" stroke-width="3" fill="none" style="display:none" />
-                                <line id="body" x1="100" y1="90" x2="100" y2="140" stroke="black" stroke-width="3" style="display:none" />
-                                <line id="armLeft" x1="100" y1="100" x2="70" y2="120" stroke="black" stroke-width="3" style="display:none" />
-                                <line id="armRight" x1="100" y1="100" x2="130" y2="120" stroke="black" stroke-width="3" style="display:none" />
-                                <line id="legLeft" x1="100" y1="140" x2="80" y2="170" stroke="black" stroke-width="3" style="display:none" />
-                                <line id="legRight" x1="100" y1="140" x2="120" y2="170" stroke="black" stroke-width="3" style="display:none" />
-                            </svg>
+            <div class="w-100 d-flex justify-content-center mb-4" >
+                @switch (Model.EtapaActual.Tipo)
+                {
+                    case TipoEtapa.Video:
+                        <div class="content-card video-card w-100 text-center text-dark" style="border-radius:12px; overflow:hidden; background-color:#212529;">
+                            <div class="video-container w-100 mx-auto">
+                                <div class="ratio ratio-16x9" style="border-radius:12px; overflow:hidden;">
+                                    <iframe src="@videoUrl"
+                                            title="@Model.EtapaActual.Titulo"
+                                            frameborder="0"
+                                            allowfullscreen
+                                            style="width:100%; height:100%; border:none; display:block;"></iframe>
+                                </div>
+                            </div>
                         </div>
 
-                        <div id="ahorcadoLetras" class="d-flex flex-wrap justify-content-center gap-2"></div>
-                        <div id="ahorcadoMensaje" class="mt-3 fw-bold text-danger"></div>
-                    </div>
-                    break;
+                        break;
 
-                case TipoEtapa.SopaDeLetras:
-                    <div class="w-100 text-center p-3 border rounded bg-light text-dark">
-                        <h5>Encuentra las palabras</h5>
-                        <div id="sopaContainer" class="d-flex justify-content-center mb-3"></div>
-                        <div id="sopaPalabras" class="mb-3"></div>
-                        <div id="sopaMensaje" class="fw-bold text-danger"></div>
-                    </div>
-                    break;
+                    case TipoEtapa.Quiz:
+                        @if (quizData.Count > 0)
+                        {
+                            <div class="content-card quiz-card w-100 text-dark">
+                                <h5 class="text-center mb-4">Responde todas las preguntas</h5>
+                                <form id="quizForm">
+                                    @for (int qNum = 0; qNum < quizData.Count; qNum++)
+                                    {
+                                        var pregunta = quizData[qNum];
+                                        <div class="quiz-question">
+                                            <p class="fw-bold mb-3">@(@qNum + 1). @pregunta.Pregunta</p>
+                                            @for (int idx = 0; idx < pregunta.Respuestas.Count; idx++)
+                                            {
+                                                var r = pregunta.Respuestas[idx];
+                                                <div class="form-check mb-2">
+                                                    <input class="form-check-input"
+                                                           type="radio"
+                                                           name="pregunta@(@qNum + 1)"
+                                                           id="pregunta@(@qNum + 1)_@idx"
+                                                           value="@idx" />
+                                                    <label class="form-check-label fs-6" for="pregunta@(@qNum + 1)_@idx">@r</label>
+                                                </div>
+                                            }
+                                        </div>
+                                    }
+                                </form>
+                                <div id="quizResult" class="mb-3 fw-bold text-center"></div>
+                            </div>
+                        }
+                        break;
 
-                case TipoEtapa.EncuentraLaPalabra:
+                    case TipoEtapa.Ahorcado:
+                        <div class="content-card hangman-card w-100 text-center text-dark">
+                            <h5 class="mb-4">Adivina la palabra</h5>
+                            <div id="ahorcadoPalabra" class="hangman-word fs-1 mb-4"></div>
 
-                    <div class="w-75 text-start p-3 border rounded bg-light text-dark">
-                        <h5 class="mb-3">Encuentra las palabras clave</h5>
+                            <div class="d-flex justify-content-center mb-4">
+                                <svg id="ahorcadoCanvas" width="150" height="200" class="hangman-canvas">
+                                    <line x1="10" y1="190" x2="140" y2="190" stroke="black" stroke-width="3" />
+                                    <line x1="40" y1="190" x2="40" y2="20" stroke="black" stroke-width="3" />
+                                    <line x1="40" y1="20" x2="100" y2="20" stroke="black" stroke-width="3" />
+                                    <line x1="100" y1="20" x2="100" y2="50" stroke="black" stroke-width="3" />
+                                    <circle id="head" cx="100" cy="70" r="20" stroke="black" stroke-width="3" fill="none" style="display:none" />
+                                    <line id="body" x1="100" y1="90" x2="100" y2="140" stroke="black" stroke-width="3" style="display:none" />
+                                    <line id="armLeft" x1="100" y1="100" x2="70" y2="120" stroke="black" stroke-width="3" style="display:none" />
+                                    <line id="armRight" x1="100" y1="100" x2="130" y2="120" stroke="black" stroke-width="3" style="display:none" />
+                                    <line id="legLeft" x1="100" y1="140" x2="80" y2="170" stroke="black" stroke-width="3" style="display:none" />
+                                    <line id="legRight" x1="100" y1="140" x2="120" y2="170" stroke="black" stroke-width="3" style="display:none" />
+                                </svg>
+                            </div>
 
-                        <!-- Consigna: fondo gris suave, padding, borde redondeado -->
-                        <p class="consigna mb-3 p-2 text-dark">
-                            Lee atentamente el texto y haz clic sobre todas las palabras importantes que consideres clave.
-                        </p>
-
-                        <!-- Contador de palabras restantes -->
-                        <div id="encContador" class="mb-2 fw-semibold text-dark" style="font-size: 0.95rem;">
-                            Palabras restantes: <span id="encRestantes">@palabrasClaveEncuentra.Count</span>
+                            <div id="ahorcadoLetras" class="d-flex flex-wrap justify-content-center gap-2"></div>
+                            <div id="ahorcadoMensaje" class="mt-3 fw-bold"></div>
                         </div>
+                        break;
 
-                        <!-- Texto de la actividad -->
-                        <div id="encTexto" class="actividad mb-3 p-3 border rounded" style="line-height:1.6; background-color: #ffffff; border: 1px solid #ced4da; cursor: pointer;">
+                    case TipoEtapa.SopaDeLetras:
+                        <div class="content-card wordsearch-card w-100 text-center text-dark">
+                            <h5 class="mb-4">Encuentra las palabras</h5>
+                            <div class="palabras-lista mb-3">
+                                <div id="sopaPalabras"></div>
+                            </div>
+                            <div id="sopaContainer" class="d-flex justify-content-center mb-3"></div>
+                            <div id="sopaMensaje" class="fw-bold"></div>
                         </div>
+                        break;
 
-                        <div id="encMensaje" class="fw-bold text-danger mb-3"></div>
-                    </div>
-                    break;
+                    case TipoEtapa.EncuentraLaPalabra:
+                        <div class="content-card find-word-card w-100 text-dark">
+                            <h5 class="text-center mb-4">Encuentra las palabras clave</h5>
 
+                            <p class="consigna mb-3 p-3">
+                                Lee atentamente el texto y haz clic sobre todas las palabras importantes que consideres clave.
+                            </p>
 
+                            <div class="contador-palabras mb-3">
+                                Palabras restantes: <span id="encRestantes">@palabrasClaveEncuentra.Count</span>
+                            </div>
 
+                            <div id="encTexto" class="actividad mb-3 p-3 border rounded"></div>
+                            <div id="encMensaje" class="fw-bold text-center mb-3"></div>
+                        </div>
+                        break;
+                }
+            </div>
 
-            }
+            <form method="post" id="continuarForm" class="text-center">
+                <input type="hidden" name="ModuloId" value="@Model.Modulo.Id" />
+                <button type="submit" id="continuarBtn" class="continue-btn">
+                    Continuar
+                </button>
+            </form>
         </div>
-
-        <form method="post" id="continuarForm" class="mt-3 d-flex justify-content-center">
-            <input type="hidden" name="ModuloId" value="@Model.Modulo.Id" />
-            <button type="submit" id="continuarBtn" class="btn btn-primary btn-lg px-4 py-3">
-                Continuar
-            </button>
-        </form>
     </div>
 
-    @* Script validación Quiz *@
+    @* Scripts existentes sin cambios *@
     @if (Model.EtapaActual.Tipo == TipoEtapa.Quiz && quizData.Count > 0)
     {
         <script>
@@ -202,22 +193,21 @@
                     const score = calcularScore();
                     if(score === -1) {
                         e.preventDefault();
-                        quizError.innerText = "Debes responder todas las preguntas antes de continuar.";
+                        quizError.innerHTML = `<div class="alert alert-danger">Debes responder todas las preguntas antes de continuar.</div>`;
                         return;
                     }
                     const porcentaje = (score / quizData.length) * 100;
                     if(porcentaje < 90) {
                         e.preventDefault();
-                        quizError.innerText = `Debes responder al menos el 90% correctamente para continuar. Has respondido ${score} de ${quizData.length}.`;
+                        quizError.innerHTML = `<div class="alert alert-danger">Debes responder al menos el 90% correctamente para continuar. Has respondido ${score} de ${quizData.length}.</div>`;
                         return;
                     }
-                    quizError.innerText = "";
+                    quizError.innerHTML = "";
                 });
             });
         </script>
     }
 
-    @* Script validación Ahorcado *@
     @if (Model.EtapaActual.Tipo == TipoEtapa.Ahorcado && !string.IsNullOrEmpty(Model.EtapaActual.ContenidoTexto))
     {
         <script>
@@ -231,21 +221,17 @@
 
                 let errores = 0;
                 let maxErrores = 6;
-
-                // Inicializar progreso respetando espacios
                 let progreso = palabra.split("").map(c => c === " " ? " " : "_");
 
-                // Función para mostrar el progreso con espacios
                 function mostrarProgreso() {
-                    palabraDiv.innerHTML = progreso.map(c => c === " " ? "&nbsp;&nbsp;&nbsp;" : `<span style="display:inline-block; min-width:20px;">${c}</span>`).join("");
+                    palabraDiv.innerHTML = progreso.map(c => c === " " ? "&nbsp;" : `<span style="display:inline-block; min-width:20px;">${c}</span>`).join("");
                 }
-
                 mostrarProgreso();
 
                 letras.forEach(l => {
                     const btn = document.createElement("button");
                     btn.innerText = l;
-                    btn.className = "btn btn-outline-primary btn-sm";
+                    btn.className = "btn btn-outline-primary letter-btn";
                     btn.onclick = (ev) => {
                         ev.preventDefault();
                         jugarLetra(l, btn);
@@ -264,19 +250,17 @@
                         }
                         mostrarProgreso();
                         if (!progreso.includes("_")) {
-                            mensajeDiv.innerHTML = `<span class="text-success">🎉 ¡Ganaste! La palabra era <b>${palabra}</b>.</span>`;
+                            mensajeDiv.innerHTML = `<div class="alert alert-success">¡Ganaste! La palabra era <b>${palabra}</b>.</div>`;
                         }
                     } else {
                         errores++;
                         dibujarAhorcado(errores);
                         if (errores >= maxErrores) {
                             mensajeDiv.innerHTML = `
-                                <span class="text-danger">❌ Perdiste. La palabra era <b>${palabra}</b>.</span>
-                                <br>
-                                <button id="btnReiniciar" class="btn btn-secondary mt-2">🔄 Reiniciar</button>
+                                <div class="alert alert-danger">Perdiste. La palabra era <b>${palabra}</b>.</div>
+                                <button id="btnReiniciar" class="btn btn-secondary mt-2">Reiniciar</button>
                             `;
                             deshabilitarBotones();
-
                             document.getElementById("btnReiniciar").addEventListener("click", (ev) => {
                                 ev.preventDefault();
                                 reiniciarJuego();
@@ -291,7 +275,6 @@
                     mostrarProgreso();
                     mensajeDiv.innerHTML = "";
                     document.querySelectorAll("#ahorcadoCanvas [id]").forEach(p => p.style.display = "none");
-
                     document.querySelectorAll("#ahorcadoLetras button").forEach(b => b.disabled = false);
                 }
 
@@ -306,16 +289,15 @@
                     }
                 }
 
-                // Validación botón Continuar
                 continuarForm.addEventListener("submit", (e) => {
                     if (progreso.includes("_")) {
                         e.preventDefault();
-                        mensajeDiv.innerHTML = `<span class="text-danger">Debes adivinar la palabra para continuar.</span>`;
+                        mensajeDiv.innerHTML = `<div class="alert alert-danger">Debes adivinar la palabra para continuar.</div>`;
                         return;
                     }
                     if (errores >= maxErrores) {
                         e.preventDefault();
-                        mensajeDiv.innerHTML = `<span class="text-danger">No puedes continuar, perdiste el juego. 🔄 Reinicia para intentarlo de nuevo.</span>`;
+                        mensajeDiv.innerHTML = `<div class="alert alert-danger">No puedes continuar, perdiste el juego. Reinicia para intentarlo de nuevo.</div>`;
                         return;
                     }
                 });
@@ -323,7 +305,6 @@
         </script>
     }
 
-    @* Script validación Sopa de letras *@
     @if (Model.EtapaActual.Tipo == TipoEtapa.SopaDeLetras && !string.IsNullOrEmpty(Model.EtapaActual.ContenidoJson))
     {
         <script>
@@ -339,10 +320,8 @@
 
                 let encontradas = [];
 
-                // Mostrar lista de palabras
-                palabrasDiv.innerHTML = `<b>Palabras a encontrar:</b> ${palabras.map(p => `<span class='mx-2' id='pal-${p}'>${p}</span>`).join("")}`;
+                palabrasDiv.innerHTML = `<b>Palabras a encontrar:</b><br>${palabras.map(p => `<span class='badge bg-secondary mx-1 mt-1' id='pal-${p}'>${p}</span>`).join("")}`;
 
-                // Insertar palabras (simplificado H/V)
                 function colocarPalabra(palabra) {
                     palabra = palabra.toUpperCase();
                     let placed = false;
@@ -367,7 +346,6 @@
                 }
                 palabras.forEach(p => colocarPalabra(p));
 
-                // Completar con letras aleatorias
                 const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
                 for (let r = 0; r < gridSize; r++) {
                     for (let c = 0; c < gridSize; c++) {
@@ -375,15 +353,14 @@
                     }
                 }
 
-                // Renderizar tabla
                 const table = document.createElement("table");
-                table.className = "table table-bordered border-dark";
+                table.className = "sopa-table table table-bordered border-dark";
                 for (let r = 0; r < gridSize; r++) {
                     const row = document.createElement("tr");
                     for (let c = 0; c < gridSize; c++) {
                         const cell = document.createElement("td");
                         cell.innerText = grid[r][c];
-                        cell.className = "p-1 text-center fw-bold sopaCell";
+                        cell.className = "p-1 text-center sopaCell";
                         cell.style.cursor = "pointer";
                         cell.dataset.row = r;
                         cell.dataset.col = c;
@@ -393,15 +370,12 @@
                 }
                 sopaContainer.appendChild(table);
 
-                // Selección de letras
                 let seleccion = [];
                 document.querySelectorAll(".sopaCell").forEach(cell => {
                     cell.addEventListener("click", () => {
                         mensajeDiv.innerHTML = "";
-                        // si ya fue marcada como correcta, no hacer nada
                         if (cell.classList.contains("bg-success")) return;
 
-                        // toggle amarillo
                         if (cell.classList.contains("bg-warning")) {
                             cell.classList.remove("bg-warning");
                             seleccion = seleccion.filter(c => c !== cell);
@@ -409,46 +383,37 @@
                             cell.classList.add("bg-warning");
                             seleccion.push(cell);
                         }
-
                         verificarPalabra();
                     });
                 });
 
                 function verificarPalabra() {
                     const intento = seleccion.map(c => c.innerText).join("");
-
                     palabras.forEach(p => {
                         if (intento.endsWith(p.toUpperCase())) {
-                            // Marcar palabra en lista
-                            document.querySelector(`#pal-${p}`).classList.add("text-success", "fw-bold");
+                            document.querySelector(`#pal-${p}`).classList.replace("bg-secondary", "bg-success");
                             encontradas.push(p);
-
-                            // Bloquear letras seleccionadas → verde y no clickeables
                             seleccion.forEach(c => {
                                 c.classList.remove("bg-warning");
                                 c.classList.add("bg-success");
                                 c.style.pointerEvents = "none";
                             });
-
                             seleccion = [];
-
                             if (encontradas.length === palabras.length) {
-                                mensajeDiv.innerHTML = `<span class="text-success">🎉 ¡Encontraste todas las palabras!</span>`;
+                                mensajeDiv.innerHTML = `<div class="alert alert-success">¡Encontraste todas las palabras!</div>`;
                             }
                         }
                     });
                 }
 
-                // Validación botón Continuar
                 continuarForm.addEventListener("submit", (e) => {
                     if (encontradas.length < palabras.length) {
                         e.preventDefault();
-                        mensajeDiv.innerHTML = `<span class="text-danger">Debes encontrar todas las palabras para continuar.</span>`;
+                        mensajeDiv.innerHTML = `<div class="alert alert-danger">Debes encontrar todas las palabras para continuar.</div>`;
                     }
                 });
             });
         </script>
-
     }
 
 

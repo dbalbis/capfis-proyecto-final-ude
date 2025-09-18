@@ -562,3 +562,254 @@ body {
     border-color: #FFA500 !important;
 }
 
+/*ESTILOS DE MODULOS APRENDIZAJE*/
+
+:root {
+    --orange-primary: #FFA500;
+    --orange-light: rgba(255, 165, 0, 0.1);
+    --orange-border: rgba(255, 165, 0, 0.3);
+}
+
+.main-container {
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    padding: 2.5rem;
+    margin: 2rem auto;
+    max-width: 95%;
+}
+
+.module-header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+    padding: 2rem;
+    background: linear-gradient(135deg, var(--orange-light), rgba(255, 165, 0, 0.05));
+    border-radius: 12px;
+    border: 1px solid var(--orange-border);
+}
+
+.module-title {
+    color: var(--orange-primary);
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+}
+
+.stage-title {
+    color: white;
+    font-weight: 600;
+}
+
+/* Content Cards */
+.content-card {
+    background: #f8f9fa;
+    border: 2px solid #e9ecef;
+    border-radius: 12px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    transition: all 0.3s ease;
+}
+
+    .content-card.video-card {
+        background: #f8f9fa;
+        border: 2px solid #00bcd4;
+        border-radius: 15px;
+        padding: 0;
+        margin-bottom: 2rem;
+        transition: all 0.3s ease;
+    }
+
+.quiz-card {
+    background: linear-gradient(135deg, #fff3cd, #ffeaa7);
+    border-color: #f6d55c;
+}
+
+.hangman-card {
+    background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+    border-color: #2196f3;
+}
+
+.wordsearch-card {
+    background: linear-gradient(135deg, #f3e5f5, #e1bee7);
+    border-color: #9c27b0;
+}
+
+.find-word-card {
+    background: linear-gradient(135deg, #e8f5e8, #c8e6c9);
+    border-color: #4caf50;
+}
+
+/* Video específico */
+.video-container {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+}
+
+    .video-container .ratio {
+        width: 100%;
+        height: 100%;
+        border-radius: 0; /* si quieres que sea cuadrado */
+        overflow: hidden;
+        background-color: #212529;
+    }
+
+/* Quiz */
+.quiz-question {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    border-left: 4px solid var(--orange-primary);
+}
+
+/* Ahorcado */
+.hangman-word {
+    font-family: 'Courier New', monospace;
+    color: #1976d2;
+    letter-spacing: 0.1em;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+}
+
+.hangman-space {
+    display: inline-block;
+    width: 0.3em; /* espacio entre palabras */
+}
+
+.hangman-canvas {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.letter-btn {
+    width: 40px;
+    height: 40px;
+    margin: 3px;
+    font-weight: bold;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+}
+
+    .letter-btn:hover:not(:disabled) {
+        transform: scale(1.1);
+    }
+
+/* Sopa de Letras */
+.sopa-table {
+    font-family: 'Courier New', monospace;
+}
+
+.sopaCell {
+    width: 35px;
+    height: 35px;
+    font-size: 1.3rem;
+    font-weight: bold;
+    border: 1px solid #666;
+    transition: all 0.2s ease;
+}
+
+    .sopaCell:hover {
+        transform: scale(1.1);
+    }
+
+.palabras-lista {
+    background: white;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    margin-bottom: 1rem;
+}
+
+/* Encuentra la Palabra */
+.consigna {
+    background: white;
+    border-left: 4px solid var(--orange-primary);
+    border-radius: 0 8px 8px 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    font-style: italic;
+}
+
+.actividad {
+    background: white;
+    font-size: 1.1rem;
+    line-height: 1.8;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.palabraClave {
+    padding: 2px 4px;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+    .palabraClave:hover {
+        background-color: rgba(255, 165, 0, 0.3);
+        transform: scale(1.05);
+    }
+
+.contador-palabras {
+    background: white;
+    padding: 0.8rem 1.2rem;
+    border-radius: 25px;
+    border: 2px solid var(--orange-border);
+    display: inline-block;
+    color: var(--orange-primary);
+    font-weight: 600;
+}
+
+/* Botón Continuar Mejorado */
+.continue-btn {
+    background: linear-gradient(45deg, var(--orange-primary), #ff8c00);
+    border: none;
+    color: white;
+    font-weight: bold;
+    font-size: 1.1rem;
+    padding: 1rem 3rem;
+    border-radius: 25px;
+    box-shadow: 0 4px 15px rgba(255, 165, 0, 0.3);
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+    .continue-btn:hover {
+        background: linear-gradient(45deg, #ff8c00, var(--orange-primary));
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(255, 165, 0, 0.4);
+        color: white;
+    }
+
+/* Mensajes */
+.alert-success {
+    background: linear-gradient(45deg, #d4edda, #c3e6cb);
+    border: none;
+    border-left: 4px solid #28a745;
+    border-radius: 8px;
+}
+
+.alert-danger {
+    background: linear-gradient(45deg, #f8d7da, #f5c6cb);
+    border: none;
+    border-left: 4px solid #dc3545;
+    border-radius: 8px;
+}
+
+/* Animación sutil */
+@@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in {
+    animation: fadeInUp 0.6s ease-out;
+}
