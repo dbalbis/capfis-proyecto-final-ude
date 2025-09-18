@@ -6,6 +6,8 @@
 @{
     Layout = "/Pages/Shared/_LayoutModulo.cshtml";
     ViewData["Title"] = Model.Modulo?.Titulo ?? "Aprender";
+    ViewData["NombreModulo"] = Model.Modulo?.Titulo ?? "";
+
 
     string videoUrl = "";
     if (Model.EtapaActual != null && Model.EtapaActual.Tipo == TipoEtapa.Video)
