@@ -41,16 +41,19 @@
     }
 }
 
+
+
 @if (Model.Modulo != null && Model.EtapaActual != null)
 {
     @if (Model.ModuloCompletado)
     {
         <div class="container py-5 text-center">
             <h2 class="text-success celebration-emoji">🎉 ¡Felicidades!</h2>
-            <h4 class="module-title text-light">
+            <h3 class="module-title-finish text-light">
                 Has completado satisfactoriamente el módulo:<br><br>
-                <strong>"@Model.Modulo.Titulo"</strong>
-            </h4>
+                <strong class="module-finish">"@Model.Modulo.Titulo"</strong>
+            </h3>
+            <br>
             <a class="btn fw-bold w-25 py-2" style="background-color: #FFA800; color: black; font-size: 1.25rem;"
                asp-page="/Index">
                 Volver
@@ -167,6 +170,20 @@
             <div class="module-header">
                 <h2 class="module-title">@Model.Modulo.Titulo</h2>
                 <h4 class="stage-title">@Model.EtapaActual.Titulo</h4>
+                    <h6 class="stage-type">
+                        @{
+                            string nombreAmigable = Model.EtapaActual.Tipo switch
+                            {
+                                TipoEtapa.Video => "Video educativo",
+                                TipoEtapa.Ahorcado => "Juego del ahorcado",
+                                TipoEtapa.Quiz => "Cuestionario",
+                                TipoEtapa.SopaDeLetras => "Sopa de letras",
+                                TipoEtapa.EncuentraLaPalabra => "Encuentra la palabra",
+                                _ => Model.EtapaActual.Tipo.ToString()
+                            };
+                        }
+                        @nombreAmigable
+                    </h6>
             </div>
 
             <partial name="_StatusMessage" model="Model.StatusMessage" />

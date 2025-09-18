@@ -15,7 +15,7 @@
         <li class="nav-item">
             <a class="nav-link btn btn-outline-warning fw-bold px-4 mb-2 @(isActive("/Modulo/Aprender") ? "active" : "")"
                asp-page="/Aprendizaje/MiAprendizaje">
-                Módulos
+                @ViewData["NombreModulo"]
             </a>
         </li>
         <!-- Aquí podrías agregar más enlaces de módulos -->

@@ -24,7 +24,7 @@ namespace CAPFIS.Pages.Modulo
         public ModuloInteractivo? Modulo { get; set; }
         public EtapaModulo? EtapaActual { get; set; }
 
-        public bool ModuloCompletado => ModuloUsuario?.Completado == true || ModuloUsuario?.Progreso >= 100;
+        public bool ModuloCompletado => ModuloUsuario?.Completado == true;
 
         public ModuloUsuario? ModuloUsuario { get; set; }
 
@@ -84,15 +84,23 @@ namespace CAPFIS.Pages.Modulo
             if (modulo == null) return NotFound();
 
             var etapasPublicadas = modulo.Etapas.OrderBy(e => e.Orden).ToList();
-            if (moduloUsuario.EtapaActualOrden < etapasPublicadas.Count)
+
+            var totalEtapas = etapasPublicadas.Count;
+
+            if (moduloUsuario.EtapaActualOrden < totalEtapas)
             {
+                // Calculamos progreso solo con etapas completadas
+                moduloUsuario.Progreso = (int)((double)(moduloUsuario.EtapaActualOrden - 1) / totalEtapas * 100);
+
+                // Pasamos a la siguiente etapa
                 moduloUsuario.EtapaActualOrden++;
-                moduloUsuario.Progreso = (int)((double)moduloUsuario.EtapaActualOrden / etapasPublicadas.Count * 100);
             }
             else
             {
-                moduloUsuario.Completado = true;
+                // Última etapa completada
+                moduloUsuario.EtapaActualOrden = totalEtapas;
                 moduloUsuario.Progreso = 100;
+                moduloUsuario.Completado = true;
             }
 
             _context.ModulosUsuarios.Update(moduloUsuario);
