@@ -23,7 +23,12 @@ namespace CAPFIS.Pages
 
         public bool EstaInscripto { get; set; } = false;
 
+        public ModuloUsuario? ModuloUsuario { get; set; }
+
         public ModuloInteractivo? Modulo { get; set; }
+
+        // Propiedad que indica si el módulo está completado
+        public bool ModuloCompletado => ModuloUsuario != null && ModuloUsuario.Completado && ModuloUsuario.Progreso >= 100;
 
         public async Task<IActionResult> OnGetAsync(string slug)
         {
@@ -39,8 +44,10 @@ namespace CAPFIS.Pages
             var user = await _userManager.GetUserAsync(User);
             if (user != null)
             {
-                EstaInscripto = await _context.ModulosUsuarios
-                    .AnyAsync(mu => mu.UserId == user.Id && mu.ModuloId == Modulo.Id);
+                ModuloUsuario = await _context.ModulosUsuarios
+                    .FirstOrDefaultAsync(mu => mu.UserId == user.Id && mu.ModuloId == Modulo.Id);
+
+                EstaInscripto = ModuloUsuario != null;
             }
 
             return Page();
@@ -54,20 +61,21 @@ namespace CAPFIS.Pages
                 return Challenge(); // Redirige a login si no hay sesión
             }
 
-            bool yaInscripto = await _context.ModulosUsuarios
-                .AnyAsync(mu => mu.UserId == user.Id && mu.ModuloId == moduloId);
+            var moduloUsuario = await _context.ModulosUsuarios
+                .FirstOrDefaultAsync(mu => mu.UserId == user.Id && mu.ModuloId == moduloId);
 
-            if (!yaInscripto)
+            if (moduloUsuario == null)
             {
-                var inscripcion = new ModuloUsuario
+                moduloUsuario = new ModuloUsuario
                 {
                     UserId = user.Id,
                     ModuloId = moduloId,
                     Progreso = 0,
+                    Completado = false,
                     FechaInscripcion = DateTime.UtcNow
                 };
 
-                _context.ModulosUsuarios.Add(inscripcion);
+                _context.ModulosUsuarios.Add(moduloUsuario);
                 await _context.SaveChangesAsync();
             }
 

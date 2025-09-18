@@ -14,7 +14,7 @@
         <hr class="text-secondary my-3"
             style="border: none; border-bottom: 2px solid rgba(255, 165, 0, 0.4); margin: 0 1rem 0.5rem 1rem;" />
 
-            <partial name="_StatusMessage" model="Model.StatusMessage" />
+        <partial name="_StatusMessage" model="Model.StatusMessage" />
 
         @if (!Model.ModulosSubscripto.Any())
         {
@@ -47,25 +47,34 @@
 
                         <!-- Botones -->
                         <div class="d-flex flex-column gap-2 w-100">
-                            <a class="btn btn-outline-warning fw-bold w-100" href="/modulos/@mu.ModuloId"
-                               style="border-width:2px; color:#FFA500; border-color:#FFA500; background-color:transparent;">
-                                Continuar
-                            </a>
-
-                            <form method="post" asp-page-handler="DarseDeBaja">
-                                <input type="hidden" name="moduloId" value="@mu.ModuloId" />
-                                <button type="submit" class="btn btn-outline-danger fw-bold w-100" style="border-width:2px;">
-                                    Darse de baja
+                            @if (mu.Completado)
+                            {
+                                <button class="btn btn-success fw-bold w-100" disabled>
+                                    ✅ Completado
                                 </button>
-                            </form>
+                            }
+                            else
+                            {
+                                <a class="btn btn-outline-warning fw-bold w-100" href="/modulos/@mu.ModuloId"
+                                   style="border-width:2px; color:#FFA500; border-color:#FFA500; background-color:transparent;">
+                                    Continuar
+                                </a>
+
+                                <form method="post" asp-page-handler="DarseDeBaja">
+                                    <input type="hidden" name="moduloId" value="@mu.ModuloId" />
+                                    <button type="submit" class="btn btn-outline-danger fw-bold w-100" style="border-width:2px;">
+                                        Darse de baja
+                                    </button>
+                                </form>
+                            }
                         </div>
-                    </div>
+                    </div> <!-- Cierra card -->
 
                     <!-- Separador entre cards -->
                     <hr class="text-secondary w-75 my-3" style="border: none; border-bottom: 2px solid rgba(255, 165, 0, 0.3);" />
                 }
-            </div>
-        }
+            </div> <!-- Cierra contenedor de cards -->
+        } <!-- Cierra else -->
     </div>
 </div>
 
