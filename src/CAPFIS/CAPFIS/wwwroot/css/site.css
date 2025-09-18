@@ -573,7 +573,6 @@ body {
 .main-container {
     background: white;
     border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
     padding: 2.5rem;
     margin: 2rem auto;
     max-width: 95%;
@@ -606,7 +605,7 @@ body {
     border: 2px solid #e9ecef;
     border-radius: 12px;
     padding: 2rem;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
     transition: all 0.3s ease;
 }
 
@@ -812,4 +811,69 @@ body {
 
 .fade-in {
     animation: fadeInUp 0.6s ease-out;
+}
+
+/*Confetti*/
+
+.confetti {
+    position: fixed;
+    width: 8px;
+    height: 8px;
+    background: #ff6b6b;
+    animation: confetti-fall 3s linear forwards;
+    pointer-events: none;
+    z-index: 9999;
+}
+
+@keyframes confetti-fall {
+    0% {
+        transform: translateY(-100vh) rotate(0deg);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/*Modulo completado*/
+
+.celebration-emoji {
+    font-size: 3rem;
+    animation: bounce 2s infinite;
+    margin-bottom: 2.2rem;
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+
+    40% {
+        transform: translateY(-20px);
+    }
+
+    60% {
+        transform: translateY(-10px);
+    }
+}
+
+.module-title {
+    font-size: 1.3rem;
+    margin-bottom: 2.2rem;
+    opacity: 0.95;
+    animation: fadeInUp 1s ease-out 0.3s both;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }

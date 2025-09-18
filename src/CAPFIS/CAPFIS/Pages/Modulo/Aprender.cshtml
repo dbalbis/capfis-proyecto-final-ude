@@ -43,6 +43,124 @@
 
 @if (Model.Modulo != null && Model.EtapaActual != null)
 {
+    @if (Model.ModuloCompletado)
+    {
+        <div class="container py-5 text-center">
+            <h2 class="text-success celebration-emoji">🎉 ¡Felicidades!</h2>
+            <h4 class="module-title text-light">
+                Has completado satisfactoriamente el módulo:<br><br>
+                <strong>"@Model.Modulo.Titulo"</strong>
+            </h4>
+            <a class="btn fw-bold w-25 py-2" style="background-color: #FFA800; color: black; font-size: 1.25rem;"
+               asp-page="/Index">
+                Volver
+            </a>
+
+
+        </div>
+
+        //Confeti
+        <canvas id="confetti-canvas" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9999;"></canvas>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                createConfetti();
+            });
+
+            function createConfetti() {
+                const canvas = document.getElementById('confetti-canvas');
+                const ctx = canvas.getContext('2d');
+
+                // Ajustar el canvas al tamaño de la ventana
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+
+                const confettiPieces = [];
+                const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4', '#ffeaa7', '#dda0dd', '#98d8c8', '#f7dc6f', '#bb8fce', '#85c1e9'];
+
+                let confettiStartTime = Date.now();
+                const confettiDuration = 15000; // 15 segundos
+
+                // Crear partículas de confeti inicial
+                function addConfettiPieces(count) {
+                    for (let i = 0; i < count; i++) {
+                        confettiPieces.push({
+                            x: Math.random() * canvas.width,
+                            y: -10 - Math.random() * 50, // Espaciar la entrada
+                            width: Math.random() * 6 + 4,
+                            height: Math.random() * 6 + 4,
+                            color: colors[Math.floor(Math.random() * colors.length)],
+                            speed: Math.random() * 1.5 + 0.5, // Velocidad más lenta
+                            rotation: Math.random() * 360,
+                            rotationSpeed: Math.random() * 3 + 1, // Rotación más lenta
+                            gravity: 0.02, // Gravedad reducida
+                            drift: Math.random() * 1 - 0.5 // Menos deriva lateral
+                        });
+                    }
+                }
+
+                // Agregar confeti inicial
+                addConfettiPieces(50);
+
+                function animateConfetti() {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                    const currentTime = Date.now();
+                    const elapsed = currentTime - confettiStartTime;
+
+                    // Agregar más confeti durante los primeros 5 segundos
+                    if (elapsed < 15000 && Math.random() < 0.3) {
+                        addConfettiPieces(5);
+                    }
+
+                    for (let i = confettiPieces.length - 1; i >= 0; i--) {
+                        const confetti = confettiPieces[i];
+
+                        // Actualizar posición
+                        confetti.y += confetti.speed;
+                        confetti.x += confetti.drift;
+                        confetti.rotation += confetti.rotationSpeed;
+                        confetti.speed += confetti.gravity;
+
+                        // Dibujar confeti
+                        ctx.save();
+                        ctx.translate(confetti.x + confetti.width / 2, confetti.y + confetti.height / 2);
+                        ctx.rotate((confetti.rotation * Math.PI) / 180);
+                        ctx.fillStyle = confetti.color;
+                        ctx.fillRect(-confetti.width / 2, -confetti.height / 2, confetti.width, confetti.height);
+                        ctx.restore();
+
+                        // Eliminar confeti que salió de la pantalla
+                        if (confetti.y > canvas.height + 10) {
+                            confettiPieces.splice(i, 1);
+                        }
+                    }
+
+                    // Continuar animación durante 10 segundos o mientras haya confeti
+                    if (elapsed < confettiDuration || confettiPieces.length > 0) {
+                        requestAnimationFrame(animateConfetti);
+                    } else {
+                        // Limpiar canvas y removerlo cuando termine
+                        setTimeout(() => {
+                            canvas.style.display = 'none';
+                        }, 500);
+                    }
+                }
+
+                // Iniciar animación
+                animateConfetti();
+
+                // Ajustar canvas si cambia el tamaño de la ventana
+                window.addEventListener('resize', function() {
+                    canvas.width = window.innerWidth;
+                    canvas.height = window.innerHeight;
+                });
+            }
+        </script>
+    }
+    else
+    {
+
     <div class="container-fluid">
         <div class="main-container fade-in" style="background-color:#212529;">
             <!-- Header del Módulo -->
@@ -159,14 +277,17 @@
 
             <form method="post" id="continuarForm" class="text-center">
                 <input type="hidden" name="ModuloId" value="@Model.Modulo.Id" />
-                <button type="submit" id="continuarBtn" class="continue-btn">
+                    <button type="submit" id="continuarBtn" class="btn fw-bold w-100 py-3" style="background-color: #FFA800; color: black; font-size: 1.25rem;">
+                        
                     Continuar
                 </button>
             </form>
         </div>
     </div>
 
-    @* Scripts existentes sin cambios *@
+        }
+
+    @* Scripts Quizz *@
     @if (Model.EtapaActual.Tipo == TipoEtapa.Quiz && quizData.Count > 0)
     {
         <script>
@@ -207,7 +328,7 @@
             });
         </script>
     }
-
+    @* Scripts Ahorcado *@
     @if (Model.EtapaActual.Tipo == TipoEtapa.Ahorcado && !string.IsNullOrEmpty(Model.EtapaActual.ContenidoTexto))
     {
         <script>
@@ -304,7 +425,7 @@
             });
         </script>
     }
-
+    @* Scripts Sopa de letras *@
     @if (Model.EtapaActual.Tipo == TipoEtapa.SopaDeLetras && !string.IsNullOrEmpty(Model.EtapaActual.ContenidoJson))
     {
         <script>

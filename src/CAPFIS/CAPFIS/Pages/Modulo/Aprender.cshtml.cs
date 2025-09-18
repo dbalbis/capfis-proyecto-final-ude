@@ -23,6 +23,9 @@ namespace CAPFIS.Pages.Modulo
 
         public ModuloInteractivo? Modulo { get; set; }
         public EtapaModulo? EtapaActual { get; set; }
+
+        public bool ModuloCompletado => ModuloUsuario?.Completado == true || ModuloUsuario?.Progreso >= 100;
+
         public ModuloUsuario? ModuloUsuario { get; set; }
 
         public string? StatusMessage { get; set; }
