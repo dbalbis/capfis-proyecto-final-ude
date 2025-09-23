@@ -134,7 +134,7 @@
         actualizarCampos();
 
         // Quiz
-                // Función para enumerar las preguntas
+        // Función para enumerar las preguntas
         function renderizarNumerosPreguntas() {
             Array.from(preguntasList.children).forEach((div, idx) => {
                 let numeroSpan = div.querySelector('.numeroPregunta');
@@ -193,13 +193,39 @@
         });
 
         // Serializar JSON y validar antes de enviar
-            form.addEventListener('submit', (e) => {
+        form.addEventListener('submit', (e) => {
             statusDiv.innerText = "";
             const tipo = tipoSelect.value;
             let data = null;
 
+            // Validaciones básicas según el tipo
+            if (tipo === 'Video') {
+                const urlInput = contenidoVideo.querySelector('input');
+                if (!urlInput.value.trim()) {
+                    statusDiv.innerText = "❌ La URL del video no puede estar vacía.";
+                    e.preventDefault();
+                    return false;
+                }
+            }
+
+            if (tipo === 'Ahorcado') {
+                const palabraInput = contenidoAhorcado.querySelector('input');
+                if (!palabraInput.value.trim()) {
+                    statusDiv.innerText = "❌ La palabra a adivinar no puede estar vacía.";
+                    e.preventDefault();
+                    return false;
+                }
+            }
+
             if (tipo === 'Quiz') {
                 const preguntas = Array.from(preguntasList.children);
+
+                if (preguntas.length === 0) {
+                    statusDiv.innerText = "❌ Debe agregar al menos una pregunta.";
+                    e.preventDefault();
+                    return false;
+                }
+
                 const quizData = [];
 
                 for (const div of preguntas) {
@@ -225,8 +251,45 @@
                 data = quizData;
 
             } else if (tipo === 'SopaDeLetras') {
-                data = Array.from(palabrasSopaList.querySelectorAll('input')).map(i => i.value);
+                const palabras = Array.from(palabrasSopaList.querySelectorAll('input'))
+                    .map(i => i.value.trim())
+                    .filter(palabra => palabra !== '');
+
+                if (palabras.length === 0) {
+                    statusDiv.innerText = "❌ Debe agregar al menos una palabra para la sopa de letras.";
+                    e.preventDefault();
+                    return false;
+                }
+
+                // Verificar que no haya palabras vacías
+                const palabrasVacias = Array.from(palabrasSopaList.querySelectorAll('input'))
+                    .some(i => !i.value.trim());
+
+                if (palabrasVacias) {
+                    statusDiv.innerText = "❌ Todas las palabras de la sopa de letras deben tener contenido.";
+                    e.preventDefault();
+                    return false;
+                }
+
+                data = palabras;
+
             } else if (tipo === 'EncuentraLaPalabra') {
+                const textoBase = contenidoEncuentra.querySelector('textarea').value.trim();
+                const palabrasClave = Array.from(palabrasClaveList.querySelectorAll('input')).map(i => i.value.trim());
+
+                // Validación simple: texto no vacío y al menos una palabra clave no vacía
+                if (!textoBase) {
+                    statusDiv.innerText = "❌ El texto base no puede estar vacío.";
+                    e.preventDefault();
+                    return false;
+                }
+
+                if (palabrasClave.length === 0 || palabrasClave.every(p => p === '')) {
+                    statusDiv.innerText = "❌ Debe agregar al menos una palabra clave.";
+                    e.preventDefault();
+                    return false;
+                }
+
                 data = {
                     Texto: contenidoEncuentra.querySelector('textarea').value,
                     PalabrasClave: Array.from(palabrasClaveList.querySelectorAll('input')).map(i => i.value)
@@ -235,7 +298,6 @@
 
             contenidoJsonHidden.value = data ? JSON.stringify(data) : "[]";
         });
-
 
     </script>
 }
