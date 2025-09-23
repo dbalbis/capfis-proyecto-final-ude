@@ -50,18 +50,31 @@ namespace CAPFIS.Pages.Admin.Modulos
 
         public IActionResult OnPost()
         {
-            if (!ModelState.IsValid) return Page();
-
             var modulo = _context.Modulos.Find(SelectedModulo.Id);
             if (modulo == null) return Page();
 
-            // Sanitizar inputs
+            // 🔹 Validaciones obligatorias
+            if (string.IsNullOrWhiteSpace(SelectedModulo.Titulo))
+                ModelState.AddModelError("SelectedModulo.Titulo", "El título es obligatorio.");
+
+            if (string.IsNullOrWhiteSpace(SelectedModulo.TituloDetallado))
+                ModelState.AddModelError("SelectedModulo.TituloDetallado", "El título detallado es obligatorio.");
+
+            if (string.IsNullOrWhiteSpace(SelectedModulo.Descripcion))
+                ModelState.AddModelError("SelectedModulo.Descripcion", "La descripción es obligatoria.");
+
+            if (string.IsNullOrWhiteSpace(modulo.ImagenHero) && (HeroImageFile == null || HeroImageFile.Length == 0))
+                ModelState.AddModelError("HeroImageFile", "Debe subir una imagen.");
+
+            if (!ModelState.IsValid) return Page();
+
+            // 🔹 Sanitizar inputs
             modulo.Titulo = InputSanitizer.SanitizeText(SelectedModulo.Titulo);
             modulo.TituloDetallado = InputSanitizer.SanitizeText(SelectedModulo.TituloDetallado);
             modulo.Descripcion = InputSanitizer.SanitizeHtml(SelectedModulo.Descripcion);
             modulo.EstaPublicado = SelectedModulo.EstaPublicado;
 
-            // Opcional: actualizar slug si cambió el título
+            // 🔹 Validar slug único
             string newSlug = GenerarSlug(modulo.Titulo);
             if (_context.Modulos.Any(m => m.Id != modulo.Id && m.Slug == newSlug))
             {
@@ -70,7 +83,7 @@ namespace CAPFIS.Pages.Admin.Modulos
             }
             modulo.Slug = newSlug;
 
-            // Subir imagen nueva si se seleccionó
+            // 🔹 Subir imagen nueva si corresponde
             if (HeroImageFile != null && HeroImageFile.Length > 0)
             {
                 const long maxFileSize = 5 * 1024 * 1024; // 5 MB
@@ -111,7 +124,6 @@ namespace CAPFIS.Pages.Admin.Modulos
             return Page();
         }
 
-        // Reutilizar la función de generar slug del modelo CrearModulo
         private string GenerarSlug(string texto)
         {
             if (string.IsNullOrEmpty(texto)) return string.Empty;

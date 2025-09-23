@@ -1,62 +1,66 @@
 ﻿@page
 @model CAPFIS.Pages.ContactoModel
 @{
+    Layout = "/Pages/Shared/_Layout.cshtml";
     ViewData["Title"] = "Contacto";
 }
 
-<div class="container text-light mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-8 col-lg-6">
-
-            <!-- Encabezado con fondo -->
-            <div class="contacto-bg mb-5 d-flex justify-content-center align-items-center">
-                <div class="container">
-                    <h1 class="fw-bold mb-0 text-center text-white">Contáctenos</h1>
-                </div>
-            </div>
-
-            <!-- Formulario -->
-            <form class="needs-validation" novalidate>
-                <div class="mb-3">
-                    <label for="nombre" class="form-label">Nombre</label>
-                    <input type="text" class="form-control" id="nombre" placeholder="Tu nombre" required>
-                    <div class="invalid-feedback">
-                        Por favor, ingresa tu nombre.
-                    </div>
-                </div>
-                <div class="mb-3">
-                    <label for="email" class="form-label">Correo electrónico</label>
-                    <input type="email" class="form-control" id="email" placeholder="nombre@ejemplo.com" required>
-                    <div class="invalid-feedback">
-                        Ingresa un correo electrónico válido.
-                    </div>
-                </div>
-                <div class="mb-3">
-                    <label for="mensaje" class="form-label">Mensaje</label>
-                    <textarea class="form-control" id="mensaje" rows="4" placeholder="Escribe tu mensaje" required style="resize: none;"></textarea>
-                    <div class="invalid-feedback">
-                        Por favor, escribe tu mensaje.
-                    </div>
-                </div>
-                <button type="submit" class="btn btn-outline-warning fw-bold px-4 login-btn w-100" style="border-width:2px; color:#FFA500; border-color:#FFA500; background-color:transparent;">
-                    Enviar
-                </button>
-            </form>
-
-            <!-- Créditos -->
-            <div class="text-center mt-4 d-flex flex-row justify-content-center gap-4 align-items-center">
-                <a href="https://www.linkedin.com/in/diego-balbis/" target="_blank" rel="noopener" class="d-flex align-items-center text-decoration-none">
-                    <i class="bi bi-linkedin me-2" style="font-size: 1.7rem; color:#FFA500;"></i>
-                    <span class="text-light" style="font-size: 0.8rem;">Diego Balbis</span>
-                </a>
-                <a href="https://www.linkedin.com/in/dayron-mu%C3%B1iz/" target="_blank" rel="noopener" class="d-flex align-items-center text-decoration-none">
-                    <i class="bi bi-linkedin me-2" style="font-size: 1.7rem; color: #FFA500;"></i>
-                    <span class="text-light" style="font-size: 0.8rem;">Dayron Muñiz</span>
-                </a>
-            </div>
-        </div>
+<!-- Hero Section -->
+<div class="mb-4 hero-bg py-5 d-flex flex-column justify-content-center align-items-center"
+     style="min-height: 320px; background-image: url('/images/contacto-img.png'); background-size: cover; background-position: center;">
+    <div class="container text-center">
+        <h1 class="fw-bold mb-4"
+            style="color: #fff; border-color: #FFA800; text-shadow: 0 4px 18px rgba(0,0,0,0.8); font-size: 3rem; line-height: 1.2;">
+            Contáctenos
+        </h1>
     </div>
 </div>
+
+
+<!-- Formulario debajo del hero -->
+<div class="container text-light py-5">
+    <h2 class="fw-bold mb-4 text-center" style="color:#FFA500;">Envíanos un mensaje</h2>
+    <form class="needs-validation" novalidate>
+        <div class="mb-3">
+            <label for="nombre" class="form-label">Nombre</label>
+            <input type="text" class="form-control" id="nombre" placeholder="Tu nombre" required>
+            <div class="invalid-feedback">
+                Por favor, ingresa tu nombre.
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="email" class="form-label">Correo electrónico</label>
+            <input type="email" class="form-control" id="email" placeholder="nombre@ejemplo.com" required>
+            <div class="invalid-feedback">
+                Ingresa un correo electrónico válido.
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="mensaje" class="form-label">Mensaje</label>
+            <textarea class="form-control" id="mensaje" rows="4" placeholder="Escribe tu mensaje" required style="resize: none;"></textarea>
+            <div class="invalid-feedback">
+                Por favor, escribe tu mensaje.
+            </div>
+        </div>
+        <button type="submit" class="btn btn-outline-warning fw-bold px-4 login-btn w-100" style="border-width:2px; color:#FFA500; border-color:#FFA500; background-color:transparent;">
+            Enviar
+        </button>
+    </form>
+
+    <!-- Créditos -->
+    <div class="text-center mt-4 d-flex flex-row justify-content-center gap-4 align-items-center">
+        <a href="https://www.linkedin.com/in/diego-balbis/" target="_blank" rel="noopener" class="d-flex align-items-center text-decoration-none">
+            <i class="bi bi-linkedin me-2" style="font-size: 1.7rem; color:#FFA500;"></i>
+            <span class="text-light" style="font-size: 0.8rem;">Diego Balbis</span>
+        </a>
+        <a href="https://www.linkedin.com/in/dayron-mu%C3%B1iz/" target="_blank" rel="noopener" class="d-flex align-items-center text-decoration-none">
+            <i class="bi bi-linkedin me-2" style="font-size: 1.7rem; color: #FFA500;"></i>
+            <span class="text-light" style="font-size: 0.8rem;">Dayron Muñiz</span>
+        </a>
+    </div>
+</div>
+
+   
 
 @section Scripts {
     <script>

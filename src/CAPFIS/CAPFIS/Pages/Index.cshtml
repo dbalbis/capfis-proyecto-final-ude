@@ -34,12 +34,24 @@
 
                 <!-- BOTONES MEJORADOS -->
                 <div class="d-flex gap-3">
-                    <a class="btn btn-primary fw-bold px-4 py-3"
-                       href="#">
-                        🚀 Comenzar Entrenamiento
-                    </a>
+                    @if (User.Identity?.IsAuthenticated ?? false)
+                    {
+                        <!-- Usuario logeado: redirige a MiAprendizaje -->
+                        <a class="btn btn-primary fw-bold px-4 py-3"
+                           href="/Aprendizaje/MiAprendizaje">
+                            🚀 Comenzar Entrenamiento
+                        </a>
+                    }
+                    else
+                    {
+                        <!-- Usuario no logeado: redirige a login -->
+                        <a class="btn btn-primary fw-bold px-4 py-3"
+                           href="/Login">
+                            🚀 Comenzar Entrenamiento
+                        </a>
+                    }
                     <a class="btn btn-outline-warning fw-bold px-4 py-3 login-btn" style="border-width:2px; color:#FFA500; border-color:#FFA500; background-color:transparent;"
-                       href="#">
+                       href="#faqSection">
                         🔍 Ver cómo funciona
                     </a>
                     
@@ -97,7 +109,7 @@
 
 
 <!-- Preguntas Frecuentes -->
-<div class="py-5" style="background: black;">
+<div id="faqSection" class="py-5" style="background: black;">
     <div class="container">
         <h3 class="text-center mb-5 fw-bold text-light" style="text-shadow: 0 4px 18px rgba(0,0,0,0.8); font-size: 2.5rem;">
             Preguntas Frecuentes
