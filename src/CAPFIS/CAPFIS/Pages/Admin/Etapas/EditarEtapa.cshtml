@@ -65,11 +65,13 @@
                 <div id="contenidoVideo" class="mb-3" style="display:none;">
                     <label class="form-label">URL del Video</label>
                     <input asp-for="Input.ContenidoUrl" class="form-control" placeholder="https://www.youtube.com/watch?v=..." />
+                    <span asp-validation-for="Input.ContenidoUrl" class="text-danger"></span>
                 </div>
 
                 <div id="contenidoAhorcado" class="mb-3" style="display:none;">
                     <label class="form-label">Palabra a adivinar</label>
-                    <input asp-for="Input.ContenidoTexto" class="form-control" />
+                    <input asp-for="Input.ContenidoTexto" class="form-control" placeholder="Palabra" />
+                    <span asp-validation-for="Input.ContenidoTexto" class="text-danger"></span>
                 </div>
 
                 <!-- Quiz -->
@@ -87,7 +89,7 @@
 
                 <div id="contenidoEncuentra" class="mb-3" style="display:none;">
                     <label class="form-label">Texto base</label>
-                    <textarea id="encuentraTexto" asp-for="Input.ContenidoTexto" class="form-control" rows="5"></textarea>
+                    <textarea asp-for="Input.ContenidoTexto" class="form-control" rows="5"></textarea>
 
                     <label class="form-label mt-2">Palabras clave</label>
                     <div id="palabrasClaveList"></div>
@@ -95,7 +97,8 @@
                 </div>
 
                 <button type="submit"
-                        class="btn btn-outline-warning fw-bold px-4 login-btn w-100 mt-3">
+                        class="btn btn-outline-warning fw-bold px-4 login-btn w-100 mt-3"
+                        style="border-width:2px; color:#FFA500; border-color:#FFA500; background-color:transparent;">
                     Guardar Etapa
                 </button>
             </form>
@@ -112,7 +115,19 @@
         const contenidoQuiz = document.getElementById('contenidoQuiz');
         const contenidoSopa = document.getElementById('contenidoSopa');
         const contenidoEncuentra = document.getElementById('contenidoEncuentra');
-        const hiddenJson = document.getElementById("contenidoJsonHidden");
+
+        const preguntasList = document.getElementById('preguntasList');
+        const agregarPreguntaBtn = document.getElementById('agregarPreguntaBtn');
+
+        const palabrasSopaList = document.getElementById('palabrasSopaList');
+        const agregarPalabraSopaBtn = document.getElementById('agregarPalabraSopaBtn');
+
+        const palabrasClaveList = document.getElementById('palabrasClaveList');
+        const agregarPalabraBtn = document.getElementById('agregarPalabraBtn');
+
+        const contenidoJsonHidden = document.getElementById('contenidoJsonHidden');
+        const form = document.getElementById('formEditarEtapa');
+        const statusDiv = document.getElementById('statusMessageJS');
 
         // Mostrar campos según tipo
         switch(tipo){
@@ -123,218 +138,251 @@
             case "EncuentraLaPalabra": contenidoEncuentra.style.display="block"; break;
         }
 
-                // ===================================================
-        // QUIZ - Editar Etapa con numeración
-        // ===================================================
+        // CARGAR DATOS EXISTENTES PARA EDICIÓN
         document.addEventListener("DOMContentLoaded", () => {
-            if(tipo !== "Quiz") return;
+            // Quiz - cargar preguntas existentes
+            if(tipo === "Quiz" && contenidoJsonHidden.value) {
+                try {
+                    const quizData = JSON.parse(contenidoJsonHidden.value);
+                    quizData.forEach(pregunta => {
+                        const div = document.createElement('div');
+                        div.classList.add('border', 'p-2', 'mb-2', 'rounded');
+                        div.innerHTML = `
+                            <input type="text" class="form-control mb-1" placeholder="Texto de la pregunta" value="${pregunta.Pregunta || ''}" />
+                            <input type="text" class="form-control mb-1" placeholder="Respuesta 1" value="${pregunta.Respuestas[0] || ''}" />
+                            <input type="text" class="form-control mb-1" placeholder="Respuesta 2" value="${pregunta.Respuestas[1] || ''}" />
+                            <input type="text" class="form-control mb-1" placeholder="Respuesta 3" value="${pregunta.Respuestas[2] || ''}" />
+                            <input type="number" min="1" max="3" class="form-control mb-1" placeholder="Número de respuesta correcta (1-3)" required value="${pregunta.Correcta || ''}" />
+                            <button type="button" class="btn btn-outline-danger btn-sm mt-1">Eliminar</button>
+                        `;
+                        preguntasList.appendChild(div);
 
-            const preguntasList = document.getElementById("preguntasList");
-            const btnAgregarPregunta = document.getElementById("agregarPreguntaBtn");
-            let quizData = [];
+                        // Botón eliminar
+                        div.querySelector('button').addEventListener('click', () => {
+                            div.remove();
+                            renderizarNumerosPreguntas();
+                        });
+                    });
+                    renderizarNumerosPreguntas();
+                } catch(e) {}
+            }
 
-            // Solo parsear hiddenJson una vez al inicio
-            try { quizData = JSON.parse(hiddenJson.value || "[]"); } catch(e){ quizData = []; }
+            // Sopa de Letras - cargar palabras existentes
+            if(tipo === "SopaDeLetras" && contenidoJsonHidden.value) {
+                try {
+                    const palabras = JSON.parse(contenidoJsonHidden.value);
+                    palabras.forEach(palabra => {
+                        const div = document.createElement('div');
+                        div.classList.add('input-group', 'mb-1');
+                        div.innerHTML = `
+                            <input type="text" class="form-control" placeholder="Palabra" value="${palabra}" />
+                            <button type="button" class="btn btn-outline-danger" onclick="this.parentElement.remove()">Eliminar</button>
+                        `;
+                        palabrasSopaList.appendChild(div);
+                    });
+                } catch(e) {}
+            }
 
-            // Función para enumerar preguntas
-            function renderizarNumerosPreguntas() {
-                Array.from(preguntasList.children).forEach((div, idx) => {
-                    let numeroSpan = div.querySelector('.numeroPregunta');
-                    if(!numeroSpan){
-                        numeroSpan = document.createElement('span');
-                        numeroSpan.classList.add('numeroPregunta', 'fw-bold', 'me-2');
-                        div.prepend(numeroSpan); // colocar al inicio del div
+            // Encuentra la Palabra - cargar datos existentes
+            if(tipo === "EncuentraLaPalabra" && contenidoJsonHidden.value) {
+                try {
+                    const encuentraData = JSON.parse(contenidoJsonHidden.value);
+
+                    // Cargar el texto base en el textarea
+                    const textareaTexto = contenidoEncuentra.querySelector('textarea');
+                    if(encuentraData.Texto && textareaTexto) {
+                        textareaTexto.value = encuentraData.Texto;
                     }
-                    numeroSpan.innerText = `${idx + 1}.`;
-                });
+
+                    // Cargar las palabras clave
+                    if(encuentraData.PalabrasClave) {
+                        encuentraData.PalabrasClave.forEach(palabra => {
+                            const div = document.createElement('div');
+                            div.classList.add('input-group', 'mb-1');
+                            div.innerHTML = `
+                                <input type="text" class="form-control" placeholder="Palabra clave" value="${palabra}" />
+                                <button type="button" class="btn btn-outline-danger" onclick="this.parentElement.remove()">Eliminar</button>
+                            `;
+                            palabrasClaveList.appendChild(div);
+                        });
+                    }
+                } catch(e) {}
             }
-
-            function renderQuiz() {
-                preguntasList.innerHTML = "";
-                quizData.forEach((p, idx) => {
-                    const div = document.createElement("div");
-                    div.className = "border p-2 mb-2 rounded";
-
-                    // Input pregunta
-                    const inputPregunta = document.createElement("input");
-                    inputPregunta.type = "text";
-                    inputPregunta.className = "form-control mb-1";
-                    inputPregunta.placeholder = "Texto de la pregunta";
-                    inputPregunta.value = p.Pregunta || "";
-                    inputPregunta.addEventListener("input", () => { p.Pregunta = inputPregunta.value; actualizarHidden(); });
-                    div.appendChild(inputPregunta);
-
-                    // Inputs respuestas
-                    p.Respuestas.forEach((r, i) => {
-                        const inputR = document.createElement("input");
-                        inputR.type = "text";
-                        inputR.className = "form-control mb-1";
-                        inputR.placeholder = `Respuesta ${i+1}`;
-                        inputR.value = r || "";
-                        inputR.addEventListener("input", () => { p.Respuestas[i] = inputR.value; actualizarHidden(); });
-                        div.appendChild(inputR);
-                    });
-
-                    // Input respuesta correcta
-                    const inputCorrecta = document.createElement("input");
-                    inputCorrecta.type = "number";
-                    inputCorrecta.min = 1;
-                    inputCorrecta.max = p.Respuestas.length;
-                    inputCorrecta.className = "form-control mb-1";
-                    inputCorrecta.placeholder = `Número de respuesta correcta (1-${p.Respuestas.length})`;
-                    inputCorrecta.value = p.Correcta || "";
-                    inputCorrecta.addEventListener("input", () => { p.Correcta = parseInt(inputCorrecta.value) || null; actualizarHidden(); });
-                    div.appendChild(inputCorrecta);
-
-                    // Botón eliminar
-                    const btnEliminar = document.createElement("button");
-                    btnEliminar.type = "button";
-                    btnEliminar.className = "btn btn-outline-danger btn-sm mt-1";
-                    btnEliminar.innerText = "Eliminar";
-                    btnEliminar.addEventListener("click", () => {
-                        quizData.splice(idx, 1);
-                        renderQuiz();
-                    });
-                    div.appendChild(btnEliminar);
-
-                    preguntasList.appendChild(div);
-                });
-
-                // Actualizar numeración al final
-                renderizarNumerosPreguntas();
-            }
-
-            function actualizarHidden() {
-                hiddenJson.value = JSON.stringify(quizData);
-            }
-
-            // Listener de agregar pregunta
-            btnAgregarPregunta.addEventListener("click", () => {
-                quizData.push({Pregunta:"", Respuestas:["","",""], Correcta:null});
-                renderQuiz();
-            });
-
-            // Render inicial
-            renderQuiz();
         });
 
-
-
-        // ===================================================
-        // SOPA DE LETRAS
-        // ===================================================
-        const palabrasSopaList = document.getElementById("palabrasSopaList");
-        const btnAgregarSopa = document.getElementById("agregarPalabraSopaBtn");
-        let sopaData = [];
-        try { sopaData = JSON.parse(hiddenJson.value || "[]"); } catch(e){ sopaData=[]; }
-
-        function renderSopa(){
-            palabrasSopaList.innerHTML="";
-            sopaData.forEach((pal,idx)=>{
-                const div = document.createElement("div");
-                div.className="input-group mb-1";
-                div.innerHTML=`
-                    <input type="text" class="form-control" value="${pal}" onchange="sopaData[${idx}]=this.value"/>
-                    <button class="btn btn-outline-danger" type="button" onclick="sopaData.splice(${idx},1); renderSopa()">X</button>
-                `;
-                palabrasSopaList.appendChild(div);
+        // Quiz
+        // Función para enumerar las preguntas
+        function renderizarNumerosPreguntas() {
+            Array.from(preguntasList.children).forEach((div, idx) => {
+                let numeroSpan = div.querySelector('.numeroPregunta');
+                if (!numeroSpan) {
+                    numeroSpan = document.createElement('span');
+                    numeroSpan.classList.add('numeroPregunta', 'fw-bold', 'me-2');
+                    div.prepend(numeroSpan); // colocar al inicio del div
+                }
+                numeroSpan.innerText = `${idx + 1}.`;
             });
-            hiddenJson.value = JSON.stringify(sopaData);
         }
-        if(tipo==="SopaDeLetras"){ renderSopa(); }
-        btnAgregarSopa?.addEventListener("click",()=>{ sopaData.push(""); renderSopa(); });
 
-        // ===================================================
-        // ENCUENTRA LA PALABRA
-        // ===================================================
-        const palabrasClaveList = document.getElementById("palabrasClaveList");
-        const btnAgregarClave = document.getElementById("agregarPalabraBtn");
-        const textareaTexto = document.getElementById("encuentraTexto");
+        // Quiz: agregar nueva pregunta
+        agregarPreguntaBtn?.addEventListener('click', () => {
+            const div = document.createElement('div');
+            div.classList.add('border', 'p-2', 'mb-2', 'rounded');
+            div.innerHTML = `
+                <input type="text" class="form-control mb-1" placeholder="Texto de la pregunta" />
+                <input type="text" class="form-control mb-1" placeholder="Respuesta 1" />
+                <input type="text" class="form-control mb-1" placeholder="Respuesta 2" />
+                <input type="text" class="form-control mb-1" placeholder="Respuesta 3" />
+                <input type="number" min="1" max="3" class="form-control mb-1" placeholder="Número de respuesta correcta (1-3)" required />
+                <button type="button" class="btn btn-outline-danger btn-sm mt-1">Eliminar</button>
+            `;
+            preguntasList.appendChild(div);
 
-        let encuentraData = { Texto: "", PalabrasClave: [] };
-        try {
-            const parsed = JSON.parse(hiddenJson.value || "{}");
-            if(parsed.Texto) encuentraData.Texto = parsed.Texto;
-            if(parsed.PalabrasClave) encuentraData.PalabrasClave = parsed.PalabrasClave;
-        } catch(e){}
-        if(textareaTexto) textareaTexto.value = encuentraData.Texto;
-
-        function renderEncuentra(){
-            palabrasClaveList.innerHTML = "";
-            encuentraData.Texto = textareaTexto.value;
-            encuentraData.PalabrasClave.forEach((pal, idx) => {
-                const div = document.createElement("div");
-                div.className = "input-group mb-1";
-                div.innerHTML = `
-                    <input type="text" class="form-control" value="${pal}" onchange="encuentraData.PalabrasClave[${idx}]=this.value"/>
-                    <button class="btn btn-outline-danger" type="button" onclick="encuentraData.PalabrasClave.splice(${idx},1); renderEncuentra()">X</button>
-                `;
-                palabrasClaveList.appendChild(div);
+            // Botón eliminar
+            div.querySelector('button').addEventListener('click', () => {
+                div.remove();
+                renderizarNumerosPreguntas(); // actualizar numeración al eliminar
             });
-            hiddenJson.value = JSON.stringify(encuentraData);
-        }
-        if(tipo==="EncuentraLaPalabra"){ renderEncuentra(); }
-        btnAgregarClave?.addEventListener("click",()=>{ encuentraData.PalabrasClave.push(""); renderEncuentra(); });
-        textareaTexto?.addEventListener("input",()=>{ encuentraData.Texto = textareaTexto.value; hiddenJson.value=JSON.stringify(encuentraData); });
 
-        // ===================================================
-        // ACTUALIZAR JSON ANTES DE ENVIAR
-        // ===================================================
-        document.querySelector("form#formEditarEtapa")?.addEventListener("submit", (e) => {
-            const statusDiv = document.getElementById('statusMessageJS');
-            statusDiv.innerText = ""; // limpiar mensaje previo
+            renderizarNumerosPreguntas(); // actualizar numeración al agregar
+        });
 
-            if(tipo === "Quiz"){
-                let valid = true;
-                const data = [];
+        // Sopa
+        agregarPalabraSopaBtn?.addEventListener('click', () => {
+            const div = document.createElement('div');
+            div.classList.add('input-group', 'mb-1');
+            div.innerHTML = `
+                <input type="text" class="form-control" placeholder="Palabra" />
+                <button type="button" class="btn btn-outline-danger" onclick="this.parentElement.remove()">Eliminar</button>
+            `;
+            palabrasSopaList.appendChild(div);
+        });
 
-                Array.from(preguntasList.children).forEach(div => {
+        // Encuentra
+        agregarPalabraBtn?.addEventListener('click', () => {
+            const div = document.createElement('div');
+            div.classList.add('input-group', 'mb-1');
+            div.innerHTML = `
+                <input type="text" class="form-control" placeholder="Palabra clave" />
+                <button type="button" class="btn btn-outline-danger" onclick="this.parentElement.remove()">Eliminar</button>
+            `;
+            palabrasClaveList.appendChild(div);
+        });
+
+        // Serializar JSON y validar antes de enviar - EXACTAMENTE IGUAL A CREAR ETAPA
+        form.addEventListener('submit', (e) => {
+            statusDiv.innerText = "";
+            let data = null;
+
+            // Validaciones básicas según el tipo
+            if (tipo === 'Video') {
+                const urlInput = contenidoVideo.querySelector('input');
+                if (!urlInput.value.trim()) {
+                    statusDiv.innerText = "❌ La URL del video no puede estar vacía.";
+                    e.preventDefault();
+                    return false;
+                }
+            }
+
+            if (tipo === 'Ahorcado') {
+                const palabraInput = contenidoAhorcado.querySelector('input');
+                if (!palabraInput.value.trim()) {
+                    statusDiv.innerText = "❌ La palabra a adivinar no puede estar vacía.";
+                    e.preventDefault();
+                    return false;
+                }
+            }
+
+            if (tipo === 'Quiz') {
+                const preguntas = Array.from(preguntasList.children);
+
+                if (preguntas.length === 0) {
+                    statusDiv.innerText = "❌ Debe agregar al menos una pregunta.";
+                    e.preventDefault();
+                    return false;
+                }
+
+                const quizData = [];
+
+                for (const div of preguntas) {
                     const inputs = div.querySelectorAll('input');
-                    if(inputs.length < 5){
-                        valid = false;
-                        statusDiv.innerText = "❌ Error interno: pregunta incompleta.";
-                        return;
-                    }
-
                     const preguntaText = inputs[0].value.trim();
-                    const respuestas = [
-                        inputs[1].value.trim(),
-                        inputs[2].value.trim(),
-                        inputs[3].value.trim()
-                    ];
+                    const respuestas = [inputs[1].value.trim(), inputs[2].value.trim(), inputs[3].value.trim()];
                     const correcta = parseInt(inputs[4].value);
 
-                    // Validación: pregunta y respuestas no vacías, correcta entre 1 y 3
-                    if(!preguntaText || respuestas.some(r => !r) || isNaN(correcta) || correcta < 1 || correcta > 3){
-                        valid = false;
+                    // Validación
+                    if (!preguntaText || respuestas.some(r => !r) || isNaN(correcta) || correcta < 1 || correcta > 3) {
                         statusDiv.innerText = "❌ Cada pregunta debe tener texto, 3 respuestas y una respuesta correcta entre 1 y 3.";
-                        return;
+                        e.preventDefault();
+                        return false;
                     }
 
-                    data.push({
+                    quizData.push({
                         Pregunta: preguntaText,
                         Respuestas: respuestas,
                         Correcta: correcta
                     });
-                });
+                }
 
-                if(!valid){
-                    e.preventDefault(); // evita enviar formulario
+                data = quizData;
+
+            } else if (tipo === 'SopaDeLetras') {
+                const palabras = Array.from(palabrasSopaList.querySelectorAll('input'))
+                    .map(i => i.value.trim())
+                    .filter(palabra => palabra !== '');
+
+                if (palabras.length === 0) {
+                    statusDiv.innerText = "❌ Debe agregar al menos una palabra para la sopa de letras.";
+                    e.preventDefault();
                     return false;
                 }
 
-                hiddenJson.value = JSON.stringify(data);
+                // Verificar que no haya palabras vacías
+                const palabrasVacias = Array.from(palabrasSopaList.querySelectorAll('input'))
+                    .some(i => !i.value.trim());
+
+                if (palabrasVacias) {
+                    statusDiv.innerText = "❌ Todas las palabras de la sopa de letras deben tener contenido.";
+                    e.preventDefault();
+                    return false;
+                }
+
+                data = palabras;
+
+            } else if (tipo === 'EncuentraLaPalabra') {
+                const textoBase = contenidoEncuentra.querySelector('textarea').value.trim();
+                const palabrasClave = Array.from(palabrasClaveList.querySelectorAll('input')).map(i => i.value.trim());
+
+                // Validación simple: texto no vacío y al menos una palabra clave no vacía
+                if (!textoBase) {
+                    statusDiv.innerText = "❌ El texto base no puede estar vacío.";
+                    e.preventDefault();
+                    return false;
+                }
+
+                if (palabrasClave.length === 0 || palabrasClave.every(p => p === '')) {
+                    statusDiv.innerText = "❌ Debe agregar al menos una palabra clave.";
+                    e.preventDefault();
+                    return false;
+                }
+
+                // Verificar que no haya palabras clave vacías
+                const palabrasVacias = Array.from(palabrasClaveList.querySelectorAll('input'))
+                    .some(i => !i.value.trim());
+
+                if (palabrasVacias) {
+                    statusDiv.innerText = "❌ Todas las palabras clave deben tener contenido.";
+                    e.preventDefault();
+                    return false;
+                }
+
+                data = {
+                    Texto: contenidoEncuentra.querySelector('textarea').value,
+                    PalabrasClave: Array.from(palabrasClaveList.querySelectorAll('input')).map(i => i.value)
+                };
             }
 
-            // Para los otros tipos, actualizamos igual
-            if(tipo==="SopaDeLetras"){
-                hiddenJson.value = JSON.stringify(sopaData);
-            }
-            if(tipo==="EncuentraLaPalabra"){
-                hiddenJson.value = JSON.stringify(encuentraData);
-            }
+            contenidoJsonHidden.value = data ? JSON.stringify(data) : "[]";
         });
-
-
     </script>
 }
