@@ -34,14 +34,10 @@ namespace CAPFIS.Pages.Admin.Modulos
             [Required(ErrorMessage = "La descripción es obligatoria")]
             public string Descripcion { get; set; } = string.Empty;
 
-            public bool Publicado { get; set; }
+            public bool Publicado { get; set; } = true;
 
+            [Required(ErrorMessage = "La imagen Hero es obligatoria")]
             public IFormFile? HeroImageFile { get; set; }
-
-            //public string? BotonTexto { get; set; }
-
-            //[Url(ErrorMessage = "Debe ser una URL válida")]
-            //public string? BotonUrl { get; set; }
         }
 
         public void OnGet()
@@ -56,8 +52,6 @@ namespace CAPFIS.Pages.Admin.Modulos
 
             // Sanitizar inputs
             Input.Titulo = InputSanitizer.SanitizeText(Input.Titulo);
-            //Input.BotonTexto = InputSanitizer.SanitizeText(Input.BotonTexto ?? string.Empty);
-            //Input.BotonUrl = InputSanitizer.SanitizeUrl(Input.BotonUrl ?? string.Empty);
 
             // Generar slug siempre a partir del título
             string slug = GenerarSlug(Input.Titulo);
@@ -69,6 +63,13 @@ namespace CAPFIS.Pages.Admin.Modulos
                 return Page();
             }
 
+            // Validación de imagen obligatoria
+            if (Input.HeroImageFile == null || Input.HeroImageFile.Length == 0)
+            {
+                ModelState.AddModelError("Input.HeroImageFile", "Debe seleccionar una imagen Hero.");
+                return Page();
+            }
+
             string? heroImagePath = null;
 
             if (Input.HeroImageFile != null && Input.HeroImageFile.Length > 0)
@@ -76,7 +77,7 @@ namespace CAPFIS.Pages.Admin.Modulos
                 const long maxFileSize = 5 * 1024 * 1024; // 5 MB
                 if (Input.HeroImageFile.Length > maxFileSize)
                 {
-                    ModelState.AddModelError("Input.HeroImageFile", "El archivo no debe superar los 2 MB.");
+                    ModelState.AddModelError("Input.HeroImageFile", "El archivo no debe superar los 5 MB.");
                     return Page();
                 }
 
@@ -115,9 +116,7 @@ namespace CAPFIS.Pages.Admin.Modulos
                 Slug = slug,
                 Descripcion = InputSanitizer.SanitizeHtml(Input.Descripcion),
                 EstaPublicado = Input.Publicado,
-                ImagenHero = heroImagePath,
-                //BotonTexto = Input.BotonTexto,
-                //BotonUrl = Input.BotonUrl
+                ImagenHero = heroImagePath
             };
 
             try
