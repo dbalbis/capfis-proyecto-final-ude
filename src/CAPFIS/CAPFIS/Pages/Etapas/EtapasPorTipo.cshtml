@@ -1,0 +1,125 @@
+﻿@page "/Etapas/{tipo}"
+@model CAPFIS.Pages.Etapas.EtapasPorTipoModel
+@{
+    Layout = "/Pages/Shared/_Layout.cshtml";
+    ViewData["Title"] = $"Etapas de {Model.TipoFormateado}";
+}
+
+<!-- Hero Section -->
+<div class="mb-4 hero-bg py-5 d-flex flex-column justify-content-center align-items-center"
+     style="min-height: 320px; background-image: url('/images/ingsocial.jpg');">
+    <div class="container">
+        <!-- TÍTULO DESTACADO -->
+        <h1 class="fw-bold mb-3 text-center"
+            style="color: #fff;
+                   text-shadow: 0 4px 18px rgba(0,0,0,0.8);
+                   font-size: 3rem;
+                   line-height: 1.2;">
+            Etapas de @Model.TipoFormateado
+        </h1>
+        <!-- DESCRIPCIÓN -->
+        <p class="text-center text-white-50 fs-5">
+            Explora todas las etapas de tipo <strong style="color: #FFA500;">@Model.TipoFormateado</strong> disponibles en nuestros módulos.
+        </p>
+    </div>
+</div>
+
+<div class="container my-5">
+    <div class="row">
+        <div class="col-12">
+            <!-- Navegación entre tipos -->
+            <div class="mb-4">
+                <h3 style="color: #FFA500;">Explorar por Tipo</h3>
+                <hr class="text-secondary my-3"
+                    style="border: none; border-bottom: 2px solid rgba(255, 165, 0, 0.4);" />
+                
+                <div class="d-flex flex-wrap gap-2 mb-4">
+                    <a href="/Etapas/Video" 
+                       class="btn fw-bold @(Model.Tipo.Equals("Video", StringComparison.OrdinalIgnoreCase) ? "btn-warning" : "btn-outline-warning")"
+                       style="border-width:2px;">
+                        📹 Videos
+                    </a>
+                    <a href="/Etapas/Ahorcado" 
+                       class="btn fw-bold @(Model.Tipo.Equals("Ahorcado", StringComparison.OrdinalIgnoreCase) ? "btn-warning" : "btn-outline-warning")"
+                       style="border-width:2px;">
+                        🎮 Ahorcado
+                    </a>
+                    <a href="/Etapas/Quiz" 
+                       class="btn fw-bold @(Model.Tipo.Equals("Quiz", StringComparison.OrdinalIgnoreCase) ? "btn-warning" : "btn-outline-warning")"
+                       style="border-width:2px;">
+                        ❓ Quiz
+                    </a>
+                    <a href="/Etapas/SopaDeLetras" 
+                       class="btn fw-bold @(Model.Tipo.Equals("SopaDeLetras", StringComparison.OrdinalIgnoreCase) ? "btn-warning" : "btn-outline-warning")"
+                       style="border-width:2px;">
+                        🔤 Sopa de Letras
+                    </a>
+                    <a href="/Etapas/EncuentraLaPalabra" 
+                       class="btn fw-bold @(Model.Tipo.Equals("EncuentraLaPalabra", StringComparison.OrdinalIgnoreCase) ? "btn-warning" : "btn-outline-warning")"
+                       style="border-width:2px;">
+                        🔍 Encuentra la Palabra
+                    </a>
+                </div>
+            </div>
+
+            @if (Model.Etapas.Any())
+            {
+                <h3 style="color: #FFA500;" class="mb-3">Etapas Disponibles (@Model.Etapas.Count)</h3>
+                <hr class="text-secondary my-3"
+                    style="border: none; border-bottom: 2px solid rgba(255, 165, 0, 0.4);" />
+
+                <div class="d-flex flex-column align-items-center gap-4">
+                    @foreach (var etapa in Model.Etapas)
+                    {
+                        <div class="bg-dark text-light p-4 rounded w-100" 
+                             style="max-width:600px; display:flex; flex-direction:column;">
+                            
+                            <!-- Cabecera con título y orden -->
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <h4 class="mb-0">@etapa.Titulo</h4>
+                            </div>
+                            
+                            
+                            <hr class="text-secondary my-3" 
+                                style="border: none; border-bottom: 1px solid rgba(255, 165, 0, 0.3);" />
+                            
+                            <!-- Información del módulo -->
+                            <div class="mb-3">
+                                <p class="mb-1 text-white-50 small">Módulo:</p>
+                                <span class="badge bg-secondary" style="font-size: 0.95rem;">
+                                    @etapa.ModuloTitulo
+                                </span>
+                            </div>
+                            
+                            <!-- Botón de acción -->
+                            <a href="/@etapa.ModuloSlug" 
+                               class="btn btn-outline-warning fw-bold w-100 mt-2"
+                               style="border-width:2px; color:#FFA500; border-color:#FFA500;">
+                                🎯 Ir al Módulo
+                            </a>
+                        </div>
+
+                        @if (etapa != Model.Etapas.Last())
+                        {
+                            <!-- Separador entre cards -->
+                            <hr class="text-secondary w-75 my-2" 
+                                style="border: none; border-bottom: 2px solid rgba(255, 165, 0, 0.3);" />
+                        }
+                    }
+                </div>
+            }
+            else
+            {
+                <div class="bg-dark text-light p-5 rounded text-center">
+                    <h4 class="mb-3" style="color: #FFA500;">No hay etapas disponibles</h4>
+                    <p class="text-white-50 mb-4">
+                        No se encontraron etapas de tipo <strong>@Model.TipoFormateado</strong> en este momento.
+                    </p>
+                    <a href="/" class="btn btn-outline-warning fw-bold" style="border-width:2px;">
+                        Volver al Inicio
+                    </a>
+                </div>
+            }
+        </div>
+    </div>
+</div>
