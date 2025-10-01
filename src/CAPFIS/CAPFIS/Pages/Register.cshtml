@@ -5,13 +5,32 @@
     Layout = "/Pages/Shared/_Layout.cshtml";
 }
 
+<!-- Agregar Flag Icon CSS desde CDN -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/6.11.0/css/flag-icons.min.css">
+
+<style>
+    /* Estilos para mostrar las banderas en el select */
+    #countrySelect option {
+        padding-left: 30px;
+        background-repeat: no-repeat;
+        background-position: 6px center;
+        background-size: 20px 15px;
+    }
+
+    .flag-option {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+</style>
+
 <div class="container py-5">
 
     <div class="row justify-content-center">
         <div class="col-md-6">
 
             <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="bg-dark p-4 rounded shadow">
-                
+
                 <h1 class="mb-4 fw-bold text-center" style="color: #FFA800; text-shadow: 0 4px 18px rgba(0,0,0,0.8);">
                     Crear cuenta
                 </h1>
@@ -60,11 +79,41 @@
                     <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
                 </div>
 
-                <!-- País -->
-                <div class="form-floating mb-3">
-                    <input asp-for="Input.Country" class="form-control" placeholder="País" />
-                    <label asp-for="Input.Country">País</label>
+                <!-- País con banderas -->
+                <div class="mb-3">
+                    <label class="form-label text-light">País</label>
+                    <select asp-for="Input.Country" class="form-select" id="countrySelect">
+                        <option value="">Seleccionar país</option>
+                        <option value="Argentina" data-flag="ar">Argentina</option>
+                        <option value="Bolivia" data-flag="bo">Bolivia</option>
+                        <option value="Brasil" data-flag="br">Brasil</option>
+                        <option value="Chile" data-flag="cl">Chile</option>
+                        <option value="Colombia" data-flag="co">Colombia</option>
+                        <option value="Costa Rica" data-flag="cr">Costa Rica</option>
+                        <option value="Cuba" data-flag="cu">Cuba</option>
+                        <option value="Ecuador" data-flag="ec">Ecuador</option>
+                        <option value="El Salvador" data-flag="sv">El Salvador</option>
+                        <option value="España" data-flag="es">España</option>
+                        <option value="Estados Unidos" data-flag="us">Estados Unidos</option>
+                        <option value="Guatemala" data-flag="gt">Guatemala</option>
+                        <option value="Honduras" data-flag="hn">Honduras</option>
+                        <option value="México" data-flag="mx">México</option>
+                        <option value="Nicaragua" data-flag="ni">Nicaragua</option>
+                        <option value="Panamá" data-flag="pa">Panamá</option>
+                        <option value="Paraguay" data-flag="py">Paraguay</option>
+                        <option value="Perú" data-flag="pe">Perú</option>
+                        <option value="Puerto Rico" data-flag="pr">Puerto Rico</option>
+                        <option value="República Dominicana" data-flag="do">República Dominicana</option>
+                        <option value="Uruguay" data-flag="uy">Uruguay</option>
+                        <option value="Venezuela" data-flag="ve">Venezuela</option>
+                    </select>
                     <span asp-validation-for="Input.Country" class="text-danger"></span>
+
+                    <!-- Mostrar bandera seleccionada -->
+                    <div id="selectedFlag" class="mt-2" style="display: none;">
+                        <span class="fi" id="flagIcon"></span>
+                        <span id="countryName" class="ms-2 text-light"></span>
+                    </div>
                 </div>
 
                 <!-- Género -->
@@ -82,7 +131,7 @@
                 <!-- Fecha de nacimiento -->
                 <div class="mb-4">
                     <label class="form-label text-light">Fecha de nacimiento</label>
-                    <input asp-for="Input.BirthDate" type="date" class="form-control" />
+                    <input asp-for="Input.BirthDate" type="date" class="form-control" max="@DateTime.Now.ToString("yyyy-MM-dd")" />
                     <span asp-validation-for="Input.BirthDate" class="text-danger"></span>
                 </div>
 
@@ -99,6 +148,27 @@
         </div>
     </div>
 </div>
+
+<script>
+    // Mostrar bandera seleccionada
+    document.getElementById('countrySelect').addEventListener('change', function() {
+        const selectedOption = this.options[this.selectedIndex];
+        const flagCode = selectedOption.getAttribute('data-flag');
+        const countryName = selectedOption.value;
+
+        const selectedFlagDiv = document.getElementById('selectedFlag');
+        const flagIcon = document.getElementById('flagIcon');
+        const countryNameSpan = document.getElementById('countryName');
+
+        if (flagCode && countryName) {
+            flagIcon.className = 'fi fi-' + flagCode;
+            countryNameSpan.textContent = countryName;
+            selectedFlagDiv.style.display = 'block';
+        } else {
+            selectedFlagDiv.style.display = 'none';
+        }
+    });
+</script>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

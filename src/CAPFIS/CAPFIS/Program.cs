@@ -41,6 +41,8 @@ builder.Services.AddAuthorization(options =>
 builder.Services.AddRazorPages(options =>
 {
     options.Conventions.AuthorizeFolder("/Admin", "SoloAdmins");
+
+    options.Conventions.AuthorizeFolder("/Aprendizaje");
 });
 
 var app = builder.Build();

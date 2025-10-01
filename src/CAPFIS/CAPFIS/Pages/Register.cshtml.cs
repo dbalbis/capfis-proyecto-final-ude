@@ -46,77 +46,56 @@ namespace CAPFIS.Pages
             _emailSender = emailSender;
         }
 
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
         [BindProperty]
         public InputModel Input { get; set; }
 
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
         public string ReturnUrl { get; set; }
 
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
         public IList<AuthenticationScheme> ExternalLogins { get; set; }
 
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
         public class InputModel
         {
-            /// <summary>
-            ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-            ///     directly from your code. This API may change or be removed in future releases.
-            /// </summary>
-            [Required]
-            [EmailAddress]
-            [Display(Name = "Email")]
+            [Required(ErrorMessage = "El correo electrónico es obligatorio.")]
+            [EmailAddress(ErrorMessage = "Ingrese un correo electrónico válido.")]
+            [Display(Name = "Correo electrónico")]
             public string Email { get; set; }
 
-            /// <summary>
-            ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-            ///     directly from your code. This API may change or be removed in future releases.
-            /// </summary>
-            [Required]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            [Required(ErrorMessage = "La contraseña es obligatoria.")]
+            [StringLength(100, ErrorMessage = "La {0} debe tener al menos {2} y como máximo {1} caracteres.", MinimumLength = 6)]
             [DataType(DataType.Password)]
-            [Display(Name = "Password")]
+            [Display(Name = "Contraseña")]
             public string Password { get; set; }
 
-            /// <summary>
-            ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-            ///     directly from your code. This API may change or be removed in future releases.
-            /// </summary>
+            [Required(ErrorMessage = "La confirmación de contraseña es obligatoria.")]
             [DataType(DataType.Password)]
-            [Display(Name = "Confirm password")]
+            [Display(Name = "Confirmar contraseña")]
             [Compare("Password", ErrorMessage = "Las contraseñas no coinciden.")]
             public string ConfirmPassword { get; set; }
 
-            [Required]
-            [Display(Name = "First Name")]
+            [Required(ErrorMessage = "El nombre es obligatorio.")]
+            [Display(Name = "Nombre")]
             public string FirstName { get; set; }
 
-            [Required]
-            [Display(Name = "Last Name")]
+            [Required(ErrorMessage = "El apellido es obligatorio.")]
+            [Display(Name = "Apellido")]
             public string LastName { get; set; }
 
+            [Required(ErrorMessage = "El país es obligatorio.")]
+            [Display(Name = "País")]
             public string Country { get; set; }
 
+            [Required(ErrorMessage = "El género es obligatorio.")]
+            [Display(Name = "Género")]
             public string Gender { get; set; }
 
+            [Required(ErrorMessage = "La fecha de nacimiento es obligatoria.")]
             [DataType(DataType.Date)]
-            [Display(Name = "Date of Birth")]
+            [Display(Name = "Fecha de nacimiento")]
             public DateTime? BirthDate { get; set; }
 
-            [Phone]
-            [Display(Name = "Phone Number")]
+            [Required(ErrorMessage = "El número de teléfono es obligatorio.")]
+            [Phone(ErrorMessage = "Ingrese un número de teléfono válido.")]
+            [Display(Name = "Número de teléfono")]
             public string PhoneNumber { get; set; }
         }
 
@@ -130,6 +109,7 @@ namespace CAPFIS.Pages
         {
             returnUrl ??= Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+
             if (ModelState.IsValid)
             {
                 var user = CreateUser();
@@ -149,7 +129,7 @@ namespace CAPFIS.Pages
 
                 if (result.Succeeded)
                 {
-                    _logger.LogInformation("User created a new account with password.");
+                    _logger.LogInformation("Usuario creó una nueva cuenta con contraseña.");
 
                     await _userManager.AddToRoleAsync(user, "Estudiante");
 
@@ -162,8 +142,8 @@ namespace CAPFIS.Pages
                         values: new { area = "Identity", userId, code, returnUrl },
                         protocol: Request.Scheme);
 
-                    await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                    await _emailSender.SendEmailAsync(Input.Email, "Confirma tu correo electrónico",
+                        $"Por favor confirma tu cuenta haciendo <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clic aquí</a>.");
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
@@ -175,13 +155,30 @@ namespace CAPFIS.Pages
                         return LocalRedirect(returnUrl);
                     }
                 }
+
+                // Traducción de errores de Identity al español
                 foreach (var error in result.Errors)
                 {
-                    ModelState.AddModelError(string.Empty, error.Description);
+                    string mensaje = error.Description;
+
+                    if (mensaje.Contains("Passwords must have at least one non alphanumeric character"))
+                        mensaje = "La contraseña debe contener al menos un carácter especial.";
+                    else if (mensaje.Contains("Passwords must have at least one digit"))
+                        mensaje = "La contraseña debe contener al menos un número.";
+                    else if (mensaje.Contains("Passwords must have at least one uppercase"))
+                        mensaje = "La contraseña debe contener al menos una letra mayúscula.";
+                    else if (mensaje.Contains("Passwords must have at least one lowercase"))
+                        mensaje = "La contraseña debe contener al menos una letra minúscula.";
+                    else if (mensaje.Contains("Passwords must be at least"))
+                        mensaje = "La contraseña no cumple con la longitud mínima requerida.";
+                    else if (mensaje.Contains("is already taken"))
+                        mensaje = "El correo electrónico ya está en uso.";
+
+                    ModelState.AddModelError(string.Empty, mensaje);
                 }
             }
 
-            // If we got this far, something failed, redisplay form
+            // Si llegamos hasta aquí, algo falló, volver a mostrar el formulario
             return Page();
         }
 
@@ -193,9 +190,9 @@ namespace CAPFIS.Pages
             }
             catch
             {
-                throw new InvalidOperationException($"Can't create an instance of '{nameof(ApplicationUser)}'. " +
-                    $"Ensure that '{nameof(ApplicationUser)}' is not an abstract class and has a parameterless constructor, or alternatively " +
-                    $"override the register page in /Areas/Identity/Pages/Account/Register.cshtml");
+                throw new InvalidOperationException($"No se puede crear una instancia de '{nameof(ApplicationUser)}'. " +
+                    $"Asegúrate de que '{nameof(ApplicationUser)}' no sea una clase abstracta y tenga un constructor sin parámetros, o alternativamente " +
+                    $"sobrescribe la página de registro en /Areas/Identity/Pages/Account/Register.cshtml");
             }
         }
 
@@ -203,7 +200,7 @@ namespace CAPFIS.Pages
         {
             if (!_userManager.SupportsUserEmail)
             {
-                throw new NotSupportedException("The default UI requires a user store with email support.");
+                throw new NotSupportedException("La interfaz predeterminada requiere un store de usuarios con soporte de correo electrónico.");
             }
             return (IUserEmailStore<ApplicationUser>)_userStore;
         }

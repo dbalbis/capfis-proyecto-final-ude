@@ -46,17 +46,7 @@ namespace CAPFIS.Pages.Modulo
 
             if (ModuloUsuario == null)
             {
-                ModuloUsuario = new ModuloUsuario
-                {
-                    UserId = user.Id,
-                    ModuloId = Modulo.Id,
-                    Progreso = 0,
-                    Completado = false,
-                    EtapaActualOrden = 1,
-                    FechaInscripcion = DateTime.UtcNow
-                };
-                _context.ModulosUsuarios.Add(ModuloUsuario);
-                await _context.SaveChangesAsync();
+                return Redirect($"/{Modulo.Slug}");
             }
 
             EtapaActual = Modulo.Etapas
