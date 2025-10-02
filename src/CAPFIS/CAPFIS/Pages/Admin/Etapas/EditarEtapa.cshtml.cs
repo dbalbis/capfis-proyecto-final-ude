@@ -43,9 +43,6 @@ namespace CAPFIS.Pages.Admin.Etapas
             public string? ContenidoTexto { get; set; }
             public string? ContenidoJson { get; set; }
 
-            [Range(1, int.MaxValue, ErrorMessage = "El orden debe ser mayor a cero")]
-            public int Orden { get; set; } = 1;
-
             public bool EstaPublicado { get; set; }
         }
 
@@ -68,7 +65,6 @@ namespace CAPFIS.Pages.Admin.Etapas
                         ContenidoUrl = etapa.ContenidoUrl,
                         ContenidoTexto = etapa.ContenidoTexto,
                         ContenidoJson = etapa.ContenidoJson,
-                        Orden = etapa.Orden,
                         EstaPublicado = etapa.EstaPublicado
                     };
                 }
@@ -99,7 +95,6 @@ namespace CAPFIS.Pages.Admin.Etapas
             etapa.ModuloInteractivoId = Input.ModuloInteractivoId;
             etapa.Titulo = Input.Titulo;
             etapa.Tipo = Input.Tipo!.Value;
-            etapa.Orden = Input.Orden;
             etapa.EstaPublicado = true;
 
             switch (Input.Tipo)
