@@ -170,8 +170,8 @@
         <div class="main-container fade-in" style="background-color:#212529;">
             <!-- Header del Módulo -->
             <div class="module-header">
-                <h2 class="module-title">@Model.Modulo.Titulo</h2>
-                <h4 class="stage-title">@Model.EtapaActual.Titulo</h4>
+                    <h2 class="module-title">@Model.EtapaActual.Titulo</h2>
+                @* <h4 class="stage-title">@Model.EtapaActual.Titulo</h4> *@
                     <h6 class="stage-type">
                         @{
                             string nombreAmigable = Model.EtapaActual.Tipo switch
@@ -352,8 +352,10 @@
     {
         <script>
             document.addEventListener("DOMContentLoaded", () => {
-                const palabra = "@Model.EtapaActual.ContenidoTexto".toUpperCase();
-                const letras = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+                const temp = document.createElement('textarea');
+                temp.innerHTML = "@Html.Raw(Model.EtapaActual.ContenidoTexto)";
+                const palabra = temp.value.normalize('NFC').toUpperCase();
+                const letras = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ".split("");
                 const letrasDiv = document.getElementById("ahorcadoLetras");
                 const palabraDiv = document.getElementById("ahorcadoPalabra");
                 const mensajeDiv = document.getElementById("ahorcadoMensaje");
