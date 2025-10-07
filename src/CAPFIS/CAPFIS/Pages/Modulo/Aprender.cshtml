@@ -339,7 +339,7 @@
                     const porcentaje = (score / quizData.length) * 100;
                     if(porcentaje < 90) {
                         e.preventDefault();
-                        quizError.innerHTML = `<div class="alert alert-danger">Debes responder al menos el 90% correctamente para continuar. Has respondido ${score} de ${quizData.length}.</div>`;
+                        quizError.innerHTML = `<div class="alert alert-danger">Debes responder al menos el 90% correctamente para continuar.</div>`;
                         return;
                     }
                     quizError.innerHTML = "";
