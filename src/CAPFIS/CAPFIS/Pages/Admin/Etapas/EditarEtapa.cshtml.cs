@@ -101,7 +101,7 @@ namespace CAPFIS.Pages.Admin.Etapas
             {
                 case TipoEtapa.Video:
                     etapa.ContenidoUrl = Input.ContenidoUrl;
-                    etapa.ContenidoTexto = null;
+                    etapa.ContenidoTexto = Input.ContenidoTexto;
                     etapa.ContenidoJson = null;
                     break;
 

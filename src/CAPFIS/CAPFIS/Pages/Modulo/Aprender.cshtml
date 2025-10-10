@@ -194,17 +194,24 @@
                 @switch (Model.EtapaActual.Tipo)
                 {
                     case TipoEtapa.Video:
-                        <div class="content-card video-card w-100 text-center text-dark" style="border-radius:12px; overflow:hidden; background-color:#212529;">
-                            <div class="video-container w-100 mx-auto">
-                                <div class="ratio ratio-16x9" style="border-radius:12px; overflow:hidden;">
-                                    <iframe src="@videoUrl"
-                                            title="@Model.EtapaActual.Titulo"
-                                            frameborder="0"
-                                            allowfullscreen
-                                            style="width:100%; height:100%; border:none; display:block;"></iframe>
+                            <div class="content-card video-card w-100 text-center text-dark" style="border-radius:12px; background-color:#212529;">
+                                <div class="video-container w-100 mx-auto" style="border-radius:12px; overflow:hidden;">
+                                    <div class="ratio ratio-16x9">
+                                        <iframe src="@videoUrl"
+                                                title="@Model.EtapaActual.Titulo"
+                                                frameborder="0"
+                                                allowfullscreen
+                                                style="width:100%; height:100%; border:none; display:block;"></iframe>
+                                    </div>
                                 </div>
+
+                                @if (!string.IsNullOrWhiteSpace(Model.EtapaActual.ContenidoTexto))
+                                {
+                                    <div class="video-credits p-3 text-white">
+                                        <p class="mb-0"><strong>Créditos de Youtube:</strong> @Model.EtapaActual.ContenidoTexto</p>
+                                    </div>
+                                }
                             </div>
-                        </div>
 
                         break;
 

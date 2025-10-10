@@ -55,7 +55,10 @@
             <!-- Video -->
             <div id="contenidoVideo" class="mb-3" style="display:none;">
                 <label class="form-label">URL del Video</label>
-                <input asp-for="Input.ContenidoUrl" class="form-control" placeholder="https://www.youtube.com/watch?v=..." />
+                <input asp-for="Input.ContenidoUrl" class="form-control mb-2" placeholder="https://www.youtube.com/watch?v=..." />
+
+                <label class="form-label">Créditos</label>
+                <input asp-for="Input.ContenidoTexto" class="form-control" placeholder="Créditos del video" />
             </div>
 
             <!-- Ahorcado -->
@@ -200,12 +203,18 @@
 
             // Validaciones básicas según el tipo
             if (tipo === 'Video') {
-                const urlInput = contenidoVideo.querySelector('input');
+                const urlInput = contenidoVideo.querySelector('input[placeholder*="youtube"]');
+                const creditosInput = contenidoVideo.querySelector('input[placeholder*="Créditos"]');
                 if (!urlInput.value.trim()) {
                     statusDiv.innerText = "❌ La URL del video no puede estar vacía.";
                     e.preventDefault();
                     return false;
                 }
+                if (!creditosInput.value.trim()) {
+                    statusDiv.innerText = "❌ Los créditos del video no pueden estar vacíos.";
+                    e.preventDefault();
+                    return false;
+                 }
             }
 
             if (tipo === 'Ahorcado') {

@@ -88,6 +88,7 @@ namespace CAPFIS.Pages.Admin.Etapas
             {
                 case TipoEtapa.Video:
                     etapa.ContenidoUrl = Input.ContenidoUrl;
+                    etapa.ContenidoTexto = Input.ContenidoTexto;
                     break;
 
                 case TipoEtapa.Ahorcado:

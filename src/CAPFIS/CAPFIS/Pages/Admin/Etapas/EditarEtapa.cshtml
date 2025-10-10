@@ -66,6 +66,10 @@
                     <label class="form-label">URL del Video</label>
                     <input asp-for="Input.ContenidoUrl" class="form-control" placeholder="https://www.youtube.com/watch?v=..." />
                     <span asp-validation-for="Input.ContenidoUrl" class="text-danger"></span>
+
+                    <label class="form-label">Créditos</label>
+                    <input asp-for="Input.ContenidoTexto" class="form-control" placeholder="Créditos del video" />
+                    <span asp-validation-for="Input.ContenidoTexto" class="text-danger"></span>
                 </div>
 
                 <div id="contenidoAhorcado" class="mb-3" style="display:none;">
@@ -269,7 +273,7 @@
             palabrasClaveList.appendChild(div);
         });
 
-        // Serializar JSON y validar antes de enviar - EXACTAMENTE IGUAL A CREAR ETAPA
+        // Serializar JSON y validar antes de enviar
         form.addEventListener('submit', (e) => {
             statusDiv.innerText = "";
             let data = null;
@@ -277,11 +281,18 @@
             // Validaciones básicas según el tipo
             if (tipo === 'Video') {
                 const urlInput = contenidoVideo.querySelector('input');
+                const creditosInput = contenidoVideo.querySelector('input[placeholder*="Créditos"]');
                 if (!urlInput.value.trim()) {
                     statusDiv.innerText = "❌ La URL del video no puede estar vacía.";
                     e.preventDefault();
                     return false;
                 }
+
+                if (!creditosInput.value.trim()) {
+                    statusDiv.innerText = "❌ Los créditos del video no pueden estar vacíos.";
+                    e.preventDefault();
+                    return false;
+                 }
             }
 
             if (tipo === 'Ahorcado') {

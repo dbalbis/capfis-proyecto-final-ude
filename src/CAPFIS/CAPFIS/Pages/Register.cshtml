@@ -22,6 +22,40 @@
         align-items: center;
         gap: 8px;
     }
+
+    /* Estilos para el modal */
+    .modal-content {
+        background-color: #1a1a1a;
+        color: #fff;
+        border: 1px solid #FFA800;
+    }
+
+    .modal-header {
+        border-bottom: 1px solid #FFA800;
+    }
+
+    .modal-footer {
+        border-top: 1px solid #FFA800;
+    }
+
+    .modal-body {
+        max-height: 60vh;
+        overflow-y: auto;
+    }
+
+    .terms-link {
+        color: #FFA800;
+        text-decoration: underline;
+        cursor: pointer;
+    }
+
+        .terms-link:hover {
+            color: #ffb733;
+        }
+
+    .form-check-label {
+        cursor: pointer;
+    }
 </style>
 
 <div class="container py-5">
@@ -129,10 +163,24 @@
                 </div>
 
                 <!-- Fecha de nacimiento -->
-                <div class="mb-4">
+                <div class="mb-3">
                     <label class="form-label text-light">Fecha de nacimiento</label>
                     <input asp-for="Input.BirthDate" type="date" class="form-control" max="@DateTime.Now.ToString("yyyy-MM-dd")" />
                     <span asp-validation-for="Input.BirthDate" class="text-danger"></span>
+                </div>
+
+                <!-- Términos y Condiciones -->
+                <div class="mb-4">
+                    <div class="form-check">
+                        <input asp-for="Input.AcceptTerms" class="form-check-input" type="checkbox" id="acceptTermsCheck" />
+                        <label class="form-check-label text-light" for="acceptTermsCheck">
+                            Acepto los
+                            <a href="#" class="terms-link" data-bs-toggle="modal" data-bs-target="#termsModal">Términos y Condiciones</a>
+                            y la
+                            <a href="#" class="terms-link" data-bs-toggle="modal" data-bs-target="#privacyModal">Política de Privacidad</a>
+                        </label>
+                    </div>
+                    <span asp-validation-for="Input.AcceptTerms" class="text-danger"></span>
                 </div>
 
                 <!-- Botón -->
@@ -145,6 +193,91 @@
                     <a asp-page="./Login" class="custom-hover text-white fw-semibold">¿Ya tenés una cuenta?</a>
                 </div>
             </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de Términos y Condiciones -->
+<div class="modal fade" id="termsModal" tabindex="-1" aria-labelledby="termsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="termsModalLabel" style="color: #FFA800;">Términos y Condiciones</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h6 class="text-warning">1. Aceptación de los Términos</h6>
+                <p>Al acceder y utilizar este sitio web, usted acepta estar sujeto a estos términos y condiciones de uso, todas las leyes y regulaciones aplicables, y acepta que es responsable del cumplimiento de las leyes locales aplicables.</p>
+
+                <h6 class="text-warning">2. Uso de la Plataforma</h6>
+                <p>Esta plataforma está diseñada para fines educativos. Usted se compromete a utilizar el servicio de manera responsable y ética, sin infringir derechos de terceros.</p>
+
+                <h6 class="text-warning">3. Cuentas de Usuario</h6>
+                <p>Para acceder a ciertas funciones de la plataforma, debe crear una cuenta. Usted es responsable de mantener la confidencialidad de su información de cuenta y contraseña.</p>
+
+                <h6 class="text-warning">4. Propiedad Intelectual</h6>
+                <p>Todo el contenido incluido en este sitio, como textos, gráficos, logotipos, imágenes y software, es propiedad de la plataforma o sus proveedores de contenido y está protegido por las leyes de propiedad intelectual.</p>
+
+                <h6 class="text-warning">5. Limitación de Responsabilidad</h6>
+                <p>La plataforma no será responsable de ningún daño directo, indirecto, incidental, especial o consecuente que resulte del uso o la imposibilidad de usar el servicio.</p>
+
+                <h6 class="text-warning">6. Modificaciones</h6>
+                <p>Nos reservamos el derecho de modificar estos términos en cualquier momento. Las modificaciones entrarán en vigor inmediatamente después de su publicación en el sitio.</p>
+
+                <h6 class="text-warning">7. Ley Aplicable</h6>
+                <p>Estos términos se regirán e interpretarán de acuerdo con las leyes del país correspondiente, sin dar efecto a ningún principio de conflictos de leyes.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" style="background-color: #FFA800; border-color: #FFA800; color: black;" onclick="acceptFromModal('termsModal')">Aceptar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de Política de Privacidad -->
+<div class="modal fade" id="privacyModal" tabindex="-1" aria-labelledby="privacyModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="privacyModalLabel" style="color: #FFA800;">Política de Privacidad</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h6 class="text-warning">1. Información que Recopilamos</h6>
+                <p>Recopilamos información personal que usted nos proporciona directamente, como nombre, apellido, correo electrónico, número de teléfono, país, género y fecha de nacimiento cuando se registra en nuestra plataforma.</p>
+
+                <h6 class="text-warning">2. Uso de la Información</h6>
+                <p>Utilizamos la información recopilada para:</p>
+                <ul>
+                    <li>Proporcionar, mantener y mejorar nuestros servicios</li>
+                    <li>Procesar transacciones y enviar notificaciones relacionadas</li>
+                    <li>Responder a sus comentarios y preguntas</li>
+                    <li>Enviar información técnica y actualizaciones</li>
+                </ul>
+
+                <h6 class="text-warning">3. Protección de Datos</h6>
+                <p>Implementamos medidas de seguridad técnicas y organizativas apropiadas para proteger su información personal contra el acceso no autorizado, alteración, divulgación o destrucción.</p>
+
+                <h6 class="text-warning">4. Compartir Información</h6>
+                <p>No vendemos, comercializamos ni transferimos su información personal a terceros sin su consentimiento, excepto cuando sea necesario para proporcionar nuestros servicios o cuando la ley lo requiera.</p>
+
+                <h6 class="text-warning">5. Cookies</h6>
+                <p>Utilizamos cookies y tecnologías similares para mejorar su experiencia en nuestro sitio web, analizar tendencias y administrar el sitio.</p>
+
+                <h6 class="text-warning">6. Sus Derechos</h6>
+                <p>Usted tiene derecho a acceder, corregir, actualizar o solicitar la eliminación de su información personal en cualquier momento.</p>
+
+                <h6 class="text-warning">7. Cambios a Esta Política</h6>
+                <p>Podemos actualizar nuestra Política de Privacidad periódicamente. Le notificaremos cualquier cambio publicando la nueva Política de Privacidad en esta página.</p>
+
+                <h6 class="text-warning">8. Contacto</h6>
+                <p>Si tiene preguntas sobre esta Política de Privacidad, puede contactarnos a través de nuestros canales de comunicación oficiales.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" style="background-color: #FFA800; border-color: #FFA800; color: black;" onclick="acceptFromModal('privacyModal')">Aceptar</button>
+            </div>
         </div>
     </div>
 </div>
@@ -167,6 +300,29 @@
         } else {
             selectedFlagDiv.style.display = 'none';
         }
+    });
+
+    // Función para aceptar desde el modal
+    function acceptFromModal(modalId) {
+        const checkbox = document.getElementById('acceptTermsCheck');
+        checkbox.checked = true;
+
+        // Disparar evento change para validación del lado del cliente
+        checkbox.dispatchEvent(new Event('change', { bubbles: true }));
+
+        // Cerrar el modal
+        const modalElement = document.getElementById(modalId);
+        const modal = bootstrap.Modal.getInstance(modalElement);
+        if (modal) {
+            modal.hide();
+        }
+    }
+
+    // Prevenir que los links del checkbox activen/desactiven el checkbox
+    document.querySelectorAll('.terms-link').forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+        });
     });
 </script>
 

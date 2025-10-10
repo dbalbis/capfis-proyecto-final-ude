@@ -22,6 +22,15 @@ using Microsoft.Extensions.Logging;
 
 namespace CAPFIS.Pages
 {
+    // Validación personalizada para checkbox obligatorio
+    public class MustBeTrueAttribute : ValidationAttribute
+    {
+        public override bool IsValid(object value)
+        {
+            return value is bool && (bool)value;
+        }
+    }
+
     public class RegisterModel : PageModel
     {
         private readonly SignInManager<ApplicationUser> _signInManager;
@@ -97,6 +106,10 @@ namespace CAPFIS.Pages
             [Phone(ErrorMessage = "Ingrese un número de teléfono válido.")]
             [Display(Name = "Número de teléfono")]
             public string PhoneNumber { get; set; }
+
+            [MustBeTrue(ErrorMessage = "Debe aceptar los términos y condiciones para registrarse.")]
+            [Display(Name = "Acepto los términos y condiciones")]
+            public bool AcceptTerms { get; set; }
         }
 
         public async Task OnGetAsync(string returnUrl = null)
