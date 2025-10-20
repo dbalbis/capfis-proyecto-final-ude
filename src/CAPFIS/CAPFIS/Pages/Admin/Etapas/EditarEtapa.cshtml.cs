@@ -1,5 +1,6 @@
 ﻿using CAPFIS.Data;
 using CAPFIS.Models;
+using CAPFIS.Utils;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -90,6 +91,19 @@ namespace CAPFIS.Pages.Admin.Etapas
             }
 
             if (!ModelState.IsValid) return Page();
+
+            // Sanitizar inputs
+            Input.Titulo = InputSanitizer.SanitizeText(Input.Titulo);
+
+            if (!string.IsNullOrWhiteSpace(Input.ContenidoUrl))
+            {
+                Input.ContenidoUrl = InputSanitizer.SanitizeUrl(Input.ContenidoUrl);
+            }
+
+            if (!string.IsNullOrWhiteSpace(Input.ContenidoTexto))
+            {
+                Input.ContenidoTexto = InputSanitizer.SanitizeText(Input.ContenidoTexto);
+            }
 
             // actualizar
             etapa.ModuloInteractivoId = Input.ModuloInteractivoId;
