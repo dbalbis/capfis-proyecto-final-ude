@@ -7,7 +7,7 @@
 
 @if (Model.Modulo != null)
 {
-    <!-- Hero Section -->
+    <!-- Hero -->
     <div class="mb-4 hero-bg py-5 d-flex flex-column justify-content-center align-items-center"
          style="min-height: 320px; background-image: url('@Model.Modulo.ImagenHero');">
         <div class="container">
@@ -59,7 +59,7 @@
     </div>
 
 
-    <!-- CONTENIDO CON TEXTO BLANCO USANDO BOOTSTRAP -->
+    
     <div class="container text-white">
 
         @Html.Raw(Model.Modulo.Descripcion)

@@ -47,7 +47,7 @@
                             </form>
 
                             <form method="post" asp-page-handler="Delete"
-                                  onsubmit="return confirm('⚠️ ¿Seguro que deseas borrar este usuario?');">
+                                  onsubmit="return confirm('¿Seguro que deseas borrar este usuario?');">
                                 <input type="hidden" name="UserId" value="@user.Id" />
                                 <button type="submit" class="btn btn-outline-danger btn-sm fw-bold"
                                         style="border-width:2px;"

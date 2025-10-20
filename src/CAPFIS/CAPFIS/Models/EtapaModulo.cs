@@ -10,15 +10,14 @@
         public string Titulo { get; set; } = string.Empty;
         public TipoEtapa Tipo { get; set; }
 
-        // Guardar contenido según tipo
-        public string? ContenidoUrl { get; set; }    // Para videos
+        public string? ContenidoUrl { get; set; }
 
-        public string? ContenidoJson { get; set; }   // Para quizzes, sopas, etc.
-        public string? ContenidoTexto { get; set; }  // Texto plano
+        public string? ContenidoJson { get; set; }
+        public string? ContenidoTexto { get; set; }
 
-        public int Orden { get; set; } // posición dentro del módulo
+        public int Orden { get; set; }
 
-        public bool EstaPublicado { get; set; } // Publicar/despublicar etapas individualmente
+        public bool EstaPublicado { get; set; }
     }
 
     public enum TipoEtapa

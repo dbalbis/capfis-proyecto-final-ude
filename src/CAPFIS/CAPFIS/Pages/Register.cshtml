@@ -5,11 +5,11 @@
     Layout = "/Pages/Shared/_Layout.cshtml";
 }
 
-<!-- Agregar Flag Icon CSS desde CDN -->
+<!-- Banderas -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/6.11.0/css/flag-icons.min.css">
 
 <style>
-    /* Estilos para mostrar las banderas en el select */
+    
     #countrySelect option {
         padding-left: 30px;
         background-repeat: no-repeat;
@@ -23,7 +23,7 @@
         gap: 8px;
     }
 
-    /* Estilos para el modal */
+    
     .modal-content {
         background-color: #1a1a1a;
         color: #fff;
@@ -143,7 +143,7 @@
                     </select>
                     <span asp-validation-for="Input.Country" class="text-danger"></span>
 
-                    <!-- Mostrar bandera seleccionada -->
+                    <!-- Mostrar bandera -->
                     <div id="selectedFlag" class="mt-2" style="display: none;">
                         <span class="fi" id="flagIcon"></span>
                         <span id="countryName" class="ms-2 text-light"></span>
@@ -283,7 +283,7 @@
 </div>
 
 <script>
-    // Mostrar bandera seleccionada
+    
     document.getElementById('countrySelect').addEventListener('change', function() {
         const selectedOption = this.options[this.selectedIndex];
         const flagCode = selectedOption.getAttribute('data-flag');
@@ -302,15 +302,15 @@
         }
     });
 
-    // Función para aceptar desde el modal
+    
     function acceptFromModal(modalId) {
         const checkbox = document.getElementById('acceptTermsCheck');
         checkbox.checked = true;
 
-        // Disparar evento change para validación del lado del cliente
+        
         checkbox.dispatchEvent(new Event('change', { bubbles: true }));
 
-        // Cerrar el modal
+        
         const modalElement = document.getElementById(modalId);
         const modal = bootstrap.Modal.getInstance(modalElement);
         if (modal) {
@@ -318,7 +318,7 @@
         }
     }
 
-    // Prevenir que los links del checkbox activen/desactiven el checkbox
+   
     document.querySelectorAll('.terms-link').forEach(link => {
         link.addEventListener('click', function(e) {
             e.preventDefault();

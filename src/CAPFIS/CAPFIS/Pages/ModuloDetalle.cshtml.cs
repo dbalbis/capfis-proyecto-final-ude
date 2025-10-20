@@ -27,7 +27,6 @@ namespace CAPFIS.Pages
 
         public ModuloInteractivo? Modulo { get; set; }
 
-        // Propiedad que indica si el módulo está completado
         public bool ModuloCompletado => ModuloUsuario != null && ModuloUsuario.Completado && ModuloUsuario.Progreso >= 100;
 
         public async Task<IActionResult> OnGetAsync(string slug)
@@ -58,7 +57,7 @@ namespace CAPFIS.Pages
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
-                return Challenge(); // Redirige a login si no hay sesión
+                return Challenge(); // Redirigimos a login si inicio sesion
             }
 
             var moduloUsuario = await _context.ModulosUsuarios

@@ -182,7 +182,6 @@ body {
     transition: background 0.3s ease, color 0.3s ease;
 }
 
-/* Elimina el ícono de Bootstrap (solo si aún ves una doble flecha) */
 .accordion-button::after {
     display: none !important;
 }
@@ -193,20 +192,17 @@ body {
     text-shadow: 0 4px 18px rgba(0, 0, 0, 0.8);
 }
 
-/* Ícono personalizado */
 .faq-icon {
     font-size: 1.40rem;
     color: #000;
     transition: transform 0.3s ease, color 0.3s ease;
 }
 
-/* Cambia al expandir */
 .accordion-button.faq-button:not(.collapsed) .faq-icon {
     transform: rotate(180deg);
     color: #FFA500;
 }
 
-/* Quitar borde azul */
 .accordion-button:focus {
     outline: none !important;
     box-shadow: none !important;
@@ -254,7 +250,6 @@ body {
     user-select: none;
 }
 
-/* Cambia el color del icono hamburguesa a #FFA500 */
 .navbar-toggler .navbar-toggler-icon {
     background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255,165,0,1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
 }
@@ -302,18 +297,18 @@ body {
 
 .link-naranja {
     color: #FFA800;
-    font-weight: 600; /* fw-semibold */
+    font-weight: 600;
     text-decoration: none;
 }
 
     .link-naranja:hover,
     .link-naranja:focus {
-        color: #e69500; /* un tono más oscuro para hover */
+        color: #e69500;
         text-decoration: underline;
     }
 
 .custom-hover:hover {
-    color: #FFA500 !important; /* amarillo más claro por ejemplo */
+    color: #FFA500 !important;
     text-decoration: underline;
 }
 
@@ -322,7 +317,6 @@ body {
     transition: background 0.3s ease-in-out;
 }
 
-/* Contenedor con bordes redondeados y sombra */
 .progress {
     height: 30px;
     background: #e9ecef;
@@ -330,7 +324,6 @@ body {
     box-shadow: inset 0 2px 5px rgba(0,0,0,0.1);
 }
 
-/* Barra de progreso con degradado animado y sombra interna */
 .progress-bar.progress-animated {
     border-radius: 15px;
     box-shadow: inset 0 2px 6px rgba(0,0,0,0.3);
@@ -344,10 +337,9 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    white-space: nowrap; /* evita que el texto se corte */
+    white-space: nowrap;
 }
 
-/* Animación para el movimiento del degradado */
 @keyframes gradientMove {
     0% {
         background-position: 0% 0;
@@ -378,12 +370,11 @@ body {
         content: "";
         position: absolute;
         inset: 0;
-        background: rgba(0,0,0,0.65); /* Overlay oscuro */
+        background: rgba(0,0,0,0.65);
         z-index: 2;
         pointer-events: none;
     }
 
-    /* El texto dentro del hero siempre blanco y por encima del overlay */
     .ingsocial-bg > .container,
     .ingsocial-bg > .container > .row {
         position: relative;
@@ -411,12 +402,11 @@ body {
         content: "";
         position: absolute;
         inset: 0;
-        background: rgba(0,0,0,0.65); /* Overlay oscuro */
+        background: rgba(0,0,0,0.65);
         z-index: 2;
         pointer-events: none;
     }
 
-    /* El texto dentro del hero siempre blanco y por encima del overlay */
     .pretexting-bg > .container,
     .pretexting-bg > .container > .row {
         position: relative;
@@ -444,12 +434,11 @@ body {
         content: "";
         position: absolute;
         inset: 0;
-        background: rgba(0,0,0,0.65); /* Overlay oscuro */
+        background: rgba(0,0,0,0.65);
         z-index: 2;
         pointer-events: none;
     }
 
-    /* El texto dentro del hero siempre blanco y por encima del overlay */
     .vishing-bg > .container,
     .vishing-bg > .container > .row {
         position: relative;
@@ -477,12 +466,11 @@ body {
         content: "";
         position: absolute;
         inset: 0;
-        background: rgba(0,0,0,0.65); /* Overlay oscuro */
+        background: rgba(0,0,0,0.65);
         z-index: 2;
         pointer-events: none;
     }
 
-    /* El texto dentro del hero siempre blanco y por encima del overlay */
     .baiting-bg > .container,
     .baiting-bg > .container > .row {
         position: relative;
@@ -510,12 +498,11 @@ body {
         content: "";
         position: absolute;
         inset: 0;
-        background: rgba(0,0,0,0.65); /* Overlay oscuro */
+        background: rgba(0,0,0,0.65);
         z-index: 2;
         pointer-events: none;
     }
 
-    /* El texto dentro del hero siempre blanco y por encima del overlay */
     .phishing-bg > .container,
     .phishing-bg > .container > .row {
         position: relative;
@@ -543,12 +530,11 @@ body {
         content: "";
         position: absolute;
         inset: 0;
-        background: rgba(0,0,0,0.65); /* Overlay oscuro */
+        background: rgba(0,0,0,0.65);
         z-index: 2;
         pointer-events: none;
     }
 
-    /* El texto dentro del hero siempre blanco y por encima del overlay */
     .smishing-bg > .container,
     .smishing-bg > .container > .row {
         position: relative;
@@ -698,11 +684,10 @@ body {
     }
 }
 
-/* HTML Structure */
 <h2 class="module-title" > @Model.Modulo.Titulo</h2 >
 <h4 class="stage-title" > @Model.EtapaActual.Titulo</h4 >
 <h6 class="stage-type" > @Model.EtapaActual.Tipo</h6 >
-/* CSS Styles */
+
 .module-title {
     color: var(--orange-primary);
     font-weight: bold;
@@ -783,7 +768,6 @@ body {
     }
 }
 
-/* Content Cards */
 .content-card {
     background: #f8f9fa;
     border: 2px solid #e9ecef;
@@ -822,7 +806,6 @@ body {
     border-color: #4caf50;
 }
 
-/* Video específico */
 .video-container {
     width: 100%;
     height: 100%;
@@ -832,7 +815,7 @@ body {
     .video-container .ratio {
         width: 100%;
         height: 100%;
-        border-radius: 0; /* si quieres que sea cuadrado */
+        border-radius: 0;
         overflow: hidden;
         background-color: #212529;
     }
@@ -943,7 +926,7 @@ body {
     font-weight: 600;
 }
 
-/* Botón Continuar Mejorado */
+/* Botón Continuar */
 .continue-btn {
     background: linear-gradient(45deg, var(--orange-primary), #ff8c00);
     border: none;
@@ -980,7 +963,6 @@ body {
     border-radius: 8px;
 }
 
-/* Animación sutil */
 @@keyframes fadeInUp {
     from {
         opacity: 0;

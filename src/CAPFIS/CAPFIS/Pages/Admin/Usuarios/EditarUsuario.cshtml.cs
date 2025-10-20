@@ -54,20 +54,18 @@ namespace CAPFIS.Pages.Admin.Usuarios
             var user = await _userManager.FindByIdAsync(UserId);
             if (user == null)
             {
-                StatusMessage = "❌ Usuario no encontrado.";
+                StatusMessage = "Usuario no encontrado.";
                 await OnGetAsync();
                 return Page();
             }
 
-            // No permitir quitar admin a uno mismo
             if (UserId == _userManager.GetUserId(User))
             {
-                StatusMessage = "⚠️ No puedes quitarte admin a ti mismo.";
+                StatusMessage = "No puedes quitarte admin a ti mismo.";
                 await OnGetAsync();
                 return Page();
             }
 
-            // Crear rol si no existe
             if (!await _roleManager.RoleExistsAsync("Administrador"))
             {
                 await _roleManager.CreateAsync(new IdentityRole("Administrador"));
@@ -78,11 +76,11 @@ namespace CAPFIS.Pages.Admin.Usuarios
                 var removeResult = await _userManager.RemoveFromRoleAsync(user, "Administrador");
                 if (removeResult.Succeeded)
                 {
-                    StatusMessage = $"⚡ Admin removido de {user.UserName}.";
+                    StatusMessage = $"Admin removido de {user.UserName}.";
                 }
                 else
                 {
-                    StatusMessage = $"❌ Error al quitar admin de {user.UserName}.";
+                    StatusMessage = $"Error al quitar admin de {user.UserName}.";
                 }
             }
             else
@@ -90,11 +88,11 @@ namespace CAPFIS.Pages.Admin.Usuarios
                 var addResult = await _userManager.AddToRoleAsync(user, "Administrador");
                 if (addResult.Succeeded)
                 {
-                    StatusMessage = $"✅ {user.UserName} ahora es admin.";
+                    StatusMessage = $"{user.UserName} ahora es admin.";
                 }
                 else
                 {
-                    StatusMessage = $"❌ Error al dar admin a {user.UserName}.";
+                    StatusMessage = $"Error al dar admin a {user.UserName}.";
                 }
             }
 
@@ -107,7 +105,7 @@ namespace CAPFIS.Pages.Admin.Usuarios
             var user = await _userManager.FindByIdAsync(UserId);
             if (user == null)
             {
-                StatusMessage = "❌ Usuario no encontrado.";
+                StatusMessage = "Usuario no encontrado.";
                 await OnGetAsync();
                 return Page();
             }
@@ -115,7 +113,7 @@ namespace CAPFIS.Pages.Admin.Usuarios
             // Evitar borrar al propio usuario
             if (UserId == _userManager.GetUserId(User))
             {
-                StatusMessage = "⚠️ No puedes borrarte a ti mismo.";
+                StatusMessage = "No puedes borrarte a ti mismo.";
                 await OnGetAsync();
                 return Page();
             }
@@ -123,11 +121,11 @@ namespace CAPFIS.Pages.Admin.Usuarios
             var deleteResult = await _userManager.DeleteAsync(user);
             if (deleteResult.Succeeded)
             {
-                StatusMessage = $"✅ Usuario {user.UserName} eliminado correctamente.";
+                StatusMessage = $"Usuario {user.UserName} eliminado correctamente.";
             }
             else
             {
-                StatusMessage = "❌ Error al eliminar usuario.";
+                StatusMessage = "Error al eliminar usuario.";
             }
 
             await OnGetAsync();

@@ -39,7 +39,7 @@
 </div>
 
 @section Scripts {
-    <!-- Si el CDN falla por políticas de integridad/CSP, probá eliminar el integrity/crossorigin o usar otro CDN -->
+  
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
 
     <script>
@@ -49,17 +49,17 @@
 
             if (!lista) return;
 
-            // Inicializar Sortable (create o new Sortable)
+           
             const sortable = Sortable.create(lista, {
                 animation: 180,
                 ghostClass: 'sortable-ghost',
                 onEnd: function (evt) {
-                    // Actualizamos las badges visualmente cada vez que termine el drag
+                    
                     actualizarBadgesOrden();
                 }
             });
 
-            // Actualiza badges "Orden: N" en cada LI
+            
             function actualizarBadgesOrden() {
                 [...lista.querySelectorAll("li")].forEach((li, index) => {
                     const badge = li.querySelector(".order-badge");
@@ -67,10 +67,10 @@
                 });
             }
 
-            // Inicializar badges al cargar
+           
             actualizarBadgesOrden();
 
-            // Al enviar el formulario, serializamos el orden actual
+            
             document.getElementById("orden-form").addEventListener("submit", function (e) {
                 const items = [...lista.querySelectorAll("li")].map((li, index) => ({
                     id: parseInt(li.dataset.id, 10),
@@ -83,7 +83,7 @@
     </script>
 
     <style>
-        /* pequeña mejora visual al arrastrar */
+        
         .sortable-ghost {
             opacity: 0.8;
             transform: rotate(-1deg);

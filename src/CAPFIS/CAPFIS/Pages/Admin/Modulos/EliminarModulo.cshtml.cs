@@ -58,7 +58,7 @@ namespace CAPFIS.Pages.Admin.Modulos
 
             StatusMessage = "✅ Módulo eliminado correctamente.";
 
-            // Recargar lista y limpiar selección
+            // Recargar lista y limpiar
             Modulos = _context.Modulos.OrderBy(m => m.Titulo).ToList();
             SelectedModulo = null;
             SelectedId = null;

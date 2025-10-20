@@ -64,7 +64,7 @@ namespace CAPFIS.Pages.Admin.Modulos
                 }
 
                 await _context.SaveChangesAsync();
-                StatusMessage = "✅ Orden de etapas actualizado correctamente.";
+                StatusMessage = "Orden de etapas actualizado correctamente.";
             }
 
             if (SelectedId.HasValue)

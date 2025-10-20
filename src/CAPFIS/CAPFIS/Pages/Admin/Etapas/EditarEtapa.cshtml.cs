@@ -78,14 +78,14 @@ namespace CAPFIS.Pages.Admin.Etapas
 
             if (!SelectedEtapaId.HasValue)
             {
-                StatusMessage = "⚠️ Debe seleccionar una etapa.";
+                StatusMessage = "Debe seleccionar una etapa.";
                 return Page();
             }
 
             var etapa = _context.Etapas.Find(SelectedEtapaId.Value);
             if (etapa == null)
             {
-                StatusMessage = "❌ La etapa no existe.";
+                StatusMessage = "La etapa no existe.";
                 return Page();
             }
 
@@ -128,7 +128,7 @@ namespace CAPFIS.Pages.Admin.Etapas
             _context.Etapas.Update(etapa);
             _context.SaveChanges();
 
-            StatusMessage = "✅ Etapa actualizada correctamente.";
+            StatusMessage = "Etapa actualizada correctamente.";
             return Page();
         }
     }

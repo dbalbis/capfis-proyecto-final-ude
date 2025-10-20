@@ -4,7 +4,7 @@
     ViewData["Title"] = "Inicio";
 }
 
-<!-- Hero Section -->
+<!-- Hero -->
 <div class="mb-4 indexHero-bg py-5">
     <div class="container">
         <div class="row align-items-center">
@@ -21,7 +21,7 @@
                 </h1>
                
 
-                <!-- SUBTÍTULO CLARO -->
+                <!-- SUBTÍTULO -->
                 <p class="fw-medium mb-5 ps-1"
                    style="color: #cfe4ff;
               text-shadow: 0 3px 12px rgba(0, 0, 0, 0.9);
@@ -32,11 +32,11 @@
 
 
 
-                <!-- BOTONES MEJORADOS -->
+                <!-- BOTONES-->
                 <div class="d-flex gap-3">
                     @if (User.Identity?.IsAuthenticated ?? false)
                     {
-                        <!-- Usuario logeado: redirige a MiAprendizaje -->
+                        <!-- Usuario logeado-->
                         <a class="btn btn-primary fw-bold px-4 py-3"
                            href="/Aprendizaje/MiAprendizaje">
                             🚀 Comenzar Entrenamiento
@@ -44,7 +44,7 @@
                     }
                     else
                     {
-                        <!-- Usuario no logeado: redirige a login -->
+                        <!-- Usuario no logeado-->
                         <a class="btn btn-primary fw-bold px-4 py-3"
                            href="/Login">
                             🚀 Comenzar Entrenamiento

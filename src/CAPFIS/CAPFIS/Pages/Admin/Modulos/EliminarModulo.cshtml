@@ -15,7 +15,7 @@
 
         <partial name="_StatusMessage" model="Model.StatusMessage" />
 
-        <!-- Select de módulo siempre visible -->
+        <!-- Select de módulo-->
         <label for="moduloSelect" class="form-label">Seleccione un módulo:</label>
         <form method="get">
             <select class="form-select" id="moduloSelect" name="SelectedId" onchange="this.form.submit()">
@@ -33,7 +33,7 @@
         <hr class="text-secondary my-3"
             style="border: none; border-bottom: 2px solid rgba(255, 165, 0, 0.4); margin: 0 1rem 0.5rem 1rem;" />
 
-        <!-- Card de detalles y botón de eliminación -->
+        
         @if (Model.SelectedModulo != null)
         {
             <div class="mb-3">

@@ -8,9 +8,9 @@ public class ModuloUsuario
     public int Id { get; set; }
 
     [ForeignKey("Usuario")]
-    public string UserId { get; set; } = null!; // FK a ApplicationUser
+    public string UserId { get; set; } = null!;
 
-    public int ModuloId { get; set; } // FK a ModuloInteractivo
+    public int ModuloId { get; set; }
 
     public DateTime FechaInscripcion { get; set; } = DateTime.UtcNow;
 

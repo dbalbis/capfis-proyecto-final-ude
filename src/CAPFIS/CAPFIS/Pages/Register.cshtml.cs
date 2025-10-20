@@ -22,7 +22,6 @@ using Microsoft.Extensions.Logging;
 
 namespace CAPFIS.Pages
 {
-    // Validación personalizada para checkbox obligatorio
     public class MustBeTrueAttribute : ValidationAttribute
     {
         public override bool IsValid(object value)
@@ -169,7 +168,7 @@ namespace CAPFIS.Pages
                     }
                 }
 
-                // Traducción de errores de Identity al español
+                // Pisamos algunos mensajes de error
                 foreach (var error in result.Errors)
                 {
                     string mensaje = error.Description;
@@ -191,7 +190,6 @@ namespace CAPFIS.Pages
                 }
             }
 
-            // Si llegamos hasta aquí, algo falló, volver a mostrar el formulario
             return Page();
         }
 

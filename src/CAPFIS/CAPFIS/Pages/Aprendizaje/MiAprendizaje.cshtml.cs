@@ -28,7 +28,6 @@ namespace CAPFIS.Pages.Aprendizaje
             var user = await _userManager.GetUserAsync(User);
             if (user == null) return;
 
-            // Traemos los módulos con el progreso del usuario
             ModulosSubscripto = await _context.ModulosUsuarios
                 .Where(mu => mu.UserId == user.Id)
                 .Include(mu => mu.Modulo)

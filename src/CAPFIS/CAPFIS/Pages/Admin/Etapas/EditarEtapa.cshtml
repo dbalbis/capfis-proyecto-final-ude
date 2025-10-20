@@ -17,7 +17,7 @@
         <partial name="_StatusMessage" model="Model.StatusMessage" />
         <div id="statusMessageJS" class="text-danger mb-2"></div>
 
-        <!-- Selector de etapa -->
+        <!-- Seleccionar etapa -->
         <form method="get">
             <label for="etapaSelect" class="form-label">Seleccione una etapa:</label>
             <select class="form-select mb-3" id="etapaSelect" name="SelectedEtapaId" onchange="this.form.submit()">
@@ -55,7 +55,7 @@
                     <span asp-validation-for="Input.Titulo" class="text-danger"></span>
                 </div>
 
-                <!-- Tipo (solo lectura) -->
+                <!-- Tipo-->
                 <div class="form-floating mb-3">
                     <input asp-for="Input.Tipo" class="form-control" readonly />
                     <label asp-for="Input.Tipo">Tipo de Etapa</label>
@@ -171,7 +171,7 @@
                 } catch(e) {}
             }
 
-            // Sopa de Letras - cargar palabras existentes
+            // Sopa de Letras
             if(tipo === "SopaDeLetras" && contenidoJsonHidden.value) {
                 try {
                     const palabras = JSON.parse(contenidoJsonHidden.value);
@@ -187,7 +187,7 @@
                 } catch(e) {}
             }
 
-            // Encuentra la Palabra - cargar datos existentes
+            // Encuentra la Palabra
             if(tipo === "EncuentraLaPalabra" && contenidoJsonHidden.value) {
                 try {
                     const encuentraData = JSON.parse(contenidoJsonHidden.value);
@@ -215,7 +215,7 @@
         });
 
         // Quiz
-        // Función para enumerar las preguntas
+        
         function renderizarNumerosPreguntas() {
             Array.from(preguntasList.children).forEach((div, idx) => {
                 let numeroSpan = div.querySelector('.numeroPregunta');
@@ -228,7 +228,7 @@
             });
         }
 
-        // Quiz: agregar nueva pregunta
+        // Agregar nueva pregunta
         agregarPreguntaBtn?.addEventListener('click', () => {
             const div = document.createElement('div');
             div.classList.add('border', 'p-2', 'mb-2', 'rounded');
@@ -251,7 +251,7 @@
             renderizarNumerosPreguntas(); // actualizar numeración al agregar
         });
 
-        // Sopa
+        // Sopa de letras
         agregarPalabraSopaBtn?.addEventListener('click', () => {
             const div = document.createElement('div');
             div.classList.add('input-group', 'mb-1');
@@ -262,7 +262,7 @@
             palabrasSopaList.appendChild(div);
         });
 
-        // Encuentra
+        // Encuentra la palabra
         agregarPalabraBtn?.addEventListener('click', () => {
             const div = document.createElement('div');
             div.classList.add('input-group', 'mb-1');
@@ -273,23 +273,23 @@
             palabrasClaveList.appendChild(div);
         });
 
-        // Serializar JSON y validar antes de enviar
+        // Serializar JSON
         form.addEventListener('submit', (e) => {
             statusDiv.innerText = "";
             let data = null;
 
-            // Validaciones básicas según el tipo
+            // Validaciones
             if (tipo === 'Video') {
                 const urlInput = contenidoVideo.querySelector('input');
                 const creditosInput = contenidoVideo.querySelector('input[placeholder*="Créditos"]');
                 if (!urlInput.value.trim()) {
-                    statusDiv.innerText = "❌ La URL del video no puede estar vacía.";
+                    statusDiv.innerText = "La URL del video no puede estar vacía.";
                     e.preventDefault();
                     return false;
                 }
 
                 if (!creditosInput.value.trim()) {
-                    statusDiv.innerText = "❌ Los créditos del video no pueden estar vacíos.";
+                    statusDiv.innerText = "Los créditos del video no pueden estar vacíos.";
                     e.preventDefault();
                     return false;
                  }
@@ -298,7 +298,7 @@
             if (tipo === 'Ahorcado') {
                 const palabraInput = contenidoAhorcado.querySelector('input');
                 if (!palabraInput.value.trim()) {
-                    statusDiv.innerText = "❌ La palabra a adivinar no puede estar vacía.";
+                    statusDiv.innerText = "La palabra a adivinar no puede estar vacía.";
                     e.preventDefault();
                     return false;
                 }
@@ -308,7 +308,7 @@
                 const preguntas = Array.from(preguntasList.children);
 
                 if (preguntas.length === 0) {
-                    statusDiv.innerText = "❌ Debe agregar al menos una pregunta.";
+                    statusDiv.innerText = "Debe agregar al menos una pregunta.";
                     e.preventDefault();
                     return false;
                 }
@@ -323,7 +323,7 @@
 
                     // Validación
                     if (!preguntaText || respuestas.some(r => !r) || isNaN(correcta) || correcta < 1 || correcta > 3) {
-                        statusDiv.innerText = "❌ Cada pregunta debe tener texto, 3 respuestas y una respuesta correcta entre 1 y 3.";
+                        statusDiv.innerText = "Cada pregunta debe tener texto, 3 respuestas y una respuesta correcta entre 1 y 3.";
                         e.preventDefault();
                         return false;
                     }
@@ -343,7 +343,7 @@
                     .filter(palabra => palabra !== '');
 
                 if (palabras.length === 0) {
-                    statusDiv.innerText = "❌ Debe agregar al menos una palabra para la sopa de letras.";
+                    statusDiv.innerText = "Debe agregar al menos una palabra para la sopa de letras.";
                     e.preventDefault();
                     return false;
                 }
@@ -353,7 +353,7 @@
                     .some(i => !i.value.trim());
 
                 if (palabrasVacias) {
-                    statusDiv.innerText = "❌ Todas las palabras de la sopa de letras deben tener contenido.";
+                    statusDiv.innerText = "Todas las palabras de la sopa de letras deben tener contenido.";
                     e.preventDefault();
                     return false;
                 }
@@ -364,15 +364,15 @@
                 const textoBase = contenidoEncuentra.querySelector('textarea').value.trim();
                 const palabrasClave = Array.from(palabrasClaveList.querySelectorAll('input')).map(i => i.value.trim());
 
-                // Validación simple: texto no vacío y al menos una palabra clave no vacía
+                
                 if (!textoBase) {
-                    statusDiv.innerText = "❌ El texto base no puede estar vacío.";
+                    statusDiv.innerText = "El texto base no puede estar vacío.";
                     e.preventDefault();
                     return false;
                 }
 
                 if (palabrasClave.length === 0 || palabrasClave.every(p => p === '')) {
-                    statusDiv.innerText = "❌ Debe agregar al menos una palabra clave.";
+                    statusDiv.innerText = "Debe agregar al menos una palabra clave.";
                     e.preventDefault();
                     return false;
                 }
@@ -382,7 +382,7 @@
                     .some(i => !i.value.trim());
 
                 if (palabrasVacias) {
-                    statusDiv.innerText = "❌ Todas las palabras clave deben tener contenido.";
+                    statusDiv.innerText = "Todas las palabras clave deben tener contenido.";
                     e.preventDefault();
                     return false;
                 }

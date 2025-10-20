@@ -71,7 +71,6 @@ namespace CAPFIS.Pages
 
             returnUrl ??= Url.Content("~/");
 
-            // Limpiar la cookie externa existente para asegurar un inicio de sesión limpio
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
 
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
@@ -115,7 +114,6 @@ namespace CAPFIS.Pages
                 }
             }
 
-            // Si llegamos hasta aquí, algo falló, volver a mostrar el formulario
             return Page();
         }
 

@@ -59,7 +59,7 @@ namespace CAPFIS.Pages.Admin.Etapas
                 return Page();
             }
 
-            // Validar JSON obligatorio para ciertos tipos
+            // Validar JSON
             if ((Input.Tipo == TipoEtapa.Quiz || Input.Tipo == TipoEtapa.SopaDeLetras || Input.Tipo == TipoEtapa.EncuentraLaPalabra)
                 && string.IsNullOrWhiteSpace(Input.ContenidoJson))
             {
@@ -68,7 +68,7 @@ namespace CAPFIS.Pages.Admin.Etapas
                 return Page();
             }
 
-            // 🔹 Calcular el orden automáticamente
+            //Calculamos el orden
             var ultimoOrden = _context.Etapas
                 .Where(e => e.ModuloInteractivoId == Input.ModuloInteractivoId)
                 .Max(e => (int?)e.Orden) ?? 0;
@@ -80,7 +80,7 @@ namespace CAPFIS.Pages.Admin.Etapas
                 ModuloInteractivoId = Input.ModuloInteractivoId,
                 Titulo = Input.Titulo,
                 Tipo = Input.Tipo!.Value,
-                Orden = nuevoOrden, // 👈 Se asigna el nuevo orden
+                Orden = nuevoOrden,
                 EstaPublicado = true,
             };
 
@@ -109,7 +109,7 @@ namespace CAPFIS.Pages.Admin.Etapas
             _context.Etapas.Add(etapa);
             _context.SaveChanges();
 
-            StatusMessage = "✅ Etapa creada correctamente.";
+            StatusMessage = "Etapa creada correctamente.";
 
             ModelState.Clear();
             Input = new InputModel();

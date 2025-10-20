@@ -79,7 +79,7 @@ namespace CAPFIS.Pages.Modulo
 
             if (moduloUsuario.EtapaActualOrden < totalEtapas)
             {
-                // Calculamos progreso solo con etapas completadas
+                // Calculamos progreso
                 moduloUsuario.Progreso = (int)((double)(moduloUsuario.EtapaActualOrden - 1) / totalEtapas * 100);
 
                 // Pasamos a la siguiente etapa

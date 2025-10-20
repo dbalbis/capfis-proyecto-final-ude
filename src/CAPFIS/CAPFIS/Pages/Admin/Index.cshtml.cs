@@ -7,7 +7,6 @@ namespace CAPFIS.Pages.Admin
     {
         public IActionResult OnGet()
         {
-            // Redirige a la primera opción por defecto
             return RedirectToPage("/Admin/Modulos/CrearModulo");
         }
     }
