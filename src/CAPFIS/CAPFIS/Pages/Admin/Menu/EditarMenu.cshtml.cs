@@ -46,10 +46,10 @@ namespace CAPFIS.Pages.Admin.Menu
                 }
 
                 await _context.SaveChangesAsync();
-                StatusMessage = "✅ Menú actualizado correctamente.";
+                StatusMessage = "Menú actualizado correctamente.";
             }
 
-            // Recargar la lista con los nuevos valores
+            // Recargar la lista con el nuevo orden
             Modulos = await _context.Modulos.OrderBy(m => m.Orden ?? int.MaxValue).ToListAsync();
             return Page();
         }

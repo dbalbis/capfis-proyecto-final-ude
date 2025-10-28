@@ -144,7 +144,7 @@
 
         // CARGAR DATOS EXISTENTES PARA EDICIÓN
         document.addEventListener("DOMContentLoaded", () => {
-            // Quiz - cargar preguntas existentes
+            // Quiz
             if(tipo === "Quiz" && contenidoJsonHidden.value) {
                 try {
                     const quizData = JSON.parse(contenidoJsonHidden.value);
@@ -214,8 +214,7 @@
             }
         });
 
-        // Quiz
-        
+        // Enumerear preguntas Quiz
         function renderizarNumerosPreguntas() {
             Array.from(preguntasList.children).forEach((div, idx) => {
                 let numeroSpan = div.querySelector('.numeroPregunta');
@@ -348,7 +347,7 @@
                     return false;
                 }
 
-                // Verificar que no haya palabras vacías
+                // Verificar que no se agreguen palabras vacías
                 const palabrasVacias = Array.from(palabrasSopaList.querySelectorAll('input'))
                     .some(i => !i.value.trim());
 

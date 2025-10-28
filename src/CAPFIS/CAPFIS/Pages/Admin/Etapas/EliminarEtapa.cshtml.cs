@@ -45,24 +45,24 @@ namespace CAPFIS.Pages.Admin.Etapas
         {
             if (SelectedEtapa == null || SelectedEtapa.Id == 0)
             {
-                StatusMessage = "❌ No se pudo eliminar la etapa.";
+                StatusMessage = "No se pudo eliminar la etapa.";
                 return Page();
             }
 
             var etapa = _context.Etapas.Find(SelectedEtapa.Id);
             if (etapa == null)
             {
-                StatusMessage = "❌ Etapa no encontrada.";
+                StatusMessage = "Etapa no encontrada.";
                 return Page();
             }
 
             int moduloId = etapa.ModuloInteractivoId;
 
-            // 1. Eliminar la etapa
+            //Eliminar la etapa
             _context.Etapas.Remove(etapa);
             _context.SaveChanges();
 
-            // 2. Reordenar las etapas del mismo módulo
+            //Reordenar las etapas del módulo
             var etapasModulo = _context.Etapas
                 .Where(e => e.ModuloInteractivoId == moduloId)
                 .OrderBy(e => e.Orden)
@@ -77,7 +77,7 @@ namespace CAPFIS.Pages.Admin.Etapas
 
             StatusMessage = "✅ Etapa eliminada y orden reacomodado.";
 
-            // 3. Recargar lista y limpiar selección
+            //Recargar lista y limpiar selección
             Etapas = _context.Etapas.OrderBy(e => e.Titulo).ToList();
             SelectedEtapa = null;
             SelectedId = null;

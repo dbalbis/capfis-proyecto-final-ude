@@ -42,21 +42,21 @@ namespace CAPFIS.Pages.Admin.Modulos
         {
             if (SelectedModulo == null || SelectedModulo.Id == 0)
             {
-                StatusMessage = "❌ No se pudo eliminar el módulo.";
+                StatusMessage = "No se pudo eliminar el módulo.";
                 return Page();
             }
 
             var modulo = _context.Modulos.Find(SelectedModulo.Id);
             if (modulo == null)
             {
-                StatusMessage = "❌ Módulo no encontrado.";
+                StatusMessage = "Módulo no encontrado.";
                 return Page();
             }
 
             _context.Modulos.Remove(modulo);
             _context.SaveChanges();
 
-            StatusMessage = "✅ Módulo eliminado correctamente.";
+            StatusMessage = "Módulo eliminado correctamente.";
 
             // Recargar lista y limpiar
             Modulos = _context.Modulos.OrderBy(m => m.Titulo).ToList();

@@ -168,7 +168,7 @@ namespace CAPFIS.Pages
                     }
                 }
 
-                // Pisamos algunos mensajes de error
+                // Pisamos mensajes de error
                 foreach (var error in result.Errors)
                 {
                     string mensaje = error.Description;

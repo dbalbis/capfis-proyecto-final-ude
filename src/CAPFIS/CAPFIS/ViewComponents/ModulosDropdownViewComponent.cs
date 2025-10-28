@@ -21,7 +21,7 @@ namespace CAPFIS.ViewComponents
                 .OrderBy(m => m.Orden)
                 .ToListAsync();
 
-            return View(modulos); // esto enviará la lista al Default.cshtml
+            return View(modulos);
         }
     }
 }

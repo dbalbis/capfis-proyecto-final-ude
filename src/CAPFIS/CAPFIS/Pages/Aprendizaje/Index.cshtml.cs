@@ -7,7 +7,6 @@ namespace CAPFIS.Pages.Aprendizaje
     {
         public IActionResult OnGet()
         {
-            // Redirige a la primera opción por defecto
             return RedirectToPage("/Aprendizaje/MiAprendizaje");
         }
     }

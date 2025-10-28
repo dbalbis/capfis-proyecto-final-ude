@@ -35,7 +35,7 @@ namespace CAPFIS.Pages.Etapas
             Tipo = tipo;
             TipoFormateado = FormatearTipo(tipo);
 
-            // Obtener todas las etapas del tipo especificado con su módulo asociado
+            // Obtener todas las etapas segun su tipo y mostrando el modulo al que pertenecen
             Etapas = await _context.Etapas
                 .Where(e => e.Tipo.ToString().ToLower() == tipo.ToLower())
                 .Include(e => e.Modulo)
@@ -70,7 +70,7 @@ namespace CAPFIS.Pages.Etapas
         }
     }
 
-    // Clase auxiliar para transportar los datos
+    // Clase auxiliar
     public class EtapaConModulo
     {
         public int Id { get; set; }

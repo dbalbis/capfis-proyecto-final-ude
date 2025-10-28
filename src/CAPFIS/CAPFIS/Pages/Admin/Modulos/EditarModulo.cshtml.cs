@@ -53,7 +53,7 @@ namespace CAPFIS.Pages.Admin.Modulos
             var modulo = _context.Modulos.Find(SelectedModulo.Id);
             if (modulo == null) return Page();
 
-            // 🔹 Validaciones obligatorias
+            // Validaciones
             if (string.IsNullOrWhiteSpace(SelectedModulo.Titulo))
                 ModelState.AddModelError("SelectedModulo.Titulo", "El título es obligatorio.");
 
@@ -68,13 +68,13 @@ namespace CAPFIS.Pages.Admin.Modulos
 
             if (!ModelState.IsValid) return Page();
 
-            // 🔹 Sanitizar inputs
+            // Sanitizar inputs
             modulo.Titulo = InputSanitizer.SanitizeText(SelectedModulo.Titulo);
             modulo.TituloDetallado = InputSanitizer.SanitizeText(SelectedModulo.TituloDetallado);
             modulo.Descripcion = InputSanitizer.SanitizeHtml(SelectedModulo.Descripcion);
             modulo.EstaPublicado = SelectedModulo.EstaPublicado;
 
-            // 🔹 Validar slug único
+            // Validar que el slug sea unico
             string newSlug = GenerarSlug(modulo.Titulo);
             if (_context.Modulos.Any(m => m.Id != modulo.Id && m.Slug == newSlug))
             {
@@ -83,7 +83,7 @@ namespace CAPFIS.Pages.Admin.Modulos
             }
             modulo.Slug = newSlug;
 
-            // 🔹 Subir imagen nueva si corresponde
+            // Subir imagen nueva
             if (HeroImageFile != null && HeroImageFile.Length > 0)
             {
                 const long maxFileSize = 5 * 1024 * 1024; // 5 MB
@@ -115,7 +115,7 @@ namespace CAPFIS.Pages.Admin.Modulos
 
             _context.SaveChanges();
 
-            StatusMessage = "✅ Módulo actualizado correctamente.";
+            StatusMessage = "Módulo actualizado correctamente.";
 
             // Recargar lista y módulo
             Modulos = _context.Modulos.OrderBy(m => m.Titulo).ToList();

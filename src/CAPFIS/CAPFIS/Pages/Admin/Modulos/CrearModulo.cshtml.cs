@@ -42,7 +42,7 @@ namespace CAPFIS.Pages.Admin.Modulos
 
         public void OnGet()
         {
-            // Solo muestra el formulario vacío
+            // muestra el formulario vacío
         }
 
         public IActionResult OnPost()
@@ -53,7 +53,7 @@ namespace CAPFIS.Pages.Admin.Modulos
             // Sanitizar inputs
             Input.Titulo = InputSanitizer.SanitizeText(Input.Titulo);
 
-            // Generar slug siempre a partir del título
+            // Generar slug a partir del título
             string slug = GenerarSlug(Input.Titulo);
 
             // Validar slug único
@@ -114,6 +114,7 @@ namespace CAPFIS.Pages.Admin.Modulos
                 Titulo = Input.Titulo,
                 TituloDetallado = Input.TituloDetallado,
                 Slug = slug,
+                //Sanitizamos la descripcion
                 Descripcion = InputSanitizer.SanitizeHtml(Input.Descripcion),
                 EstaPublicado = Input.Publicado,
                 ImagenHero = heroImagePath
@@ -124,7 +125,7 @@ namespace CAPFIS.Pages.Admin.Modulos
                 _context.Modulos.Add(modulo);
                 _context.SaveChanges();
 
-                StatusMessage = "✅ Módulo creado correctamente.";
+                StatusMessage = "Módulo creado correctamente.";
 
                 // Limpiar formulario
                 ModelState.Clear();
@@ -132,7 +133,7 @@ namespace CAPFIS.Pages.Admin.Modulos
             }
             catch (Exception ex)
             {
-                StatusMessage = $"❌ Error al guardar el módulo: {ex.Message}";
+                StatusMessage = $"Error al guardar el módulo: {ex.Message}";
             }
 
             return Page();

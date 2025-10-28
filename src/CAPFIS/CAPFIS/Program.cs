@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Conexion SQL
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
                        ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -23,21 +23,21 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
 .AddRoles<IdentityRole>()
 .AddEntityFrameworkStores<ApplicationDbContext>();
 
-// Configuración de la cookie
+// Configuración de la cookie para proteger urls
 builder.Services.ConfigureApplicationCookie(options =>
 {
     options.LoginPath = "/";         // Si no está autenticado, redirige al Index
     options.AccessDeniedPath = "/";  // Si no tiene permisos, redirige al Index
 });
 
-// Autorización: policy para administradores
+// Autorización solo para administradores
 builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("SoloAdmins", policy =>
         policy.RequireRole("Administrador"));
 });
 
-// Autorizar todas las páginas dentro de /Admin
+// Proteger todas las páginas dentro de /Admin y /Aprendizaje
 builder.Services.AddRazorPages(options =>
 {
     options.Conventions.AuthorizeFolder("/Admin", "SoloAdmins");
@@ -47,7 +47,6 @@ builder.Services.AddRazorPages(options =>
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseMigrationsEndPoint();
@@ -61,14 +60,14 @@ else
 app.UseHttpsRedirection();
 app.UseRouting();
 
-app.UseAuthentication(); // Debe ir antes de UseAuthorization
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapStaticAssets();
 app.MapRazorPages()
    .WithStaticAssets();
 
-// Crear roles y usuario admin
+// Crear roles
 using (var scope = app.Services.CreateScope())
 {
     var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
@@ -76,47 +75,9 @@ using (var scope = app.Services.CreateScope())
 
     var services = scope.ServiceProvider;
     var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
-    await CrearUsuarioAdministrador(userManager, services);
 }
 
 app.Run();
-
-async Task CrearUsuarioAdministrador(UserManager<ApplicationUser> userManager, IServiceProvider services)
-{
-    string adminEmail = "admin@capfis.com";
-    string adminPassword = "Admin123!";
-
-    var adminUser = await userManager.FindByEmailAsync(adminEmail);
-
-    if (adminUser == null)
-    {
-        var nuevoAdmin = new ApplicationUser
-        {
-            UserName = adminEmail,
-            Email = adminEmail,
-            FirstName = "Admin",
-            LastName = "CAPFIS",
-            Country = "Uruguay",
-            Gender = "Otro",
-            BirthDate = new DateTime(1990, 1, 1),
-            EmailConfirmed = true
-        };
-
-        var result = await userManager.CreateAsync(nuevoAdmin, adminPassword);
-        if (result.Succeeded)
-        {
-            await userManager.AddToRoleAsync(nuevoAdmin, "Administrador");
-        }
-        else
-        {
-            var logger = services.GetRequiredService<ILogger<Program>>();
-            foreach (var error in result.Errors)
-            {
-                logger.LogError($"Error al crear usuario admin: {error.Description}");
-            }
-        }
-    }
-}
 
 async Task CrearRoles(RoleManager<IdentityRole> roleManager)
 {
